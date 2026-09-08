@@ -3,6 +3,26 @@
 Next.js 16 (App Router, static) + Payload 3 CMS on SQLite. One app serves both
 the public site and the admin at `/admin`.
 
+## Deploying
+
+Needs Node 20.9+, ~2 GB RAM to build, and a **persistent disk** for `888.db`
+and `media/`. `npm start` runs `payload migrate` before the server, so a fresh
+database is built from `src/migrations/` on first boot — production has
+dev-push disabled and would otherwise start with no schema.
+
+Set `NEXT_PUBLIC_SITE_URL` **before** building; it is baked into the sitemap,
+canonicals and JSON-LD.
+
+Schedule the backup daily:
+
+```
+0 3 * * * cd /app && npm run backup >> /var/log/888-backup.log 2>&1
+```
+
+It uses `VACUUM INTO`, so it is safe to run while the site is serving, and it
+keeps the last 14 by default (`BACKUP_KEEP`). Copies land next to the app —
+sync `backups/` off-box to survive losing the disk itself.
+
 ## Running it
 
 ```bash
@@ -198,13 +218,26 @@ The email test stubs the transport, so it proves the messages are built and
 sent without needing a mail provider. It also checks that customer input is
 escaped, and that editing a lead does not re-notify the dispatcher.
 
+## Drafts
+
+Services, Locations and Pages keep version history. **Save** stores a draft,
+**Publish** makes it live, and the last 20 versions can be restored from the
+document's Versions tab. Every public query filters to published only, so an
+unfinished edit cannot leak onto the live site.
+
+Enquiries and images deliberately have no drafts — a lead is a record of fact,
+not a document with revisions.
+
 ## Notes for whoever picks this up
 
 - Forms post to `/api/enquiry`, not straight to Payload, so the endpoint can
   validate and drop fields a customer must not set (`status`, `notes`).
   Enquiries are **not** publicly readable — they hold customer names and phones.
 - Spam is handled by a hidden honeypot field, which answers `200` so bots do not
-  learn they were caught. No captcha.
+  learn they were caught. No captcha. On top of that the endpoint is rate
+  limited to 5 submissions per IP per 10 minutes, counted in memory — that
+  resets on restart and is per-instance, which is the right trade for a single
+  server. Move the counter to the database if it ever runs on more than one.
 - The FAQ accordions are `<details>`/`<summary>`, so keyboard support and
   find-in-page work without JavaScript.
 - The review marquee is two identical CSS tracks; it pauses on hover and focus
