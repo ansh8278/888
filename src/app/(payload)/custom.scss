@@ -1,0 +1,715 @@
+/* ============================================================
+   888 Lock & Key — CMS theme
+   Brand palette and layout polish over Payload's defaults.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
+
+:root {
+  --brand: #ea580c;
+  --brand-dark: #c2410c;
+  --brand-light: #fff7ed;
+  --brand-border: #fed7aa;
+  --brand-ink: #0f172a;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora', var(--font-body);
+}
+
+html[data-theme='light'] {
+  --theme-bg: #faf8f5; /* the warm sand used across the public site */
+}
+
+/* Headings pick up the site's display face. */
+.payload__modal-container h1,
+h1.doc-header__title,
+.dash h1,
+.dash h2 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Brand marks ---------- */
+.brand-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg { width: 16px; height: 16px; }
+}
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-logo__mark {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 26px -8px rgba(234, 88, 12, 0.55);
+}
+.brand-logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  text-align: left;
+}
+.brand-logo__text strong {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.brand-logo__text span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+/* ---------- Primary actions in brand orange ---------- */
+.btn--style-primary {
+  --color: #fff;
+  background-color: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--brand-dark) !important;
+    border-color: var(--brand-dark) !important;
+    color: #fff !important;
+  }
+}
+.nav__link:hover,
+.nav-group__toggle:hover {
+  color: var(--brand);
+}
+.nav__link--active {
+  color: var(--brand);
+  font-weight: 600;
+}
+.pill--style-success {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+}
+
+/* Group headings in the sidebar read as sections, not labels. */
+.nav-group__label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* ---------- Dashboard ---------- */
+.dash {
+  max-width: 1100px;
+  padding-top: 28px;
+  padding-bottom: 64px;
+}
+.dash__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+.dash__head h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+}
+.dash__head p {
+  margin: 6px 0 0;
+  opacity: 0.65;
+}
+.dash__view-site {
+  padding: 11px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--theme-elevation-200);
+  font-weight: 700;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+}
+
+/* Leads banner — the one thing that must never be missed. */
+.dash__leads {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 24px;
+  border-radius: 16px;
+  border: 1px solid var(--theme-elevation-150);
+  background: var(--theme-elevation-0);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px -12px rgba(15, 23, 42, 0.28);
+  }
+}
+.dash__leads--active {
+  border-color: var(--brand-border);
+  background: var(--brand-light);
+
+  /* This banner paints its own light background, so it must also pin its text
+     colour — inheriting the theme's white made it invisible in dark mode. */
+  .dash__leads-body strong { color: #7c2d12; }
+  .dash__leads-body span { color: #9a3412; opacity: 0.9; }
+  .dash__leads-go { color: var(--brand-dark); }
+}
+.dash__leads-num {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  min-width: 64px;
+  text-align: center;
+  color: var(--theme-elevation-400);
+}
+.dash__leads--active .dash__leads-num {
+  color: var(--brand);
+}
+.dash__leads-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.dash__leads-body strong {
+  font-size: 1.05rem;
+}
+.dash__leads-body span {
+  font-size: 0.88rem;
+  opacity: 0.72;
+}
+.dash__leads-go {
+  font-weight: 700;
+  color: var(--brand);
+  white-space: nowrap;
+}
+
+.dash__recent {
+  list-style: none;
+  margin: 0 0 34px;
+  padding: 0;
+  border: 1px solid var(--theme-elevation-100);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.dash__recent li + li {
+  border-top: 1px solid var(--theme-elevation-100);
+}
+.dash__recent a {
+  display: grid;
+  grid-template-columns: 1.2fr 1.6fr 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: var(--theme-elevation-50);
+  }
+}
+.dash__recent-name { font-weight: 700; }
+.dash__recent-meta { opacity: 0.7; }
+.dash__recent-phone { font-variant-numeric: tabular-nums; }
+.dash__recent-time { opacity: 0.55; font-size: 0.82rem; white-space: nowrap; }
+
+.dash__title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 14px;
+}
+
+.dash__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.dash__tile {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid var(--theme-elevation-150);
+  background: var(--theme-elevation-0);
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--brand);
+    box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.3);
+  }
+
+  strong { font-size: 1rem; }
+  span { font-size: 0.83rem; opacity: 0.68; }
+}
+.dash__tile-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.dash__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.dash__stat {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: var(--theme-elevation-50);
+  border: 1px solid var(--theme-elevation-100);
+
+  b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--brand);
+    line-height: 1.1;
+  }
+  span {
+    font-size: 0.82rem;
+    opacity: 0.7;
+  }
+}
+.dash__note {
+  font-size: 0.86rem;
+  opacity: 0.65;
+  max-width: 70ch;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .dash__recent a {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .dash__leads {
+    flex-wrap: wrap;
+  }
+}
+
+/* Log out was an unlabelled icon tucked in the sidebar corner. Give it a name
+   in the dashboard header, and a label on the sidebar icon too. */
+.dash__head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.dash__logout {
+  padding: 11px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--theme-elevation-200);
+  font-weight: 700;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:hover {
+    border-color: #dc2626;
+    color: #dc2626;
+  }
+}
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   Icons come from CSS rather than the labels themselves, so no emoji leaks
+   into page titles, breadcrumbs, search results or the API.
+   ============================================================ */
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 12px;
+  margin: 1px 0;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &::before {
+    content: '•';
+    font-size: 1.02rem;
+    line-height: 1;
+    width: 1.3em;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: var(--theme-elevation-100);
+    color: var(--brand);
+  }
+}
+
+/* Current page reads as a filled pill, not just a colour change. */
+.nav__link--active,
+.nav__link[aria-current='page'] {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+
+/* Icons are keyed off the stable ids Payload puts on each nav item. Href
+   selectors do not work: the item for the page you are ON renders as a <div>
+   with no href, so the active link alone lost its icon. */
+#nav-enquiries::before             { content: '📥'; }
+#nav-services::before              { content: '🔧'; }
+#nav-locations::before             { content: '📍'; }
+#nav-reviews::before               { content: '⭐'; }
+#nav-faqs::before                  { content: '💬'; }
+#nav-pages::before                 { content: '📃'; }
+#nav-media::before                 { content: '🖼️'; }
+#nav-users::before                 { content: '👤'; }
+#nav-global-home-page::before      { content: '🏠'; }
+#nav-global-combo-template::before { content: '📄'; }
+#nav-global-site-settings::before  { content: '⚙️'; }
+#nav-global-navigation::before     { content: '🧭'; }
+
+/* Group headings in the sidebar read as sections, not labels. */
+.nav-group__label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* ---------- Dashboard ---------- */
+.dash {
+  max-width: 1100px;
+  padding-top: 28px;
+  padding-bottom: 64px;
+}
+.dash__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+.dash__head h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+}
+.dash__head p {
+  margin: 6px 0 0;
+  opacity: 0.65;
+}
+.dash__view-site {
+  padding: 11px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--theme-elevation-200);
+  font-weight: 700;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+}
+
+/* Leads banner — the one thing that must never be missed. */
+.dash__leads {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 24px;
+  border-radius: 16px;
+  border: 1px solid var(--theme-elevation-150);
+  background: var(--theme-elevation-0);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px -12px rgba(15, 23, 42, 0.28);
+  }
+}
+.dash__leads--active {
+  border-color: var(--brand-border);
+  background: var(--brand-light);
+
+  /* This banner paints its own light background, so it must also pin its text
+     colour — inheriting the theme's white made it invisible in dark mode. */
+  .dash__leads-body strong { color: #7c2d12; }
+  .dash__leads-body span { color: #9a3412; opacity: 0.9; }
+  .dash__leads-go { color: var(--brand-dark); }
+}
+.dash__leads-num {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  min-width: 64px;
+  text-align: center;
+  color: var(--theme-elevation-400);
+}
+.dash__leads--active .dash__leads-num {
+  color: var(--brand);
+}
+.dash__leads-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.dash__leads-body strong {
+  font-size: 1.05rem;
+}
+.dash__leads-body span {
+  font-size: 0.88rem;
+  opacity: 0.72;
+}
+.dash__leads-go {
+  font-weight: 700;
+  color: var(--brand);
+  white-space: nowrap;
+}
+
+.dash__recent {
+  list-style: none;
+  margin: 0 0 34px;
+  padding: 0;
+  border: 1px solid var(--theme-elevation-100);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.dash__recent li + li {
+  border-top: 1px solid var(--theme-elevation-100);
+}
+.dash__recent a {
+  display: grid;
+  grid-template-columns: 1.2fr 1.6fr 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: var(--theme-elevation-50);
+  }
+}
+.dash__recent-name { font-weight: 700; }
+.dash__recent-meta { opacity: 0.7; }
+.dash__recent-phone { font-variant-numeric: tabular-nums; }
+.dash__recent-time { opacity: 0.55; font-size: 0.82rem; white-space: nowrap; }
+
+.dash__title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 14px;
+}
+
+.dash__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.dash__tile {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid var(--theme-elevation-150);
+  background: var(--theme-elevation-0);
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--brand);
+    box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.3);
+  }
+
+  strong { font-size: 1rem; }
+  span { font-size: 0.83rem; opacity: 0.68; }
+}
+.dash__tile-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.dash__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.dash__stat {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: var(--theme-elevation-50);
+  border: 1px solid var(--theme-elevation-100);
+
+  b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--brand);
+    line-height: 1.1;
+  }
+  span {
+    font-size: 0.82rem;
+    opacity: 0.7;
+  }
+}
+.dash__note {
+  font-size: 0.86rem;
+  opacity: 0.65;
+  max-width: 70ch;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .dash__recent a {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .dash__leads {
+    flex-wrap: wrap;
+  }
+}
+
+/* Log out was an unlabelled icon tucked in the sidebar corner. Give it a name
+   in the dashboard header, and a label on the sidebar icon too. */
+.dash__head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.dash__logout {
+  padding: 11px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--theme-elevation-200);
+  font-weight: 700;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:hover {
+    border-color: #dc2626;
+    color: #dc2626;
+  }
+}
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   Icons come from CSS rather than the labels themselves, so no emoji leaks
+   into page titles, breadcrumbs, search results or the API.
+   ============================================================ */
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 12px;
+  margin: 1px 0;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &::before {
+    content: '•';
+    font-size: 1.02rem;
+    line-height: 1;
+    width: 1.3em;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: var(--theme-elevation-100);
+    color: var(--brand);
+  }
+}
+
+/* Current page reads as a filled pill, not just a colour change. */
+.nav__link--active,
+.nav__link[aria-current='page'] {
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+
+/* Content */
+.nav__link[href*="/collections/services"]::before   { content: '🔧'; }
+.nav__link[href*="/collections/locations"]::before  { content: '📍'; }
+.nav__link[href*="/collections/reviews"]::before    { content: '⭐'; }
+.nav__link[href*="/collections/faqs"]::before       { content: '💬'; }
+.nav__link[href*="/collections/pages"]::before      { content: '📃'; }
+/* Enquiries */
+.nav__link[href*="/collections/enquiries"]::before  { content: '📥'; }
+/* Pages (globals) */
+.nav__link[href*="/globals/home-page"]::before      { content: '🏠'; }
+.nav__link[href*="/globals/combo-template"]::before { content: '📄'; }
+/* Settings */
+.nav__link[href*="/globals/site-settings"]::before  { content: '⚙️'; }
+.nav__link[href*="/globals/navigation"]::before     { content: '🧭'; }
+.nav__link[href*="/collections/media"]::before      { content: '🖼️'; }
+.nav__link[href*="/collections/users"]::before      { content: '👤'; }
+
+/* Group headings: quieter, with room to breathe between sections. */
+.nav-group + .nav-group { margin-top: 14px; }
+.nav-group__toggle { padding-inline: 12px; }
+
+/* Payload's log-out is an icon with no label down in the corner. */
+.nav__log-out {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  &::after { content: 'Log out'; }
+  &:hover { background: var(--theme-elevation-100); color: #dc2626; }
+}
