@@ -10,7 +10,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    group: 'Content',
+    group: 'Pages',
     // Gives each document a "Preview" button pointing at its live page.
     preview: (doc) => (doc?.slug ? `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${doc.slug}` : null),
     description: 'Standalone pages such as About, Privacy and Terms.',

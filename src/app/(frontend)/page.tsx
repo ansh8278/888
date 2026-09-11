@@ -21,6 +21,7 @@ import {
   getLocations,
   getReviews,
   getHomeFaqs,
+  getPageCopy,
 } from '../../lib/data'
 import { localBusinessSchema, faqSchema, JsonLd } from '../../lib/schema'
 
@@ -34,13 +35,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
 }
 
 const HomePage = async () => {
-  const [home, settings, services, locations, reviews, faqs] = await Promise.all([
+  const [home, settings, services, locations, reviews, faqs, copy] = await Promise.all([
     getHomePage(),
     getSiteSettings(),
     getServices(),
     getLocations(),
     getReviews(true),
     getHomeFaqs(),
+    getPageCopy(),
   ])
 
   const featuredServices = services.filter((s) => s.featured)
@@ -130,7 +132,13 @@ const HomePage = async () => {
           />
           <div className="reviews-row">
             <ReviewMarquee reviews={reviews} />
-            <CallCard phone={settings.phone} phoneHref={settings.phoneHref} />
+            <CallCard
+              phone={settings.phone}
+              phoneHref={settings.phoneHref}
+              title={copy.callCardTitle}
+              subtitle={copy.callCardSubtitle}
+              note={copy.callCardNote}
+            />
           </div>
         </div>
       </section>

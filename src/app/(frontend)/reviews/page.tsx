@@ -1,17 +1,20 @@
 import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { ReviewCard, CtaBanner } from '../../../components/blocks'
-import { getReviews, getSiteSettings } from '../../../lib/data'
+import { getReviews, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, reviewSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Customer Reviews',
-  description: 'Real reviews from customers across California, Arizona and New York.',
-  alternates: { canonical: '/reviews' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.reviews?.title ?? 'Customer Reviews',
+    description: copy.reviews?.intro ?? undefined,
+    alternates: { canonical: '/reviews' },
+  }
 }
 
 const ReviewsPage = async () => {
-  const [reviews, settings] = await Promise.all([getReviews(), getSiteSettings()])
+  const [reviews, settings, copy] = await Promise.all([getReviews(), getSiteSettings(), getPageCopy()])
 
   return (
     <>
@@ -19,9 +22,9 @@ const ReviewsPage = async () => {
       <JsonLd data={reviewSchema(settings, reviews)} />
 
       <PageHero
-        eyebrow={`${settings.rating} · ${settings.reviewCount}+ reviews`}
-        title="What our customers say"
-        intro="Real people, real jobs, in their own words."
+        eyebrow={copy.reviews?.eyebrow || `${settings.rating} · ${settings.reviewCount}+ reviews`}
+        title={copy.reviews?.title ?? 'What our customers say'}
+        intro={copy.reviews?.intro}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Reviews' }]}
       />
 
@@ -35,7 +38,7 @@ const ReviewsPage = async () => {
         </div>
       </section>
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} />
+      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

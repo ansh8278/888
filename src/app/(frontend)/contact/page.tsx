@@ -2,20 +2,24 @@ import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { EnquiryForm } from '../book/EnquiryForm'
 import { Icon } from '../../../components/Icon'
-import { getServices, getLocations, getSiteSettings } from '../../../lib/data'
+import { getServices, getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Phone, email and shop addresses for our California, Arizona and New York locations.',
-  alternates: { canonical: '/contact' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.contact?.title ?? 'Contact Us',
+    description: copy.contact?.intro ?? undefined,
+    alternates: { canonical: '/contact' },
+  }
 }
 
 const ContactPage = async () => {
-  const [services, locations, settings] = await Promise.all([
+  const [services, locations, settings, copy] = await Promise.all([
     getServices(),
     getLocations(),
     getSiteSettings(),
+    getPageCopy(),
   ])
 
   return (
@@ -23,16 +27,16 @@ const ContactPage = async () => {
       <JsonLd data={breadcrumbSchema([{ label: 'Home', href: '/' }, { label: 'Contact', href: '/contact' }])} />
 
       <PageHero
-        eyebrow="Get in touch"
-        title="Contact us"
-        intro={`${settings.hours} · ${settings.serviceAreaLine ?? ''}`}
+        eyebrow={copy.contact?.eyebrow}
+        title={copy.contact?.title ?? 'Contact us'}
+        intro={copy.contact?.intro || `${settings.hours} · ${settings.serviceAreaLine ?? ''}`}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
       />
 
       <section className="sec">
         <div className="wrap form-layout">
           <div className="form-main">
-            <h2>Send us a message</h2>
+            <h2>{copy.contactFormHeading ?? 'Send us a message'}</h2>
             <EnquiryForm
               type="contact"
               submitLabel="Send message"
@@ -67,7 +71,7 @@ const ContactPage = async () => {
 
       <section className="sec sec-sand">
         <div className="wrap">
-          <h2>Our shops</h2>
+          <h2>{copy.contactShopsHeading ?? 'Our shops'}</h2>
           <div className="contact-grid">
             {locations.map((loc) => (
               <div className="contact-card" key={loc.id}>

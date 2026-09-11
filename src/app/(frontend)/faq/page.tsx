@@ -2,18 +2,20 @@ import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { FaqList } from '../../../components/FaqList'
 import { CtaBanner } from '../../../components/blocks'
-import { getAllFaqs, getSiteSettings } from '../../../lib/data'
+import { getAllFaqs, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, faqSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Frequently Asked Questions',
-  description:
-    'Licensing, arrival times, proof of ownership, after-hours pricing and warranty — answered before you call.',
-  alternates: { canonical: '/faq' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.faq?.title ?? 'Frequently Asked Questions',
+    description: copy.faq?.intro ?? undefined,
+    alternates: { canonical: '/faq' },
+  }
 }
 
 const FaqPage = async () => {
-  const [faqs, settings] = await Promise.all([getAllFaqs(), getSiteSettings()])
+  const [faqs, settings, copy] = await Promise.all([getAllFaqs(), getSiteSettings(), getPageCopy()])
 
   return (
     <>
@@ -21,9 +23,9 @@ const FaqPage = async () => {
       <JsonLd data={faqSchema(faqs)} />
 
       <PageHero
-        eyebrow="Before You Call"
-        title="Frequently Asked Questions"
-        intro="Straight answers on pricing, arrival times, ID checks and warranty."
+        eyebrow={copy.faq?.eyebrow}
+        title={copy.faq?.title ?? 'Frequently Asked Questions'}
+        intro={copy.faq?.intro}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'FAQ' }]}
       />
 
@@ -33,7 +35,7 @@ const FaqPage = async () => {
         </div>
       </section>
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading="Still not sure?" />
+      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

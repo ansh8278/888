@@ -713,3 +713,4 @@ h1.doc-header__title,
   &::after { content: 'Log out'; }
   &:hover { background: var(--theme-elevation-100); color: #dc2626; }
 }
+#nav-global-page-copy::before      { content: '✏️'; }

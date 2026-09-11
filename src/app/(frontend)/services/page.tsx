@@ -1,18 +1,20 @@
 import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { ServiceCard, CtaBanner } from '../../../components/blocks'
-import { getServices, getSiteSettings } from '../../../lib/data'
+import { getServices, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Locksmith Services',
-  description:
-    'Car lockouts, home lockouts, rekeying, car keys and fobs, smart locks and commercial access control. 24/7 mobile service with upfront pricing.',
-  alternates: { canonical: '/services' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.services?.title ?? 'Locksmith Services',
+    description: copy.services?.intro ?? undefined,
+    alternates: { canonical: '/services' },
+  }
 }
 
 const ServicesIndex = async () => {
-  const [services, settings] = await Promise.all([getServices(), getSiteSettings()])
+  const [services, settings, copy] = await Promise.all([getServices(), getSiteSettings(), getPageCopy()])
 
   return (
     <>
@@ -23,9 +25,9 @@ const ServicesIndex = async () => {
         ])}
       />
       <PageHero
-        eyebrow="One call. Every solution."
-        title="Locksmith Services"
-        intro="Cars, homes and businesses — handled by our own background-checked technicians, 24 hours a day, at a price agreed before we set off."
+        eyebrow={copy.services?.eyebrow}
+        title={copy.services?.title ?? 'Locksmith Services'}
+        intro={copy.services?.intro}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
       />
 
@@ -39,7 +41,7 @@ const ServicesIndex = async () => {
         </div>
       </section>
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} />
+      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

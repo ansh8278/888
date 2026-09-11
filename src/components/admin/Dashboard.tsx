@@ -18,22 +18,22 @@ type Tile = { href: string; label: string; hint: string; icon: string }
 
 const SECTIONS: { title: string; tiles: Tile[] }[] = [
   {
-    title: 'Edit the website',
+    title: 'Edit pages & content',
     tiles: [
       { href: '/admin/globals/home-page', label: 'Home page', hint: 'Hero text, headings, buttons', icon: '🏠' },
-      { href: '/admin/collections/services', label: 'Services', hint: 'Prices, descriptions, FAQs', icon: '🔧' },
-      { href: '/admin/collections/locations', label: 'Locations', hint: 'Cities, shops, opening hours', icon: '📍' },
+      { href: '/admin/collections/pages', label: 'Standalone pages', hint: 'About Us, Privacy Policy, Terms', icon: '📃' },
+      { href: '/admin/collections/services', label: 'Services (6 pages)', hint: 'Prices, descriptions, FAQs per service', icon: '🔧' },
+      { href: '/admin/collections/locations', label: 'Locations (6 pages)', hint: 'Cities, shops, phone, hours', icon: '📍' },
+      { href: '/admin/globals/combo-template', label: 'City page template (36 pages)', hint: 'Wording for [service]-in-[city] pages', icon: '📄' },
       { href: '/admin/collections/reviews', label: 'Reviews', hint: 'Customer quotes shown on the site', icon: '⭐' },
       { href: '/admin/collections/faqs', label: 'FAQs', hint: 'Questions and answers', icon: '💬' },
-      { href: '/admin/collections/pages', label: 'Pages', hint: 'About, Privacy, Terms and more', icon: '📃' },
     ],
   },
   {
-    title: 'Settings',
+    title: 'Settings & Media',
     tiles: [
       { href: '/admin/globals/site-settings', label: 'Site settings', hint: 'Phone, licence, hours, ratings', icon: '⚙️' },
       { href: '/admin/globals/navigation', label: 'Menus', hint: 'Top menu and footer links', icon: '🧭' },
-      { href: '/admin/globals/combo-template', label: 'City page template', hint: 'Wording for the service-in-city pages', icon: '📄' },
       { href: '/admin/collections/media', label: 'Images', hint: 'Photos used across the site', icon: '🖼️' },
       { href: '/admin/collections/users', label: 'Staff logins', hint: 'Who can sign in here', icon: '👤' },
     ],
@@ -85,18 +85,20 @@ export const Dashboard = async () => {
     signedInAs = null
   }
 
-  const [newLeads, totalLeads, services, locations, reviews] = await Promise.all([
+  const [newLeads, totalLeads, services, locations, reviews, standalonePages] = await Promise.all([
     count(payload, 'enquiries', { status: { equals: 'new' } }),
     count(payload, 'enquiries'),
     count(payload, 'services'),
     count(payload, 'locations'),
     count(payload, 'reviews'),
+    count(payload, 'pages'),
   ])
 
   // Every service is offered in every city unless a location narrows it down,
   // which is the same arithmetic the site uses to generate those pages.
   const comboPages = services * locations
-  const totalPages = 8 + services + locations + comboPages
+  // 8 core static pages + services + locations + comboPages + standalone pages (about, terms, privacy)
+  const totalPages = 8 + services + locations + comboPages + standalonePages
 
   let latest: Lead[] = []
   try {
@@ -180,7 +182,7 @@ export const Dashboard = async () => {
         </section>
       ))}
 
-      <h2 className="dash__title">Your site right now</h2>
+      <h2 className="dash__title">Your website right now</h2>
       <div className="dash__stats">
         <div className="dash__stat">
           <b>{services}</b>
@@ -192,22 +194,20 @@ export const Dashboard = async () => {
         </div>
         <div className="dash__stat">
           <b>{comboPages}</b>
-          <span>Service-in-city pages</span>
+          <span>City combo pages</span>
         </div>
         <div className="dash__stat">
-          <b>{reviews}</b>
-          <span>Reviews</span>
+          <b>{standalonePages}</b>
+          <span>Info pages (About/Legal)</span>
         </div>
         <div className="dash__stat">
           <b>{totalPages}</b>
-          <span>Pages live</span>
+          <span>Total pages live</span>
         </div>
       </div>
 
       <p className="dash__note">
-        Adding a service or a city automatically creates its page, its
-        service-in-city pages, the menu links and the sitemap entries. Changes go
-        live on the next publish of the site.
+        Your website currently serves <b>{totalPages} live pages</b>. Adding a service or a city automatically creates its individual page, its service-in-city combo pages, menu links, and sitemap entries.
       </p>
     </Gutter>
   )

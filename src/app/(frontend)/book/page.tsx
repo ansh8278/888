@@ -2,20 +2,24 @@ import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { EnquiryForm } from './EnquiryForm'
 import { Icon } from '../../../components/Icon'
-import { getServices, getLocations, getSiteSettings } from '../../../lib/data'
+import { getServices, getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Request Service',
-  description: 'Book a locksmith or request a free quote. A real dispatcher calls you back.',
-  alternates: { canonical: '/book' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.book?.title ?? 'Request Service',
+    description: copy.book?.intro ?? undefined,
+    alternates: { canonical: '/book' },
+  }
 }
 
 const BookPage = async () => {
-  const [services, locations, settings] = await Promise.all([
+  const [services, locations, settings, copy] = await Promise.all([
     getServices(),
     getLocations(),
     getSiteSettings(),
+    getPageCopy(),
   ])
 
   return (
@@ -23,9 +27,9 @@ const BookPage = async () => {
       <JsonLd data={breadcrumbSchema([{ label: 'Home', href: '/' }, { label: 'Request Service', href: '/book' }])} />
 
       <PageHero
-        eyebrow="Book Online"
-        title="Request service or a free quote"
-        intro="Tell us where you are and what you need. A dispatcher calls you back with a firm price — usually within minutes."
+        eyebrow={copy.book?.eyebrow}
+        title={copy.book?.title ?? 'Request service'}
+        intro={copy.book?.intro}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Request Service' }]}
       />
 
@@ -45,12 +49,9 @@ const BookPage = async () => {
 
           <aside className="form-aside">
             <div className="price-card">
-              <div className="price-card-label">Faster than a form</div>
+              <div className="price-card-label">{copy.bookSideTitle ?? 'Faster than a form'}</div>
               <div className="price-card-value small">{settings.phone}</div>
-              <p className="price-card-note">
-                If you are locked out right now, call. Someone answers 24 hours a day and the van is
-                dispatched while you are still on the line.
-              </p>
+              {copy.bookSideText ? <p className="price-card-note">{copy.bookSideText}</p> : null}
               <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary price-card-cta" data-call-cta>
                 <Icon name="phone" />
                 Call now

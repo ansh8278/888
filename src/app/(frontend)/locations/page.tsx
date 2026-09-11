@@ -3,18 +3,20 @@ import Link from 'next/link'
 import { PageHero } from '../../../components/Hero'
 import { LocationCard, CtaBanner, SectionHead } from '../../../components/blocks'
 import { Icon } from '../../../components/Icon'
-import { getLocations, getSiteSettings } from '../../../lib/data'
+import { getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Locations We Serve',
-  description:
-    'Mobile locksmith coverage across California, Arizona and New York. Find your city for local pricing, shop details and arrival times.',
-  alternates: { canonical: '/locations' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.locations?.title ?? 'Locations We Serve',
+    description: copy.locations?.intro ?? undefined,
+    alternates: { canonical: '/locations' },
+  }
 }
 
 const LocationsIndex = async () => {
-  const [locations, settings] = await Promise.all([getLocations(), getSiteSettings()])
+  const [locations, settings, copy] = await Promise.all([getLocations(), getSiteSettings(), getPageCopy()])
 
   // Group by state so the page reads as coverage, not a flat list.
   const byState = locations.reduce<Record<string, typeof locations>>((acc, loc) => {
@@ -31,9 +33,9 @@ const LocationsIndex = async () => {
         ])}
       />
       <PageHero
-        eyebrow="We Serve Multiple Cities"
-        title="Find a locksmith near you"
-        intro={settings.serviceAreaLine ?? undefined}
+        eyebrow={copy.locations?.eyebrow}
+        title={copy.locations?.title ?? 'Find a locksmith near you'}
+        intro={copy.locations?.intro ?? settings.serviceAreaLine}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Locations' }]}
       />
 
@@ -67,7 +69,7 @@ const LocationsIndex = async () => {
         </section>
       ))}
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} />
+      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

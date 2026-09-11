@@ -1,17 +1,15 @@
 import Link from 'next/link'
-import { getSiteSettings } from '../../lib/data'
+import { getSiteSettings, getPageCopy } from '../../lib/data'
 import { Icon } from '../../components/Icon'
 
 const NotFound = async () => {
-  const settings = await getSiteSettings()
+  const [settings, copy] = await Promise.all([getSiteSettings(), getPageCopy()])
   return (
     <section className="sec notfound">
       <div className="wrap narrow">
-        <div className="hero-eyebrow">404</div>
-        <h1>We could not find that page.</h1>
-        <p className="page-hero-intro">
-          It may have moved. If you are locked out right now, calling is faster than looking.
-        </p>
+        <div className="hero-eyebrow">{copy.notFound?.eyebrow ?? '404'}</div>
+        <h1>{copy.notFound?.title ?? 'We could not find that page.'}</h1>
+        {copy.notFound?.intro ? <p className="page-hero-intro">{copy.notFound.intro}</p> : null}
         <div className="hero-cta">
           <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary" data-call-cta>
             <Icon name="phone" />

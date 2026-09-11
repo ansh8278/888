@@ -2,21 +2,24 @@ import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { PricingTable, CtaBanner } from '../../../components/blocks'
 import { FaqList } from '../../../components/FaqList'
-import { getServices, getSiteSettings, getHomeFaqs } from '../../../lib/data'
+import { getServices, getSiteSettings, getHomeFaqs, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, faqSchema } from '../../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Pricing',
-  description:
-    'Starting prices published up front. Your technician confirms the exact quote before any work begins — what we quote is what you pay.',
-  alternates: { canonical: '/pricing' },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.pricing?.title ?? 'Pricing',
+    description: copy.pricing?.intro ?? undefined,
+    alternates: { canonical: '/pricing' },
+  }
 }
 
 const PricingPage = async () => {
-  const [services, settings, faqs] = await Promise.all([
+  const [services, settings, faqs, copy] = await Promise.all([
     getServices(),
     getSiteSettings(),
     getHomeFaqs(),
+    getPageCopy(),
   ])
   const priced = services.filter((s) => s.showInPricingTable)
 
@@ -26,19 +29,16 @@ const PricingPage = async () => {
       <JsonLd data={faqSchema(faqs)} />
 
       <PageHero
-        eyebrow="Transparent Pricing"
-        title="Starting prices, published up front."
-        intro="Your technician confirms the exact quote before any work begins. If a job needs more than what was quoted, we stop and tell you what it costs first."
+        eyebrow={copy.pricing?.eyebrow}
+        title={copy.pricing?.title ?? 'Pricing'}
+        intro={copy.pricing?.intro}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Pricing' }]}
       />
 
       <section className="sec">
         <div className="wrap">
           <PricingTable services={priced} />
-          <p className="table-note">
-            Prices are starting points for standard work during normal hours. After-hours call-outs
-            carry a flat fee quoted on the phone before we dispatch.
-          </p>
+          {copy.pricingNote ? <p className="table-note">{copy.pricingNote}</p> : null}
         </div>
       </section>
 
@@ -53,7 +53,7 @@ const PricingPage = async () => {
         </div>
       </section>
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading="Want a firm price?" />
+      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

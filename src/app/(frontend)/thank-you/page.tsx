@@ -1,18 +1,23 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Icon } from '../../../components/Icon'
-import { getSiteSettings, getLocations } from '../../../lib/data'
+import { getSiteSettings, getLocations, getPageCopy } from '../../../lib/data'
+import { fillTemplate } from '../../../lib/template'
 
-export const metadata: Metadata = {
-  title: 'Request received',
-  description: 'Your request has reached our dispatch team.',
-  // Confirmation pages must stay out of search results: they would rank for
-  // nothing useful and pollute the conversion numbers with organic landings.
-  robots: { index: false, follow: false },
+export const generateMetadata = async (): Promise<Metadata> => {
+  const copy = await getPageCopy()
+  return {
+    title: copy.thankYou?.title ?? 'Request received',
+    description: copy.thankYou?.intro ?? undefined,
+    // Confirmation pages must stay out of search results: they would rank for
+    // nothing useful and pollute the conversion numbers with organic landings.
+    robots: { index: false, follow: false },
+  }
 }
 
 const ThankYouPage = async () => {
-  const [settings, locations] = await Promise.all([getSiteSettings(), getLocations()])
+  const [settings, locations, copy] = await Promise.all([getSiteSettings(), getLocations(), getPageCopy()])
+  const vars = { arrival: settings.averageArrival?.toLowerCase() ?? '', count: String(locations.length) }
 
   return (
     <>
@@ -22,20 +27,16 @@ const ThankYouPage = async () => {
             <Icon name="check" />
           </div>
 
-          <div className="hero-eyebrow">Request received</div>
-          <h1>Thanks — a dispatcher is on it.</h1>
-          <p className="page-hero-intro">
-            Your details are with our {settings.hours?.toLowerCase().includes('24') ? '24/7 ' : ''}
-            dispatch team and someone will call you back shortly to confirm the price and the
-            arrival time.
-          </p>
+          {copy.thankYou?.eyebrow ? <div className="hero-eyebrow">{copy.thankYou.eyebrow}</div> : null}
+          <h1>{copy.thankYou?.title ?? 'Thanks — a dispatcher is on it.'}</h1>
+          {copy.thankYou?.intro ? <p className="page-hero-intro">{copy.thankYou.intro}</p> : null}
 
           {/* Anyone who just submitted a lockout form is standing outside. Calling
               is faster than waiting for a call back, so say so plainly. */}
           <div className="thanks__urgent">
             <div>
-              <strong>Locked out right now?</strong>
-              <p>Calling is faster. Someone answers day or night, and the van is dispatched while you are still on the line.</p>
+              <strong>{copy.thankYouUrgentTitle ?? 'Locked out right now?'}</strong>
+              {copy.thankYouUrgentText ? <p>{copy.thankYouUrgentText}</p> : null}
             </div>
             <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary" data-call-cta>
               <Icon name="phone" />
@@ -45,30 +46,15 @@ const ThankYouPage = async () => {
 
           <h2 className="thanks__next-title">What happens next</h2>
           <ol className="thanks__steps">
-            <li>
-              <span className="thanks__step-num">1</span>
-              <div>
-                <strong>We call you back</strong>
-                <p>A real dispatcher, not an automated system, to confirm what you need and where you are.</p>
-              </div>
-            </li>
-            <li>
-              <span className="thanks__step-num">2</span>
-              <div>
-                <strong>You get a firm price</strong>
-                <p>Agreed on the phone before a van moves. No call-out surprises when the technician arrives.</p>
-              </div>
-            </li>
-            <li>
-              <span className="thanks__step-num">3</span>
-              <div>
-                <strong>A technician is dispatched</strong>
-                <p>
-                  From the nearest of our {locations.length} locations
-                  {settings.averageArrival ? `, arriving in about ${settings.averageArrival.toLowerCase()} on average` : ''}.
-                </p>
-              </div>
-            </li>
+            {(copy.thankYouSteps ?? []).map((step, i) => (
+              <li key={step.id ?? i}>
+                <span className="thanks__step-num">{i + 1}</span>
+                <div>
+                  <strong>{step.title}</strong>
+                  <p>{fillTemplate(step.text, vars)}</p>
+                </div>
+              </li>
+            ))}
           </ol>
 
           <div className="thanks__trust">

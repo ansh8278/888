@@ -147,15 +147,27 @@ export const ReviewMarquee = ({ reviews }: { reviews: Review[] }) => {
   )
 }
 
-export const CallCard = ({ phone, phoneHref }: { phone: string; phoneHref: string }) => (
+export const CallCard = ({
+  phone,
+  phoneHref,
+  title = 'Need a Locksmith?',
+  subtitle = "We're here 24/7.",
+  note = 'Same day service. No call-centre. Real people.',
+}: {
+  phone: string
+  phoneHref: string
+  title?: string | null
+  subtitle?: string | null
+  note?: string | null
+}) => (
   <article className="rev-card-dark">
     <div className="dark-card-head">
       <div className="dark-padlock-box">
         <Icon name="lock" strokeWidth={2.2} />
       </div>
       <div className="dark-head-text">
-        <h3>Need a Locksmith?</h3>
-        <p>We&rsquo;re here 24/7.</p>
+        <h3>{title}</h3>
+        {subtitle ? <p>{subtitle}</p> : null}
       </div>
     </div>
     <div>
@@ -163,7 +175,7 @@ export const CallCard = ({ phone, phoneHref }: { phone: string; phoneHref: strin
         <Icon name="phone" />
         Call {phone}
       </a>
-      <div className="dark-card-note">Same day service. No call-centre. Real people.</div>
+      {note ? <div className="dark-card-note">{note}</div> : null}
     </div>
   </article>
 )
@@ -196,19 +208,19 @@ export const PricingTable = ({ services }: { services: Service[] }) => (
 export const CtaBanner = ({
   phone,
   phoneHref,
-  heading = 'Locked out right now?',
-  subtitle = 'One call. A real dispatcher. A van on the way.',
+  heading,
+  subtitle,
 }: {
   phone: string
   phoneHref: string
-  heading?: string
-  subtitle?: string
+  heading?: string | null
+  subtitle?: string | null
 }) => (
   <section className="cta-banner">
     <div className="wrap cta-banner-inner">
       <div>
-        <h2>{heading}</h2>
-        <p>{subtitle}</p>
+        <h2>{heading || 'Locked out right now?'}</h2>
+        <p>{subtitle || 'One call. A real dispatcher. A van on the way.'}</p>
       </div>
       <div className="cta-banner-actions">
         <a href={`tel:${phoneHref}`} className="btn-hero-primary" data-call-cta>

@@ -9,7 +9,7 @@ export const Services: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'startingPrice', 'order'],
-    group: 'Content',
+    group: 'Pages',
     // Gives each document a "Preview" button pointing at its live page.
     preview: (doc) => (doc?.slug ? `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/services/${doc.slug}` : null),
     description: 'Each service gets its own page, and one page per city it is offered in.',

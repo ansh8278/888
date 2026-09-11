@@ -33,6 +33,11 @@ export const getHomePage = cache(async () => {
   return payload.findGlobal({ slug: 'home-page', depth: 1 })
 })
 
+export const getPageCopy = cache(async () => {
+  const payload = await client()
+  return payload.findGlobal({ slug: 'page-copy', depth: 0 })
+})
+
 export const getComboTemplate = cache(async () => {
   const payload = await client()
   return payload.findGlobal({ slug: 'combo-template', depth: 0 })

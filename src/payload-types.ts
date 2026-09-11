@@ -101,12 +101,14 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-page': HomePage;
+    'page-copy': PageCopy;
     'combo-template': ComboTemplate;
     'site-settings': SiteSetting;
     navigation: Navigation;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'page-copy': PageCopySelect<false> | PageCopySelect<true>;
     'combo-template': ComboTemplateSelect<false> | ComboTemplateSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
@@ -967,6 +969,141 @@ export interface HomePage {
   createdAt?: string | null;
 }
 /**
+ * Headings and intros for the Services, Locations, Pricing, Reviews, FAQ, Book, Contact and Thank-you pages.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-copy".
+ */
+export interface PageCopy {
+  id: number;
+  services: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  locations: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  reviews: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  faq: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  pricing: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  pricingNote?: string | null;
+  book: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  bookSideTitle?: string | null;
+  bookSideText?: string | null;
+  contact: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  contactFormHeading?: string | null;
+  contactShopsHeading?: string | null;
+  thankYou: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  thankYouUrgentTitle?: string | null;
+  thankYouUrgentText?: string | null;
+  /**
+   * Use {arrival} to insert the average arrival time from Site settings.
+   */
+  thankYouSteps?:
+    | {
+        title: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The dark banner at the foot of most pages. Service and city pages override it with their own.
+   */
+  ctaHeading?: string | null;
+  ctaSubtitle?: string | null;
+  callCardTitle?: string | null;
+  callCardSubtitle?: string | null;
+  callCardNote?: string | null;
+  notFound: {
+    /**
+     * Small orange line above the heading.
+     */
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Also used as the page description in search results.
+     */
+    intro?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Wording for the "[service] in [city]" pages. Use {service}, {city}, {state}, {phone}, {arrival} and {price} — they are swapped for the real values on each page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1138,6 +1275,97 @@ export interface HomePageSelect<T extends boolean = true> {
         description?: T;
         image?: T;
         noindex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-copy_select".
+ */
+export interface PageCopySelect<T extends boolean = true> {
+  services?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  locations?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  reviews?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  faq?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  pricing?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  pricingNote?: T;
+  book?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  bookSideTitle?: T;
+  bookSideText?: T;
+  contact?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  contactFormHeading?: T;
+  contactShopsHeading?: T;
+  thankYou?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
+      };
+  thankYouUrgentTitle?: T;
+  thankYouUrgentText?: T;
+  thankYouSteps?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaSubtitle?: T;
+  callCardTitle?: T;
+  callCardSubtitle?: T;
+  callCardNote?: T;
+  notFound?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        intro?: T;
       };
   updatedAt?: T;
   createdAt?: T;

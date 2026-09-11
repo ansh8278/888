@@ -19,6 +19,7 @@ import { SiteSettings } from './globals/SiteSettings'
 import { Navigation } from './globals/Navigation'
 import { HomePage } from './globals/HomePage'
 import { ComboTemplate } from './globals/ComboTemplate'
+import { PageCopy } from './globals/PageCopy'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -48,7 +49,7 @@ export default buildConfig({
   },
   // Enquiries first so the sidebar opens on the thing staff check daily.
   collections: [Enquiries, Services, Locations, Reviews, Faqs, Pages, Media, Users],
-  globals: [HomePage, ComboTemplate, SiteSettings, Navigation],
+  globals: [HomePage, PageCopy, ComboTemplate, SiteSettings, Navigation],
   editor: lexicalEditor(),
   // Password resets and new-enquiry alerts both go through this.
   email: emailAdapter,
