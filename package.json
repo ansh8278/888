@@ -15,7 +15,8 @@
     "email:check": "payload run src/lib/send-test-email.ts",
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
-    "backup": "node scripts/backup.mjs"
+    "backup": "node scripts/backup.mjs",
+    "versions:backfill": "payload run src/scripts/backfill-versions.ts"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "^3.88.0",

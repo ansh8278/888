@@ -154,8 +154,9 @@ warning naming the customer and phone number.
 
 Everything on the site is editable at `/admin`:
 
-- **Content** — Services, Locations, Reviews, FAQs, Pages
-- **Pages** — Home page (every hero word), Service-in-city page template
+- **Pages** — Services, Locations, Pages, Home page, Page text (headings and
+  intros for every other page), Service-in-city page template
+- **Content** — Reviews, FAQs
 - **Settings** — Site settings (phone, licence, hours, ratings), Menus
 - **Enquiries** — form submissions, with a status workflow
 - **Admin** — Users
@@ -227,6 +228,11 @@ unfinished edit cannot leak onto the live site.
 
 Enquiries and images deliberately have no drafts — a lead is a record of fact,
 not a document with revisions.
+
+**If you enable versions on another collection that already has data**, run
+`npm run versions:backfill` once. The admin list reads from the versions table,
+so existing documents show as "No Results" until they get a first version
+entry. The public site is unaffected either way.
 
 ## Notes for whoever picks this up
 
