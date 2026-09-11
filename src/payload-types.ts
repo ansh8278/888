@@ -1086,6 +1086,10 @@ export interface PageCopy {
    */
   ctaHeading?: string | null;
   ctaSubtitle?: string | null;
+  /**
+   * Shown under "[Service] near you" on every service page.
+   */
+  serviceCitySubtitle?: string | null;
   callCardTitle?: string | null;
   callCardSubtitle?: string | null;
   callCardNote?: string | null;
@@ -1357,6 +1361,7 @@ export interface PageCopySelect<T extends boolean = true> {
       };
   ctaHeading?: T;
   ctaSubtitle?: T;
+  serviceCitySubtitle?: T;
   callCardTitle?: T;
   callCardSubtitle?: T;
   callCardNote?: T;

@@ -5,7 +5,7 @@ import { PageHero } from '../../../../components/Hero'
 import { FaqList } from '../../../../components/FaqList'
 import { Prose, CtaBanner, SectionHead } from '../../../../components/blocks'
 import { Icon } from '../../../../components/Icon'
-import { getService, getServices, getLocations, getSiteSettings } from '../../../../lib/data'
+import { getService, getServices, getLocations, getSiteSettings, getPageCopy } from '../../../../lib/data'
 import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema } from '../../../../lib/schema'
 import type { Faq } from '../../../../payload-types'
 
@@ -30,10 +30,11 @@ export const generateMetadata = async (props: {
 
 const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
   const { slug } = await props.params
-  const [service, settings, locations] = await Promise.all([
+  const [service, settings, locations, copy] = await Promise.all([
     getService(slug),
     getSiteSettings(),
     getLocations(),
+    getPageCopy(),
   ])
 
   if (!service) notFound()
@@ -107,7 +108,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
         <div className="wrap">
           <SectionHead
             heading={`${service.title} near you`}
-            subtitle="Pick your city for local pricing, arrival times and shop details."
+            subtitle={copy.serviceCitySubtitle}
           />
           <div className="city-link-grid">
             {locations.map((location) => (

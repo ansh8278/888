@@ -148,6 +148,13 @@ export const PageCopy: GlobalConfig = {
               label: 'Bottom-of-page banner text',
               defaultValue: 'One call. A real dispatcher. A van on the way.',
             },
+            {
+              name: 'serviceCitySubtitle',
+              type: 'text',
+              label: 'Service page — "near you" line',
+              defaultValue: 'Pick your city for local pricing, arrival times and shop details.',
+              admin: { description: 'Shown under "[Service] near you" on every service page.' },
+            },
             { name: 'callCardTitle', type: 'text', label: 'Home page call card heading', defaultValue: 'Need a Locksmith?' },
             { name: 'callCardSubtitle', type: 'text', label: 'Home page call card line', defaultValue: "We're here 24/7." },
             { name: 'callCardNote', type: 'text', label: 'Home page call card small print', defaultValue: 'Same day service. No call-centre. Real people.' },

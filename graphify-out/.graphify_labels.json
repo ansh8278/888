@@ -1,1 +1,20 @@
-{"0": "Payload Collections & Access Control", "1": "Package Dependencies", "2": "Project Docs & Design Rationale", "3": "Generated Payload Types", "4": "Admin Dashboard & Payload UI", "5": "Booking & Contact Pages", "6": "Content Blocks & Icons", "7": "TypeScript Configuration", "8": "Email Notification Pipeline", "9": "Site Layout, Header & Footer", "10": "Location & Service-Combo Pages", "11": "Enquiry API & Rate Limiting", "12": "Reviews & Structured Data", "13": "Seed Data & Rich Text", "14": "FAQ & Pricing Pages", "15": "NPM Scripts", "16": "CMS Data Fetch Layer", "17": "Database Backup Script", "18": "Payload REST API Route", "19": "App Icon & Branding", "20": "Next.js Config", "21": "No-JS Frontend Patterns"}
+{
+  "0": "payload.config.ts",
+  "1": "package.json",
+  "2": "Enquiries Collection",
+  "3": "payload-types.ts",
+  "4": "importMap.js",
+  "6": "lib/data.ts",
+  "7": "compilerOptions",
+  "8": "notify.ts",
+  "9": "Icon.tsx",
+  "10": "thank-you/page.tsx",
+  "11": "enquiry/route.ts",
+  "13": "seed/index.ts",
+  "15": "scripts",
+  "17": "backup.mjs",
+  "18": "[...slug]/route.ts",
+  "19": "App Icon (Padlock Favicon)",
+  "20": "next.config.ts",
+  "21": "Native <details>/<summary> FAQ Accordions"
+}
