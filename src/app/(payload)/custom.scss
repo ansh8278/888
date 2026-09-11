@@ -35,12 +35,37 @@ h1.doc-header__title,
   border-radius: 8px;
   background: var(--brand);
   color: #fff;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 
-  svg { width: 16px; height: 16px; }
+  svg { width: 15px; height: 15px; }
+}
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  white-space: nowrap;
+}
+.brand-mark__text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.98rem;
+  letter-spacing: -0.01em;
+  color: var(--theme-text);
+}
+/* Payload's home-link slot is an 18px box with overflow hidden, sized for a
+   bare glyph. Let it grow to fit the mark and the name. */
+.step-nav__home,
+.step-nav__home > span,
+.step-nav__home > a,
+.step-nav__home > a > span {
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  display: inline-flex !important;
+  align-items: center;
 }
 .brand-logo {
   display: flex;

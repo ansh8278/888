@@ -21,10 +21,18 @@ const Padlock = ({ size = 24 }: { size?: number }) => (
   </svg>
 )
 
+/**
+ * Payload gives this slot an 18px box with overflow hidden and expects a bare
+ * icon. The wrapper is widened in custom.scss so the mark can carry the
+ * company name — an empty header next to a clipped padlock read as broken.
+ */
 export const Icon = () => (
-  <div className="brand-icon">
-    <Padlock size={20} />
-  </div>
+  <span className="brand-mark">
+    <span className="brand-icon">
+      <Padlock size={15} />
+    </span>
+    <span className="brand-mark__text">888 Lock &amp; Key</span>
+  </span>
 )
 
 export const Logo = () => (
