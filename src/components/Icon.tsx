@@ -17,6 +17,8 @@ export type IconName =
   | 'bolt'
   | 'check'
   | 'chevron'
+  | 'search'
+  | 'info'
 
 const stroke = {
   fill: 'none',
@@ -124,6 +126,18 @@ const paths: Record<IconName, ReactElement> = {
   chevron: (
     <g {...stroke} strokeWidth={2.5}>
       <path d="M6 9l6 6 6-6" />
+    </g>
+  ),
+  search: (
+    <g {...stroke} strokeWidth={2}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21l-4.35-4.35" />
+    </g>
+  ),
+  info: (
+    <g {...stroke} strokeWidth={2}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8h.01M12 11v5" />
     </g>
   ),
 }
