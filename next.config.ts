@@ -44,6 +44,8 @@ const nextConfig: NextConfig = {
     ]
   },
   images: {
+    // Uploads live on Vercel Blob when deployed there.
+    remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com' }],
     localPatterns: [
       {
         // The optimiser checks the full request path, which includes any

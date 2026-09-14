@@ -20,8 +20,12 @@ export const mediaUrl = (m: unknown): string | null => {
   if (!url) return null
   // next/image does not add basePath to local src itself, so it is added here.
   if (!/^https?:\/\//i.test(url)) return withBase(url)
+  // Our own absolute URLs become relative; anything else (Vercel Blob, a CDN)
+  // is served from that host and must stay absolute.
   try {
     const parsed = new URL(url)
+    const own = new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000')
+    if (parsed.host !== own.host) return url
     return withBase(`${parsed.pathname}${parsed.search}`)
   } catch {
     return url
