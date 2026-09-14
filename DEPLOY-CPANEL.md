@@ -68,6 +68,31 @@ SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD
 Linux versions of the libraries. It can take a few minutes. It must finish
 without errors.
 
+## No Terminal? Use a cron job instead (Steps 4–6 in one go)
+
+Some plans hide Terminal, and the *Run NPM Install* button refuses to run
+until the app's URL answers — which it cannot before the libraries exist.
+A cron job runs the same commands without either.
+
+1. Upload `scripts/cpanel-deploy.sh` into the `888` folder (it is already
+   there if you used the zip).
+2. cPanel → **Cron Jobs** → *Add New Cron Job*:
+   - Common Settings: **Once Per Minute** (`* * * * *`)
+   - Command:
+     ```
+     bash /home/YOURUSER/888/scripts/cpanel-deploy.sh
+     ```
+     (replace `YOURUSER`; the exact home path is shown in File Manager)
+3. Click *Add New Cron Job*. **Then delete the cron job straight away** —
+   one run is enough, and the script writes a marker so a repeat cannot
+   wipe your content anyway.
+4. Wait 5–10 minutes, then open `888/deploy.log` in File Manager
+   (right-click → View). The last line should say `DONE`.
+5. cPanel → Node.js → **Restart**, then open the site.
+
+If the log ends in `FAILED at build`, the server is short of memory — use
+Plan B below.
+
 ## Step 4 — Build
 
 Back in **Terminal**, the *Setup Node.js App* screen shows a line like
