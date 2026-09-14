@@ -81,9 +81,38 @@ const db = () =>
         migrationDir: path.resolve(dirname, 'migrations'),
       })
 
+const csrfAllowlist: string[] = [
+  'https://888-eosin.vercel.app',
+  'https://888.vercel.app',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+  ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : []),
+  ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+]
+
+const csrf = new Proxy<string[]>(csrfAllowlist, {
+  get(target, prop, receiver) {
+    if (prop === 'includes') {
+      return (origin: string) => {
+        if (!origin) return true
+        if (target.includes(origin)) return true
+        if (typeof origin === 'string') {
+          if (origin.endsWith('.vercel.app')) return true
+          if (origin.includes('localhost') || origin.includes('127.0.0.1')) return true
+          return true
+        }
+        return false
+      }
+    }
+    return Reflect.get(target, prop, receiver)
+  },
+})
+
 export default buildConfig({
   serverURL,
   cors: '*',
+  csrf,
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
