@@ -25,7 +25,7 @@ export const getSiteSettings = cache(async () => {
 
 export const getNavigation = cache(async () => {
   const payload = await client()
-  return payload.findGlobal({ slug: 'navigation', depth: 0 })
+  return payload.findGlobal({ slug: 'navigation', depth: 1 })
 })
 
 export const getHomePage = cache(async () => {

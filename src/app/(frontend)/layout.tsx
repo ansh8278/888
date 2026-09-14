@@ -5,11 +5,12 @@ import { Footer } from '../../components/Footer'
 import { StickyCall } from '../../components/StickyCall'
 import { getNavigation, getSiteSettings } from '../../lib/data'
 import { mediaUrl } from '../../components/blocks'
+import { ProgressBar } from '../../components/ProgressBar'
 import '../../styles/site.css'
 
-// Render from the database on every request so admin edits show up
-// immediately instead of being frozen into the build.
-export const dynamic = 'force-dynamic'
+// Revalidate every 60s so pages are cached at the Edge CDN for instant (0ms)
+// navigation while content edits in Payload CMS still update automatically.
+export const revalidate = 60
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const sora = Sora({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-sora', display: 'swap' })
@@ -46,6 +47,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable} ${caveat.variable}`}>
       <body>
+        <ProgressBar />
         <a href="#main" className="skip-link">
           Skip to content
         </a>

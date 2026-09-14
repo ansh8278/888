@@ -114,17 +114,21 @@ export const Header = ({ companyName, tagline, phone, phoneHref, items }: Props)
         <ul>
           {items.map((item) => (
             <li key={item.href}>
-              <Link href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+              <Link
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                onClick={() => setOpen(false)}
+              >
                 {item.label}
               </Link>
             </li>
           ))}
         </ul>
-        <a href={`tel:${phoneHref}`} className="btn-hero-primary mobile-nav-call">
+        <a href={`tel:${phoneHref}`} className="btn-hero-primary mobile-nav-call" onClick={() => setOpen(false)}>
           <Icon name="phone" />
           Call {phone}
         </a>
-        <Link href="/book" className="btn-hero-secondary mobile-nav-book">
+        <Link href="/book" className="btn-hero-secondary mobile-nav-book" onClick={() => setOpen(false)}>
           Request Service
         </Link>
       </div>
