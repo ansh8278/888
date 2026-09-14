@@ -72,25 +72,6 @@ export const Footer = ({
 
   return (
     <footer className="site-footer">
-      {/* Sleek top live dispatch bar */}
-      <div className="footer-top-bar">
-        <div className="wrap footer-top-inner">
-          <div className="footer-live-status">
-            <span className="live-dot" />
-            <span className="live-text">24/7 Mobile Dispatch Active</span>
-            <span className="dot-sep">•</span>
-            <span className="live-eta">Avg Arrival 15–25 Mins</span>
-          </div>
-          <div className="footer-quick-call">
-            <span className="quick-call-label">Need immediate service?</span>
-            <a href={`tel:${phoneHref}`} className="footer-call-pill">
-              <Icon name="phone" />
-              <span>{phone}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
       <div className="wrap">
         <div className="footer-main-grid">
           {/* Brand Info */}
