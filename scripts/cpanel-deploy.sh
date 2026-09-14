@@ -46,8 +46,10 @@ trap 'rm -f "$LOCK"' EXIT
   # (.name-XXXXXXXX) and the next install trips on them. Clear them first.
   VENV_MODULES="$(dirname "$(dirname "$ACTIVATE")")/lib/node_modules"
   if [ -d "$VENV_MODULES" ]; then
-    leftovers=$(find "$VENV_MODULES" -maxdepth 1 -type d -name '.*-????????' 2>/dev/null | wc -l)
-    [ "$leftovers" -gt 0 ] && { echo "removing $leftovers leftover temp folders from an interrupted install"; find "$VENV_MODULES" -maxdepth 1 -type d -name '.*-????????' -exec rm -rf {} + ; }
+    # No depth limit: leftovers also sit inside scoped folders (@babel/.parser-XXXX)
+    # and nested node_modules.
+    leftovers=$(find "$VENV_MODULES" -type d -name '.*-????????' 2>/dev/null | wc -l)
+    [ "$leftovers" -gt 0 ] && { echo "removing $leftovers leftover temp folders from an interrupted install"; find "$VENV_MODULES" -depth -type d -name '.*-????????' -exec rm -rf {} + 2>/dev/null; }
   fi
   npm install --omit=dev --no-audit --no-fund 2>&1 || { echo "FAILED at npm install"; exit 1; }
   echo "npm install finished $(date +%H:%M)"
