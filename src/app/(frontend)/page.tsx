@@ -135,45 +135,64 @@ const HomePage = async () => {
             </p>
           </div>
 
-          <div className="about-pillars-grid">
-            <div className="about-pillar-card">
-              <div className="pillar-icon-box">
-                <Icon name="shield" />
+          <div className="about-showcase-grid">
+            <div className="about-pillars-grid">
+              <div className="about-pillar-card">
+                <div className="pillar-icon-box">
+                  <Icon name="shield" />
+                </div>
+                <h3>100% Upfront Firm Pricing</h3>
+                <p>
+                  We quote your exact total on the phone before our technician is dispatched. What we quote is what you pay—never any travel fees or surprise doorstep upcharges.
+                </p>
               </div>
-              <h3>100% Upfront Firm Pricing</h3>
-              <p>
-                We quote your exact total on the phone before our technician is dispatched. What we quote is what you pay—never any travel fees or surprise doorstep upcharges.
-              </p>
+
+              <div className="about-pillar-card">
+                <div className="pillar-icon-box">
+                  <Icon name="key" />
+                </div>
+                <h3>Non-Destructive Entry First</h3>
+                <p>
+                  Over 96% of our lockout calls are resolved using precision lock-picks and bypass tools. We never drill your locks unless the hardware has suffered irreparable mechanical failure.
+                </p>
+              </div>
+
+              <div className="about-pillar-card">
+                <div className="pillar-icon-box">
+                  <Icon name="people" />
+                </div>
+                <h3>W-2 Badged &amp; Screened Techs</h3>
+                <p>
+                  Every locksmith is a direct employee, Live Scan fingerprinted, state licensed, and covered by $2,000,000 in commercial liability insurance for complete peace of mind.
+                </p>
+              </div>
+
+              <div className="about-pillar-card">
+                <div className="pillar-icon-box">
+                  <Icon name="building" />
+                </div>
+                <h3>Real Physical Shops &amp; Mobile Fleet</h3>
+                <p>
+                  We operate real walk-in retail service centers and a fleet of mobile workshop vans stocked with computerized laser key cutters and OBD-II key diagnostic computers.
+                </p>
+              </div>
             </div>
 
-            <div className="about-pillar-card">
-              <div className="pillar-icon-box">
-                <Icon name="key" />
+            <div className="about-showcase-img-card">
+              <Image
+                src="/images/about-van.jpg"
+                alt="888 Lock & Key licensed locksmith technician with mobile workshop service van"
+                width={700}
+                height={550}
+                className="about-van-photo"
+              />
+              <div className="about-photo-glass-badge">
+                <span className="livedot" />
+                <div>
+                  <strong>Official 888 Mobile Workshop Fleet</strong>
+                  <span>Stocked with laser cutters, 1,500+ blanks &amp; diagnostic computers</span>
+                </div>
               </div>
-              <h3>Non-Destructive Entry First</h3>
-              <p>
-                Over 96% of our lockout calls are resolved using precision lock-picks and bypass tools. We never drill your locks unless the hardware has suffered irreparable mechanical failure.
-              </p>
-            </div>
-
-            <div className="about-pillar-card">
-              <div className="pillar-icon-box">
-                <Icon name="people" />
-              </div>
-              <h3>W-2 Badged &amp; Screened Techs</h3>
-              <p>
-                Every locksmith is a direct employee, Live Scan fingerprinted, state licensed, and covered by $2,000,000 in commercial liability insurance for complete peace of mind.
-              </p>
-            </div>
-
-            <div className="about-pillar-card">
-              <div className="pillar-icon-box">
-                <Icon name="building" />
-              </div>
-              <h3>Real Physical Shops &amp; Mobile Fleet</h3>
-              <p>
-                We operate real walk-in retail service centers and a fleet of mobile workshop vans stocked with computerized laser key cutters and OBD-II key diagnostic computers.
-              </p>
             </div>
           </div>
 
@@ -314,9 +333,20 @@ const HomePage = async () => {
               </p>
 
               <div className="faq-dispatch-box">
+                <div className="faq-dispatch-img-wrap">
+                  <Image
+                    src="/images/faq-support.jpg"
+                    alt="24/7 Locksmith Live Emergency Dispatch Support Desk"
+                    width={500}
+                    height={320}
+                    className="faq-support-img"
+                  />
+                  <span className="faq-img-badge">
+                    <span className="livedot" /> Live GPS Dispatch
+                  </span>
+                </div>
                 <div className="faq-dispatch-header">
-                  <span className="livedot" />
-                  <strong>24/7 Live Emergency Dispatch</strong>
+                  <strong>24/7 Live Emergency Dispatch Desk</strong>
                 </div>
                 <p>Need urgent assistance? A licensed technician is staged near your neighborhood right now.</p>
                 <a href={`tel:${settings.phoneHref}`} className="btn btn-primary btn-block">

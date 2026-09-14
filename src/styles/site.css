@@ -2564,10 +2564,139 @@ html, body { max-width: 100%; overflow-x: hidden; }
   color: var(--muted);
   margin: 0;
 }
+.about-showcase-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: stretch;
+}
 .about-pillars-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.about-showcase-img-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-md);
+  min-height: 420px;
+  display: flex;
+}
+.about-van-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+.about-showcase-img-card:hover .about-van-photo {
+  transform: scale(1.03);
+}
+.about-photo-glass-badge {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.about-photo-glass-badge strong {
+  display: block;
+  font-family: var(--font-sora), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.about-photo-glass-badge span {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+/* Fleet Image Wrap for /about page */
+.fleet-img-wrap {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-sm);
+}
+.fleet-van-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.fleet-img-wrap:hover .fleet-van-img {
+  transform: scale(1.03);
+}
+.fleet-img-overlay-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* FAQ Dispatch Image Wrap for Homepage & Explorer */
+.faq-dispatch-img-wrap {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+}
+.faq-support-img {
+  width: 100%;
+  height: 165px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.faq-dispatch-img-wrap:hover .faq-support-img {
+  transform: scale(1.03);
+}
+.faq-img-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .about-pillar-card {
   background: var(--bg-sand);
@@ -3591,6 +3720,9 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 /* Responsive Overrides for About & FAQ -------------------- */
 @media (max-width: 1024px) {
+  .about-showcase-grid {
+    grid-template-columns: 1fr;
+  }
   .about-pillars-grid {
     grid-template-columns: repeat(2, 1fr);
   }

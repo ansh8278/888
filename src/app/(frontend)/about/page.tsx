@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { PageHero } from '../../../components/Hero'
 import { CtaBanner } from '../../../components/blocks'
 import { getSiteSettings, getLocations, getPageCopy } from '../../../lib/data'
@@ -308,6 +309,18 @@ const AboutPage = async () => {
             </div>
 
             <div className="fleet-showcase-side">
+              <div className="fleet-img-wrap">
+                <Image
+                  src="/images/about-van.jpg"
+                  alt="888 Lock & Key liveried mobile workshop van and master locksmith"
+                  width={600}
+                  height={450}
+                  className="fleet-van-img"
+                />
+                <span className="fleet-img-overlay-badge">
+                  <span className="livedot" /> Unit #888 Active
+                </span>
+              </div>
               <div className="fleet-badge-card">
                 <div className="fleet-badge-icon">
                   <Icon name="car" />

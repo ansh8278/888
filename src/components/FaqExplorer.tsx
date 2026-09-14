@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Icon } from './Icon'
 import type { Faq } from '../payload-types'
 
@@ -342,6 +343,18 @@ export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
         {/* Support & Dispatch Sidebar */}
         <aside className="faq-sidebar-col">
           <div className="faq-sidebar-card faq-dispatch-spotlight">
+            <div className="faq-dispatch-img-wrap">
+              <Image
+                src="/images/faq-support.jpg"
+                alt="24/7 Locksmith Live Emergency Dispatch Support Desk"
+                width={500}
+                height={320}
+                className="faq-support-img"
+              />
+              <span className="faq-img-badge">
+                <span className="livedot" /> 24/7 Live Operators
+              </span>
+            </div>
             <div className="faq-spotlight-status">
               <span className="livedot" />
               <span className="faq-live-label">24/7 Mobile Dispatch Active</span>
