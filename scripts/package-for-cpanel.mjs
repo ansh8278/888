@@ -23,7 +23,7 @@ if (existsSync(out)) rmSync(out)
 
 const exclude = [
   'node_modules/*', '.next/*', '.git/*', 'backups/*', 'graphify-out/*', 'media/*',
-  '.env', '888.db', '888.db-*', '*.zip', '.DS_Store', '*/.DS_Store',
+  '.env', 'cpanel-env.txt', '888.db', '888.db-*', '*.zip', '.DS_Store', '*/.DS_Store',
 ]
 
 execSync(
