@@ -55,6 +55,13 @@ const seed = async () => {
     }
   }
 
+  // Safe to run twice: never duplicate the starter content.
+  const existing = await payload.count({ collection: 'services' })
+  if (existing.totalDocs > 0) {
+    payload.logger.info('Content already present — skipping the starter content.')
+    return
+  }
+
   // ---------- media ----------
   const upload = async (filePath: string, alt: string) => {
     const created = await payload.create({
