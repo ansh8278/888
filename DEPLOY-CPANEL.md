@@ -177,10 +177,16 @@ On your computer:
 ```
 cd web
 NEXT_PUBLIC_SITE_URL=https://yourdomain.com npm run build
-zip -r 888-build.zip .next -x ".next/cache/*"
+rm -f .next/lock
+zip -r 888-build.zip .next -x ".next/cache/*" ".next/trace" ".next/diagnostics/*"
 ```
+(add `NEXT_PUBLIC_BASE_PATH=/888` before `npm run build` if the site lives
+under a sub-path — both values must match the server's `.env`.)
+
 Upload `888-build.zip` into `~/888` and extract it (it creates `.next/`).
-Then do Step 5 and Step 6 as normal. Skip Step 4.
+Delete the zip. Then do Step 5 and Step 6 as normal. Skip Step 4.
+The cron deploy script notices the uploaded build (`.next/BUILD_ID`) and
+skips building on its own; delete `.next` on the server to build there again.
 
 `NEXT_PUBLIC_SITE_URL` must be set **before** this build — it is baked into
 the sitemap and links.
