@@ -4,17 +4,23 @@ Vercel has no permanent disk, so two things move off the server:
 
 | On cPanel / locally | On Vercel |
 |---|---|
-| `888.db` file | **Turso** — the same SQLite database, hosted (free tier) |
+| `888.db` file (SQLite) | **Supabase** — a hosted Postgres database (free tier) |
 | `media/` folder | **Vercel Blob** — file storage (free tier) |
 
-Both are switched on by environment variables; nothing else changes.
+Both are switched on by environment variables. The app picks the database
+engine from the connection string (`file:` → SQLite, `postgres://` →
+Postgres); each engine has its own migrations folder (`src/migrations`,
+`src/migrations-pg`).
 
-## 1. Database — Turso (5 min)
+## 1. Database — Supabase (5 min)
 
-1. Sign up at https://turso.tech → **Create Database** → name `888`, pick a
-   region near your customers.
-2. Copy the **URL** (`libsql://888-xxxx.turso.io`).
-3. **Create Token** (read & write, no expiry) → copy it. Shown once.
+1. Sign up at https://supabase.com → **New project** → name `888`, choose a
+   strong database password (save it), pick a region near your customers.
+2. When it is ready: top bar **Connect** → *Connection string* → method
+   **Session pooler** (not Direct, not Transaction) → copy the URI. It looks
+   like `postgresql://postgres.xxxx:[YOUR-PASSWORD]@aws-0-region.pooler.supabase.com:5432/postgres`.
+3. Replace `[YOUR-PASSWORD]` with the password you chose. That is your
+   `DATABASE_URI`.
 
 ## 2. Vercel project (10 min)
 
@@ -30,8 +36,7 @@ add (Production):
 
 ```
 PAYLOAD_SECRET          a long random string (openssl rand -hex 32)
-DATABASE_URI            libsql://888-xxxx.turso.io
-DATABASE_AUTH_TOKEN     the Turso token
+DATABASE_URI            the Supabase connection string from step 1
 NEXT_PUBLIC_SITE_URL    https://<project>.vercel.app   (later: your real domain)
 NOTIFY_EMAIL            where lead alerts go
 SMTP_HOST / SMTP_PORT / SMTP_USER / SMTP_PASSWORD / SMTP_FROM / SMTP_FROM_NAME
@@ -71,8 +76,11 @@ Then open `https://<project>.vercel.app/admin` and log in with
 - **Code change:** `vercel --prod` again.
 - **Own domain:** Vercel → Settings → Domains → add it, follow the DNS
   instructions, then change `NEXT_PUBLIC_SITE_URL` and redeploy.
-- **Backups:** Turso dashboard has point-in-time restore; Blob files are
-  kept by Vercel.
+- **Backups:** Supabase → Database → Backups (daily on the free tier);
+  Blob files are kept by Vercel.
+- **Changing fields later:** after editing a collection, run
+  `DATABASE_URI=<supabase uri> npm run migrate:create -- <name>` locally and
+  commit the new file in `src/migrations-pg/`; the next deploy applies it.
 
 ## Notes
 

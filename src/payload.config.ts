@@ -1,3 +1,4 @@
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -24,6 +25,33 @@ import { PageCopy } from './globals/PageCopy'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+/**
+ * Two database engines, chosen by the connection string:
+ *   file:./888.db          SQLite file — local development and cPanel
+ *   postgres://…           Postgres — Supabase, used on Vercel
+ * Each keeps its own migration folder; the SQL differs.
+ */
+const DATABASE_URI = process.env.DATABASE_URI || 'file:./888.db'
+const db = () =>
+  /^postgres(ql)?:/.test(DATABASE_URI)
+    ? postgresAdapter({
+        pool: {
+          connectionString: DATABASE_URI,
+          // Supabase requires TLS; its pooler presents a certificate node's
+          // default trust store does not always accept.
+          ssl: /localhost|127\.0\.0\.1/.test(DATABASE_URI) ? false : { rejectUnauthorized: false },
+        },
+        migrationDir: path.resolve(dirname, 'migrations-pg'),
+      })
+    : sqliteAdapter({
+        client: {
+          url: DATABASE_URI,
+          // Only for a hosted SQLite (Turso); unused with a local file.
+          authToken: process.env.DATABASE_AUTH_TOKEN,
+        },
+        migrationDir: path.resolve(dirname, 'migrations'),
+      })
 
 export default buildConfig({
   // Without this Payload cannot work out the request origin and warns on every
@@ -58,13 +86,7 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./888.db',
-      // Only for a hosted database (Turso); unused with a local file.
-      authToken: process.env.DATABASE_AUTH_TOKEN,
-    },
-  }),
+  db: db(),
   upload: {
     limits: { fileSize: 10_000_000 },
   },
