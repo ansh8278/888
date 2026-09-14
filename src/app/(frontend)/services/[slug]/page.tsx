@@ -6,7 +6,7 @@ import { FaqList } from '../../../../components/FaqList'
 import { Prose, CtaBanner, SectionHead } from '../../../../components/blocks'
 import { Icon } from '../../../../components/Icon'
 import { getService, getServices, getLocations, getSiteSettings, getPageCopy } from '../../../../lib/data'
-import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema } from '../../../../lib/schema'
+import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
 import type { Faq } from '../../../../payload-types'
 
 export const generateStaticParams = async () => {
@@ -23,7 +23,7 @@ export const generateMetadata = async (props: {
   return {
     title: service.seo?.title || `${service.title} — 24/7 Mobile Locksmith`,
     description: service.seo?.description || service.intro,
-    alternates: { canonical: `/services/${service.slug}` },
+    alternates: { canonical: absolute(`/services/${service.slug}`) },
     robots: service.seo?.noindex ? { index: false, follow: true } : undefined,
   }
 }

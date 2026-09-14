@@ -4,14 +4,14 @@ import { PageHero } from '../../../components/Hero'
 import { LocationCard, CtaBanner, SectionHead } from '../../../components/blocks'
 import { Icon } from '../../../components/Icon'
 import { getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
-import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
+import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
     title: copy.locations?.title ?? 'Locations We Serve',
     description: copy.locations?.intro ?? undefined,
-    alternates: { canonical: '/locations' },
+    alternates: { canonical: absolute('/locations') },
   }
 }
 

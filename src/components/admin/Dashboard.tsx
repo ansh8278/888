@@ -2,6 +2,7 @@ import { headers as nextHeaders } from 'next/headers'
 import { Gutter } from '@payloadcms/ui'
 import { getPayload, type Where } from 'payload'
 import config from '@payload-config'
+import { withBase } from '../../lib/base-path'
 
 /**
  * Replaces Payload's default dashboard entirely.
@@ -125,7 +126,7 @@ export const Dashboard = async () => {
           <a className="dash__view-site" href={SITE_URL} target="_blank" rel="noopener noreferrer">
             View live site ↗
           </a>
-          <a className="dash__logout" href="/admin/logout">
+          <a className="dash__logout" href={withBase('/admin/logout')}>
             {signedInAs ? `Log out (${signedInAs})` : 'Log out'}
           </a>
         </div>
@@ -134,7 +135,7 @@ export const Dashboard = async () => {
       {/* Leads first — the only thing here that is time-critical. */}
       <a
         className={`dash__leads${newLeads > 0 ? ' dash__leads--active' : ''}`}
-        href="/admin/collections/enquiries?where[status][equals]=new"
+        href={withBase('/admin/collections/enquiries?where[status][equals]=new')}
       >
         <div className="dash__leads-num">{newLeads}</div>
         <div className="dash__leads-body">
@@ -152,7 +153,7 @@ export const Dashboard = async () => {
         <ul className="dash__recent">
           {latest.map((lead) => (
             <li key={lead.id}>
-              <a href={`/admin/collections/enquiries/${lead.id}`}>
+              <a href={withBase(`/admin/collections/enquiries/${lead.id}`)}>
                 <span className="dash__recent-name">{lead.name}</span>
                 <span className="dash__recent-meta">
                   {[lead.serviceLabel, lead.cityLabel].filter(Boolean).join(' · ') || 'No details given'}
@@ -170,7 +171,7 @@ export const Dashboard = async () => {
           <h2 className="dash__title">{section.title}</h2>
           <div className="dash__grid">
             {section.tiles.map((tile) => (
-              <a className="dash__tile" key={tile.href} href={tile.href}>
+              <a className="dash__tile" key={tile.href} href={withBase(tile.href)}>
                 <span className="dash__tile-icon" aria-hidden="true">
                   {tile.icon}
                 </span>

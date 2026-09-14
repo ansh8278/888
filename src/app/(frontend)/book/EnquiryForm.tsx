@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Icon } from '../../../components/Icon'
+import { withBase } from '../../../lib/base-path'
 
 type Option = { label: string; value: string }
 
@@ -29,7 +30,7 @@ export const EnquiryForm = ({ type, services, cities, submitLabel }: Props) => {
     const payload = Object.fromEntries(new FormData(form).entries())
 
     try {
-      const res = await fetch('/api/enquiry', {
+      const res = await fetch(withBase('/api/enquiry'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...payload, type, sourcePage: window.location.pathname }),

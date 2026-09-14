@@ -14,7 +14,7 @@ import {
   getHomeFaqs,
   servicesForLocation,
 } from '../../../../lib/data'
-import { JsonLd, locationSchema, faqSchema, breadcrumbSchema } from '../../../../lib/schema'
+import { JsonLd, locationSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
 
 export const generateStaticParams = async () => {
   const locations = await getLocations()
@@ -33,7 +33,7 @@ export const generateMetadata = async (props: {
       location.seo?.description ||
       location.intro ||
       `24/7 mobile locksmith serving ${location.city}, ${location.state}. Cars, homes and businesses.`,
-    alternates: { canonical: `/locations/${location.slug}` },
+    alternates: { canonical: absolute(`/locations/${location.slug}`) },
     robots: location.seo?.noindex ? { index: false, follow: true } : undefined,
   }
 }

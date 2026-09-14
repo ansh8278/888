@@ -3,14 +3,14 @@ import { PageHero } from '../../../components/Hero'
 import { FaqList } from '../../../components/FaqList'
 import { CtaBanner } from '../../../components/blocks'
 import { getAllFaqs, getSiteSettings, getPageCopy } from '../../../lib/data'
-import { JsonLd, breadcrumbSchema, faqSchema } from '../../../lib/schema'
+import { JsonLd, breadcrumbSchema, faqSchema, absolute } from '../../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
     title: copy.faq?.title ?? 'Frequently Asked Questions',
     description: copy.faq?.intro ?? undefined,
-    alternates: { canonical: '/faq' },
+    alternates: { canonical: absolute('/faq') },
   }
 }
 

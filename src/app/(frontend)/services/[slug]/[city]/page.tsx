@@ -16,7 +16,7 @@ import {
   getReviews,
   servicesForLocation,
 } from '../../../../../lib/data'
-import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, locationSchema } from '../../../../../lib/schema'
+import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, locationSchema, absolute } from '../../../../../lib/schema'
 import { fillTemplate } from '../../../../../lib/template'
 import type { Faq } from '../../../../../payload-types'
 
@@ -62,7 +62,7 @@ export const generateMetadata = async (props: {
   return {
     title: fillTemplate(template.seoTitle, vars) || `${service.title} in ${location.city}`,
     description: fillTemplate(template.seoDescription, vars) || service.intro,
-    alternates: { canonical: `/services/${slug}/${city}` },
+    alternates: { canonical: absolute(`/services/${slug}/${city}`) },
   }
 }
 

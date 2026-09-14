@@ -3,14 +3,14 @@ import { PageHero } from '../../../components/Hero'
 import { EnquiryForm } from '../book/EnquiryForm'
 import { Icon } from '../../../components/Icon'
 import { getServices, getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
-import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
+import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
     title: copy.contact?.title ?? 'Contact Us',
     description: copy.contact?.intro ?? undefined,
-    alternates: { canonical: '/contact' },
+    alternates: { canonical: absolute('/contact') },
   }
 }
 

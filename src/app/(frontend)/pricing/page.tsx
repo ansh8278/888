@@ -3,14 +3,14 @@ import { PageHero } from '../../../components/Hero'
 import { PricingTable, CtaBanner } from '../../../components/blocks'
 import { FaqList } from '../../../components/FaqList'
 import { getServices, getSiteSettings, getHomeFaqs, getPageCopy } from '../../../lib/data'
-import { JsonLd, breadcrumbSchema, faqSchema } from '../../../lib/schema'
+import { JsonLd, breadcrumbSchema, faqSchema, absolute } from '../../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
     title: copy.pricing?.title ?? 'Pricing',
     description: copy.pricing?.intro ?? undefined,
-    alternates: { canonical: '/pricing' },
+    alternates: { canonical: absolute('/pricing') },
   }
 }
 

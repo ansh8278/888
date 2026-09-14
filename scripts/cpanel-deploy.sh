@@ -32,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 6 (webpack build, self-stopping)"
+  echo "script  : version 7 (webpack build, /888 base path, reads .env)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -44,6 +44,16 @@ trap 'rm -f "$LOCK"' EXIT
   # shellcheck disable=SC1090
   source "$ACTIVATE"
   cd "$APP_DIR" || { echo "FAILED: cannot cd to $APP_DIR"; exit 1; }
+
+  # cPanel's Node.js env vars only reach the app via Passenger, not cron. The
+  # build bakes in NEXT_PUBLIC_*, and migrate/seed need the secret and
+  # database path, so load them from .env in the app folder.
+  if [ -f "$APP_DIR/.env" ]; then
+    set -a; . "$APP_DIR/.env"; set +a
+    echo "env     : loaded from .env (site url: ${NEXT_PUBLIC_SITE_URL:-unset}, base path: ${NEXT_PUBLIC_BASE_PATH:-none})"
+  else
+    echo "WARNING : no .env in $APP_DIR — build will use localhost URLs and seed may fail"
+  fi
   echo "node    : $(node -v)   npm: $(npm -v)"
   echo "glibc   : $(ldd --version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+$' || echo unknown)  (database needs 2.18, images 2.28)"
 

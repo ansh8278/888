@@ -4,6 +4,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { Icon, GoogleG, type IconName } from './Icon'
 import type { Media, Service, Location, Review } from '../payload-types'
+import { withBase } from '../lib/base-path'
 
 /**
  * Media relationships come back as an id or the populated doc, depending on depth.
@@ -17,10 +18,11 @@ export const mediaUrl = (m: unknown): string | null => {
   if (!m || typeof m !== 'object' || !('url' in m)) return null
   const url = (m as Media).url
   if (!url) return null
-  if (!/^https?:\/\//i.test(url)) return url
+  // next/image does not add basePath to local src itself, so it is added here.
+  if (!/^https?:\/\//i.test(url)) return withBase(url)
   try {
     const parsed = new URL(url)
-    return `${parsed.pathname}${parsed.search}`
+    return withBase(`${parsed.pathname}${parsed.search}`)
   } catch {
     return url
   }

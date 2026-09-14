@@ -23,14 +23,14 @@ import {
   getHomeFaqs,
   getPageCopy,
 } from '../../lib/data'
-import { localBusinessSchema, faqSchema, JsonLd } from '../../lib/schema'
+import { localBusinessSchema, faqSchema, JsonLd, absolute } from '../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const [home, settings] = await Promise.all([getHomePage(), getSiteSettings()])
   return {
     title: home.seo?.title || `${settings.companyName} — 24/7 Mobile Locksmith`,
     description: home.seo?.description || home.lede,
-    alternates: { canonical: '/' },
+    alternates: { canonical: absolute('/') },
   }
 }
 

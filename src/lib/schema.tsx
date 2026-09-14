@@ -2,6 +2,13 @@ import type { SiteSetting, Location, Faq, Service, Review } from '../payload-typ
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
+/**
+ * Absolute URL for a site path. Use this for canonicals: a relative canonical
+ * like '/faq' is resolved by Next against the domain root, which drops any
+ * sub-path the site is served under.
+ */
+export const absolute = (path: string) => `${SITE_URL}${path === '/' ? '' : path}`
+
 /** Renders JSON-LD. Skipped entirely when there is nothing to describe. */
 export const JsonLd = ({ data }: { data: object | null }) =>
   data ? (

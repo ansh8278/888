@@ -7,6 +7,9 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  // Serve the whole site under a sub-path (e.g. example.com/888) when set.
+  // Baked in at build time. See src/lib/base-path.ts.
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || undefined,
   /**
    * Next blocks cross-origin requests to dev assets by default, so opening the
    * dev server from a phone on the LAN (http://192.168.x.x:3000) served the
@@ -43,7 +46,9 @@ const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
-        pathname: '/api/media/file/**',
+        // The optimiser checks the full request path, which includes any
+        // basePath the site is served under.
+        pathname: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/api/media/file/**`,
       },
     ],
   },

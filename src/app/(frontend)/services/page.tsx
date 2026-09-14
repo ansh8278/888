@@ -2,14 +2,14 @@ import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { ServiceCard, CtaBanner } from '../../../components/blocks'
 import { getServices, getSiteSettings, getPageCopy } from '../../../lib/data'
-import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
+import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
     title: copy.services?.title ?? 'Locksmith Services',
     description: copy.services?.intro ?? undefined,
-    alternates: { canonical: '/services' },
+    alternates: { canonical: absolute('/services') },
   }
 }
 

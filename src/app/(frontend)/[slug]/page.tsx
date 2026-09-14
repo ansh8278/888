@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { PageHero } from '../../../components/Hero'
 import { Prose, CtaBanner } from '../../../components/blocks'
 import { getPage, getPages, getSiteSettings } from '../../../lib/data'
-import { JsonLd, breadcrumbSchema } from '../../../lib/schema'
+import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 
 export const generateStaticParams = async () => {
   const pages = await getPages()
@@ -19,7 +19,7 @@ export const generateMetadata = async (props: {
   return {
     title: page.seo?.title || page.title,
     description: page.seo?.description || page.intro || undefined,
-    alternates: { canonical: `/${page.slug}` },
+    alternates: { canonical: absolute(`/${page.slug}`) },
     robots: page.seo?.noindex ? { index: false, follow: true } : undefined,
   }
 }
