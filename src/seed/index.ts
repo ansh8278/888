@@ -8,7 +8,7 @@ import { doc, para, heading, list } from '../lib/rich-text'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 /** Images still live in the original site folder, two levels up from web/src. */
-const ASSETS = path.resolve(dirname, '../../../')
+const ASSETS = path.resolve(dirname, '../../seed-assets')
 
 import { randomBytes } from 'crypto'
 
@@ -70,7 +70,7 @@ const seed = async () => {
   const cityImages: Record<string, number> = {}
   for (const loc of LOCATIONS) {
     cityImages[loc.image] = await upload(
-      path.join(ASSETS, 'assets/cities', `${loc.image}.jpg`),
+      path.join(ASSETS, 'cities', `${loc.image}.jpg`),
       `${loc.city} skyline`,
     )
   }
