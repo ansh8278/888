@@ -26,10 +26,15 @@ app
     // Map "/" to "/888" (no slash) so Next's own trailing-slash redirect
     // cannot ping-pong with Apache's.
     const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    let logged = 0
     createServer((req, res) => {
+      const incoming = req.url
+      res.setHeader('x-888-app', '3')
       if (base && req.url !== base && !req.url.startsWith(`${base}/`) && !req.url.startsWith(`${base}?`)) {
         req.url = req.url.startsWith('/?') || req.url === '/' ? base + req.url.slice(1) : base + req.url
       }
+      // First few requests go to stderr.log so a wrong mount path is visible.
+      if (logged++ < 10) console.error(`request: ${incoming} -> ${req.url}`)
       handle(req, res)
     }).listen(port, hostname, () => {
       console.log(`888 Lock & Key ready on ${hostname}:${port}`)
