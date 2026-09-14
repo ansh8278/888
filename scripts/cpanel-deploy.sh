@@ -16,6 +16,12 @@ LOG="$APP_DIR/deploy.log"
 # cPanel's Node lives in a "virtual environment"; this is its standard path.
 ACTIVATE=$(ls -d "$HOME"/nodevenv/888/*/bin/activate 2>/dev/null | head -1)
 
+# Builds this host killed for memory leave orphan worker processes behind,
+# and they count against the account's process limit (100). Clear them on
+# every tick. The live app runs under Passenger and matches none of these.
+pkill -u "$(id -un)" -f 'next build|processChild\.js|npm (install|ci)' 2>/dev/null \
+  && echo "$(date): cleared leftover build processes ($(ps -u "$(id -un)" --no-headers | wc -l) processes remain)" >> "$LOG"
+
 # Once a deploy has fully succeeded, do nothing — so the cron job can be left
 # running every minute without harm. Delete .deploy-done to deploy again.
 [ -f "$APP_DIR/.deploy-done" ] && exit 0
@@ -32,7 +38,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 12 (publishes starter content)"
+  echo "script  : version 13 (clears leftover processes)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
