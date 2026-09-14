@@ -16,7 +16,8 @@
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
     "backup": "node scripts/backup.mjs",
-    "versions:backfill": "payload run src/scripts/backfill-versions.ts"
+    "versions:backfill": "payload run src/scripts/backfill-versions.ts",
+    "package:cpanel": "node scripts/package-for-cpanel.mjs"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "^3.88.0",

@@ -52,3 +52,5 @@ backups/
 # graphify: a derived code graph, rebuilt with `graphify update .` — it also
 # copies README text (which once held a password) into JSON, so never commit it.
 graphify-out/
+
+888-site.zip
