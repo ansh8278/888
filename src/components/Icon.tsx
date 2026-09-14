@@ -144,8 +144,16 @@ const paths: Record<IconName, ReactElement> = {
 
 type Props = SVGProps<SVGSVGElement> & { name: IconName }
 
-export const Icon = ({ name, ...rest }: Props) => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...rest}>
+export const Icon = ({ name, width = 18, height = 18, style, ...rest }: Props) => (
+  <svg
+    viewBox="0 0 24 24"
+    width={width}
+    height={height}
+    aria-hidden="true"
+    focusable="false"
+    style={{ flexShrink: 0, ...style }}
+    {...rest}
+  >
     {paths[name]}
   </svg>
 )

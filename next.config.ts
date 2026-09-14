@@ -52,6 +52,12 @@ const nextConfig: NextConfig = {
         // basePath the site is served under.
         pathname: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/api/media/file/**`,
       },
+      {
+        pathname: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/images/**`,
+      },
+      {
+        pathname: `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/**`,
+      },
     ],
   },
   webpack: (webpackConfig) => {

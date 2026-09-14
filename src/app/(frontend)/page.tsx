@@ -177,11 +177,12 @@ const HomePage = async () => {
 
             <div className="about-home-image-wrap">
               <Image
-                src="/images/888-team.png"
+                src="/images/888-team.webp"
                 alt="888 Lock & Key technician and mobile service van"
                 width={700}
                 height={500}
                 className="about-home-photo"
+                unoptimized
               />
             </div>
           </div>

@@ -75,12 +75,13 @@ const AboutPage = async () => {
 
             <div className="about-team-image-box">
               <Image
-                src="/images/888-team.png"
+                src="/images/888-team.webp"
                 alt="888 Lock & Key technician and mobile service van"
                 width={700}
                 height={500}
                 className="about-team-photo"
                 priority
+                unoptimized
               />
               <div className="about-photo-caption">
                 <strong>888 Lock &amp; Key Mobile Fleet</strong>
@@ -161,7 +162,8 @@ const AboutPage = async () => {
                   </div>
                 ) : null}
                 <Link href={`/locations/${loc.slug}`} className="hub-link">
-                  {loc.city} locksmith details <Icon name="arrow" />
+                  <span>{loc.city} locksmith details</span>
+                  <Icon name="arrow" width={16} height={16} />
                 </Link>
               </div>
             ))}

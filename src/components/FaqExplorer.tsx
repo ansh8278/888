@@ -284,14 +284,16 @@ export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
               Our mobile technicians are available 24/7 for automotive, home, and business locksmith emergencies.
             </p>
             <a href={`tel:${phoneHref}`} className="btn btn-primary btn-block">
-              <Icon name="phone" /> Call {phone}
+              <Icon name="phone" width={18} height={18} /> Call {phone}
             </a>
             <div className="faq-contact-links">
               <Link href="/book" className="link-arrow">
-                Book a service appointment <Icon name="arrow" />
+                <span>Book a service appointment</span>
+                <Icon name="arrow" width={15} height={15} />
               </Link>
               <Link href="/locations" className="link-arrow">
-                View all service locations <Icon name="arrow" />
+                <span>View all service locations</span>
+                <Icon name="arrow" width={15} height={15} />
               </Link>
             </div>
           </div>
