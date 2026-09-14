@@ -45,8 +45,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   }))
 
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable} ${caveat.variable}`}>
-      <body>
+    <html lang="en" className={`${inter.variable} ${sora.variable} ${caveat.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <ProgressBar />
         <a href="#main" className="skip-link">
           Skip to content

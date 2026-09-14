@@ -32,7 +32,34 @@ const dirname = path.dirname(filename)
  *   postgres://…           Postgres — Supabase, used on Vercel
  * Each keeps its own migration folder; the SQL differs.
  */
-const DATABASE_URI = process.env.DATABASE_URI || 'file:./888.db'
+const DEFAULT_DATABASE_URI =
+  'postgresql://postgres.fbbtfvgdipzsvtnahmoz:YgeZPf6DCexqHkno@aws-0-ap-south-1.pooler.supabase.com:6543/postgres?pgbouncer=true'
+const DEFAULT_PAYLOAD_SECRET =
+  '3cc3a78023c5f9382dae98589538b15ed92e6b0c70fe6acdd3caee154427c43f'
+
+const DATABASE_URI =
+  process.env.DATABASE_URI ||
+  (process.env.VERCEL || process.env.NODE_ENV === 'production'
+    ? DEFAULT_DATABASE_URI
+    : 'file:./888.db')
+
+const PAYLOAD_SECRET = process.env.PAYLOAD_SECRET || DEFAULT_PAYLOAD_SECRET
+
+const getServerURL = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')) {
+    return process.env.NEXT_PUBLIC_SITE_URL
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+}
+
+const serverURL = getServerURL()
+
 const db = () =>
   /^postgres(ql)?:/.test(DATABASE_URI)
     ? postgresAdapter({
@@ -54,9 +81,17 @@ const db = () =>
       })
 
 export default buildConfig({
-  // Without this Payload cannot work out the request origin and warns on every
-  // server-side operation; it is also used to build links in emails.
-  serverURL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  serverURL,
+  cors: [
+    serverURL,
+    'https://*.vercel.app',
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+  ],
+  csrf: [
+    serverURL,
+    'https://*.vercel.app',
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+  ],
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
@@ -82,7 +117,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   // Password resets and new-enquiry alerts both go through this.
   email: emailAdapter,
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
