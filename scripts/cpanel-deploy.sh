@@ -32,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 9 (wipes the real node_modules)"
+  echo "script  : version 10 (npm ci from package-lock.json)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -85,20 +85,27 @@ trap 'rm -f "$LOCK"' EXIT
     echo "cleared $VENV_MODULES — $(ls -A "$VENV_MODULES" | wc -l) items left (must be 0)"
   }
   wipe_modules
-  if ! npm install --omit=dev --no-audit --no-fund 2>&1; then
-    # "Invalid Version:" here means npm's own records got corrupted by the
-    # earlier overlapping runs. Wipe its cache and lockfile and go again.
-    echo; echo "npm install failed — clearing npm's cache and lockfile, then retrying once"
-    npm cache clean --force 2>&1
-    rm -f "$APP_DIR/package-lock.json"
-    wipe_modules
-    if ! npm install --omit=dev --no-audit --no-fund 2>&1; then
-      echo "FAILED at npm install. npm's own log:"
-      tail -n 40 "$(ls -t "$HOME"/.npm/_logs/*-debug-0.log 2>/dev/null | head -1)" 2>/dev/null
-      exit 1
-    fi
+
+  # npm's resolver crashes on this host ("Invalid Version:") even from a
+  # clean slate. `npm ci` skips the resolver: it installs exactly what
+  # package-lock.json lists, which is what worked on the very first run.
+  if [ ! -f "$APP_DIR/package-lock.json" ]; then
+    echo "FAILED: package-lock.json is missing. Upload it from Desktop/888/web into $APP_DIR and run again."
+    exit 1
   fi
-  echo "npm install finished $(date +%H:%M)"
+  if grep -q '"version": ""' "$APP_DIR/package-lock.json"; then
+    echo "FAILED: package-lock.json on the server is damaged. Upload a fresh copy from Desktop/888/web (Overwrite) and run again."
+    exit 1
+  fi
+  echo "package-lock.json: $(wc -c < "$APP_DIR/package-lock.json") bytes"
+  if ! npm ci --omit=dev --no-audit --no-fund 2>&1; then
+    echo "FAILED at npm ci. npm settings on this server:"
+    npm config list 2>&1 | grep -v '^;' | head -20
+    echo "npm's own log:"
+    tail -n 40 "$(ls -t "$HOME"/.npm/_logs/*-debug-0.log 2>/dev/null | head -1)" 2>/dev/null
+    exit 1
+  fi
+  echo "npm ci finished $(date +%H:%M)"
 
   echo; echo "---- 2/4 build ----  (started $(date +%H:%M))"
   # --webpack: this host's system libraries are older than Next's native
