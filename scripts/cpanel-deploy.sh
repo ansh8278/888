@@ -28,6 +28,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
+  echo "script  : version 5 (webpack build)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
