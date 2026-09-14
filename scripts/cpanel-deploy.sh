@@ -8,7 +8,8 @@
 # the starter content — the same steps the cPanel buttons would do, minus the
 # URL check that keeps failing before the app can run.
 
-set -u
+# No `set -u`: cPanel's activate script reads a variable it never sets
+# (CL_VIRTUAL_ENV) and strict mode aborts on it.
 APP_DIR="${APP_DIR:-$HOME/888}"
 LOG="$APP_DIR/deploy.log"
 
