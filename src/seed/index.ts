@@ -98,6 +98,8 @@ const seed = async () => {
     const created = await payload.create({
       collection: 'services',
       data: {
+        // Drafts are hidden from the site; starter content must be live.
+        _status: 'published',
         title: svc.title,
         icon: svc.icon as 'car',
         order: svc.order,
@@ -121,6 +123,8 @@ const seed = async () => {
     await payload.create({
       collection: 'locations',
       data: {
+        // Drafts are hidden from the site; starter content must be live.
+        _status: 'published',
         city: loc.city,
         state: loc.state,
         stateAbbr: loc.stateAbbr,
@@ -160,6 +164,8 @@ const seed = async () => {
   await payload.create({
     collection: 'pages',
     data: {
+      // Drafts are hidden from the site; starter content must be live.
+      _status: 'published',
       title: 'About Us',
       slug: 'about',
       intro:
@@ -185,6 +191,8 @@ const seed = async () => {
   await payload.create({
     collection: 'pages',
     data: {
+      // Drafts are hidden from the site; starter content must be live.
+      _status: 'published',
       title: 'Privacy Policy',
       slug: 'privacy',
       intro: 'What we collect when you contact us, and what we do with it.',
@@ -205,6 +213,8 @@ const seed = async () => {
   await payload.create({
     collection: 'pages',
     data: {
+      // Drafts are hidden from the site; starter content must be live.
+      _status: 'published',
       title: 'Terms of Service',
       slug: 'terms',
       intro: 'The terms you agree to when you book work with us.',

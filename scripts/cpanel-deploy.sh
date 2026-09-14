@@ -32,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 11 (reuses install, uses uploaded build)"
+  echo "script  : version 12 (publishes starter content)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -134,6 +134,12 @@ trap 'rm -f "$LOCK"' EXIT
     echo "already seeded — skipping so your content is not overwritten"
   else
     npm run seed 2>&1 && touch "$APP_DIR/.seeded" || { echo "FAILED at seed"; exit 1; }
+  fi
+  # Starter content seeded by older versions was left as drafts, which the
+  # site hides. Publish everything once; later drafts made in admin are left alone.
+  if [ ! -f "$APP_DIR/.published" ]; then
+    echo "publishing all content (one time)"
+    npm run versions:backfill 2>&1 && touch "$APP_DIR/.published" || { echo "FAILED at publish"; exit 1; }
   fi
 
   # Tell Passenger to reload the app.
