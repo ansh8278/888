@@ -21,7 +21,17 @@ const handle = app.getRequestHandler()
 app
   .prepare()
   .then(() => {
-    createServer((req, res) => handle(req, res)).listen(port, hostname, () => {
+    // Passenger strips the sub-path it mounts us on ("/888") before the
+    // request reaches us, but the app is built to expect it. Put it back.
+    // Map "/" to "/888" (no slash) so Next's own trailing-slash redirect
+    // cannot ping-pong with Apache's.
+    const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    createServer((req, res) => {
+      if (base && req.url !== base && !req.url.startsWith(`${base}/`) && !req.url.startsWith(`${base}?`)) {
+        req.url = req.url.startsWith('/?') || req.url === '/' ? base + req.url.slice(1) : base + req.url
+      }
+      handle(req, res)
+    }).listen(port, hostname, () => {
       console.log(`888 Lock & Key ready on ${hostname}:${port}`)
     })
   })
