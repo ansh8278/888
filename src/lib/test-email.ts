@@ -20,6 +20,13 @@ const sent: { to: string; subject: string; html: string }[] = []
 const run = async () => {
   const payload = await getPayload({ config })
 
+  // The notify hook logs "alert sent to <address>" after every send. With the
+  // transport stubbed below that is misleading — it reads as if the test just
+  // emailed a real inbox — so keep the log quiet for the duration.
+  const previousLevel = payload.logger.level
+  payload.logger.level = 'error'
+  console.log('email: transport stubbed — nothing is actually sent')
+
   // Two seams, deliberately: the enquiry hook calls payload.sendEmail (bound at
   // init), while Payload's forgot-password operation calls the adapter's
   // sendEmail directly. Stubbing only one silently misses the other.
@@ -114,6 +121,7 @@ const run = async () => {
   assert.match(reset.html, /888 Lock &amp; Key/, 'reset email is branded')
 
   console.log('email: all assertions passed')
+  console.log(`  captured ${sent.length} messages, delivered 0`)
   console.log(`  alert  -> "${alert.subject}"`)
   console.log(`  reset  -> "${reset.subject}"`)
   } finally {
@@ -123,6 +131,7 @@ const run = async () => {
     }
     payload.sendEmail = realSendEmail
     payload.email.sendEmail = realAdapterSend
+    payload.logger.level = previousLevel
   }
   process.exit(0)
 }
