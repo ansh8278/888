@@ -40,6 +40,7 @@ trap 'rm -f "$LOCK"' EXIT
   source "$ACTIVATE"
   cd "$APP_DIR" || { echo "FAILED: cannot cd to $APP_DIR"; exit 1; }
   echo "node    : $(node -v)   npm: $(npm -v)"
+  echo "glibc   : $(ldd --version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+$' || echo unknown)  (database needs 2.18, images 2.28)"
 
   echo; echo "---- 1/4 npm install ----  (started $(date +%H:%M), silent until done — can take 10-20 min here)"
   # Clean slate. Earlier runs on this slow host overlapped and left npm's
@@ -55,9 +56,12 @@ trap 'rm -f "$LOCK"' EXIT
   npm install --omit=dev --no-audit --no-fund 2>&1 || { echo "FAILED at npm install"; exit 1; }
   echo "npm install finished $(date +%H:%M)"
 
-  echo; echo "---- 2/4 build ----"
-  # 1.5 GB ceiling: enough for this site, low enough for shared hosting.
-  NODE_OPTIONS=--max-old-space-size=1536 npx next build 2>&1 || { echo "FAILED at build (if it says 'heap out of memory' or 'Killed', use Plan B in DEPLOY-CPANEL.md)"; exit 1; }
+  echo; echo "---- 2/4 build ----  (started $(date +%H:%M))"
+  # --webpack: this host's system libraries are older than Next's native
+  # compiler needs (GLIBC 2.30), so the fast Turbopack path cannot load.
+  # Webpack uses a portable fallback. Slower, but it works here.
+  NODE_OPTIONS=--max-old-space-size=2048 npx next build --webpack 2>&1 || { echo "FAILED at build (if it says 'heap out of memory' or 'Killed', use Plan B in DEPLOY-CPANEL.md)"; exit 1; }
+  echo "build finished $(date +%H:%M)"
 
   echo; echo "---- 3/4 migrate ----"
   npx payload migrate 2>&1 || { echo "FAILED at migrate"; exit 1; }
