@@ -6,11 +6,12 @@ import { revalidatePath } from 'next/cache'
  * this purges the Next.js cache for the entire frontend layout, ensuring changes
  * reflect instantly on the live site.
  */
-export const revalidateSite = () => {
+export const revalidateSite = (args?: any) => {
   try {
     revalidatePath('/', 'layout')
   } catch (_e) {
     // In some non-request contexts (like build or seed scripts),
     // next/cache may not be available. Ignore safely.
   }
+  return args?.doc
 }

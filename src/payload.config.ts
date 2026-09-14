@@ -83,16 +83,7 @@ const db = () =>
 
 export default buildConfig({
   serverURL,
-  cors: [
-    serverURL,
-    'https://*.vercel.app',
-    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
-  ],
-  csrf: [
-    serverURL,
-    'https://*.vercel.app',
-    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
-  ],
+  cors: '*',
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
