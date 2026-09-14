@@ -42,14 +42,15 @@ trap 'rm -f "$LOCK"' EXIT
   echo "node    : $(node -v)   npm: $(npm -v)"
 
   echo; echo "---- 1/4 npm install ----  (started $(date +%H:%M), silent until done — can take 10-20 min here)"
-  # A killed or overlapping install leaves npm's temp folders behind
-  # (.name-XXXXXXXX) and the next install trips on them. Clear them first.
+  # Clean slate. Earlier runs on this slow host overlapped and left npm's
+  # half-extracted folders everywhere; patching around them failed twice.
+  # Killing any stray install and reinstalling from empty is the reliable fix.
+  # (~/.npm keeps the downloaded packages, so this is faster than the first time.)
+  pkill -u "$(id -un)" -f 'npm (install|ci)' 2>/dev/null && { echo "stopped a stray npm install from an earlier run"; sleep 3; }
   VENV_MODULES="$(dirname "$(dirname "$ACTIVATE")")/lib/node_modules"
   if [ -d "$VENV_MODULES" ]; then
-    # No depth limit: leftovers also sit inside scoped folders (@babel/.parser-XXXX)
-    # and nested node_modules.
-    leftovers=$(find "$VENV_MODULES" -type d -name '.*-????????' 2>/dev/null | wc -l)
-    [ "$leftovers" -gt 0 ] && { echo "removing $leftovers leftover temp folders from an interrupted install"; find "$VENV_MODULES" -depth -type d -name '.*-????????' -exec rm -rf {} + 2>/dev/null; }
+    echo "clearing $VENV_MODULES for a fresh install"
+    find "$VENV_MODULES" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
   fi
   npm install --omit=dev --no-audit --no-fund 2>&1 || { echo "FAILED at npm install"; exit 1; }
   echo "npm install finished $(date +%H:%M)"
