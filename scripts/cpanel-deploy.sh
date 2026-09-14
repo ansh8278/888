@@ -16,6 +16,10 @@ LOG="$APP_DIR/deploy.log"
 # cPanel's Node lives in a "virtual environment"; this is its standard path.
 ACTIVATE=$(ls -d "$HOME"/nodevenv/888/*/bin/activate 2>/dev/null | head -1)
 
+# Once a deploy has fully succeeded, do nothing — so the cron job can be left
+# running every minute without harm. Delete .deploy-done to deploy again.
+[ -f "$APP_DIR/.deploy-done" ] && exit 0
+
 # Never run two deploys at once: a second npm install collides with the
 # first one's half-extracted folders (ENOTEMPTY on rename).
 LOCK="$APP_DIR/.deploy.lock"
@@ -28,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 5 (webpack build)"
+  echo "script  : version 6 (webpack build, self-stopping)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -77,5 +81,7 @@ trap 'rm -f "$LOCK"' EXIT
   # Tell Passenger to reload the app.
   mkdir -p "$APP_DIR/tmp" && touch "$APP_DIR/tmp/restart.txt"
 
+  touch "$APP_DIR/.deploy-done"
   echo; echo "DONE. Now open the site. If it shows an error, restart it in cPanel > Node.js."
+  echo "(This script will not run again until $APP_DIR/.deploy-done is deleted.)"
 } >> "$LOG" 2>&1
