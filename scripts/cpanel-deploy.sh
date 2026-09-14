@@ -32,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 8 (safe .env loader, npm self-heal)"
+  echo "script  : version 9 (wipes the real node_modules)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -69,19 +69,29 @@ trap 'rm -f "$LOCK"' EXIT
   # Killing any stray install and reinstalling from empty is the reliable fix.
   # (~/.npm keeps the downloaded packages, so this is faster than the first time.)
   pkill -u "$(id -un)" -f 'npm (install|ci)' 2>/dev/null && { echo "stopped a stray npm install from an earlier run"; sleep 3; }
+  # cPanel normally makes 888/node_modules a link into the Node environment,
+  # but after the earlier crashes it may be a real folder full of torn
+  # packages (an empty version = "Invalid Version:"). Wipe whichever it is.
   VENV_MODULES="$(dirname "$(dirname "$ACTIVATE")")/lib/node_modules"
-  if [ -d "$VENV_MODULES" ]; then
-    echo "clearing $VENV_MODULES for a fresh install"
-    find "$VENV_MODULES" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
-  fi
-  rm -f "$APP_DIR/node_modules/.package-lock.json"
+  wipe_modules() {
+    echo "node_modules is: $(ls -ld "$APP_DIR/node_modules" 2>&1)"
+    if [ -d "$APP_DIR/node_modules" ] && [ ! -L "$APP_DIR/node_modules" ]; then
+      rm -rf "$APP_DIR/node_modules"
+      mkdir -p "$VENV_MODULES" && ln -s "$VENV_MODULES" "$APP_DIR/node_modules"
+      echo "replaced the real folder with a link to $VENV_MODULES"
+    fi
+    mkdir -p "$VENV_MODULES"
+    find "$VENV_MODULES" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+    echo "cleared $VENV_MODULES — $(ls -A "$VENV_MODULES" | wc -l) items left (must be 0)"
+  }
+  wipe_modules
   if ! npm install --omit=dev --no-audit --no-fund 2>&1; then
     # "Invalid Version:" here means npm's own records got corrupted by the
     # earlier overlapping runs. Wipe its cache and lockfile and go again.
     echo; echo "npm install failed — clearing npm's cache and lockfile, then retrying once"
     npm cache clean --force 2>&1
     rm -f "$APP_DIR/package-lock.json"
-    find "$VENV_MODULES" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
+    wipe_modules
     if ! npm install --omit=dev --no-audit --no-fund 2>&1; then
       echo "FAILED at npm install. npm's own log:"
       tail -n 40 "$(ls -t "$HOME"/.npm/_logs/*-debug-0.log 2>/dev/null | head -1)" 2>/dev/null
