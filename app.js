@@ -10,12 +10,23 @@
  * each deploy so the database schema matches the code.
  */
 import { createServer } from 'http'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import nextEnv from '@next/env'
 import next from 'next'
+
+// Under Passenger the working directory is not reliable. Everything here is
+// relative to this file's folder: .env, the SQLite file (file:./888.db) and
+// the media uploads. So move there first, then load .env ourselves —
+// next.config.ts needs NEXT_PUBLIC_BASE_PATH before it is evaluated.
+const dir = dirname(fileURLToPath(import.meta.url))
+process.chdir(dir)
+nextEnv.loadEnvConfig(dir, false)
 
 const port = Number(process.env.PORT) || 3000
 const hostname = process.env.HOSTNAME || '0.0.0.0'
 
-const app = next({ dev: false, hostname, port })
+const app = next({ dev: false, dir, hostname, port })
 const handle = app.getRequestHandler()
 
 app
@@ -26,10 +37,11 @@ app
     // Map "/" to "/888" (no slash) so Next's own trailing-slash redirect
     // cannot ping-pong with Apache's.
     const base = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    console.error(`888 app: base path "${base}", cwd ${process.cwd()}, dir ${dir}`)
     let logged = 0
     createServer((req, res) => {
       const incoming = req.url
-      res.setHeader('x-888-app', '3')
+      res.setHeader('x-888-app', '4')
       if (base && req.url !== base && !req.url.startsWith(`${base}/`) && !req.url.startsWith(`${base}?`)) {
         req.url = req.url.startsWith('/?') || req.url === '/' ? base + req.url.slice(1) : base + req.url
       }
