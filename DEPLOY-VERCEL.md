@@ -17,10 +17,11 @@ Postgres); each engine has its own migrations folder (`src/migrations`,
 1. Sign up at https://supabase.com → **New project** → name `888`, choose a
    strong database password (save it), pick a region near your customers.
 2. When it is ready: top bar **Connect** → *Connection string* → method
-   **Session pooler** (not Direct, not Transaction) → copy the URI. It looks
-   like `postgresql://postgres.xxxx:[YOUR-PASSWORD]@aws-0-region.pooler.supabase.com:5432/postgres`.
+   **Transaction pooler** (port 6543 with `?pgbouncer=true`) → copy the URI.
+   It looks like `postgresql://postgres.xxxx:[YOUR-PASSWORD]@aws-0-region.pooler.supabase.com:6543/postgres?pgbouncer=true`.
 3. Replace `[YOUR-PASSWORD]` with the password you chose. That is your
-   `DATABASE_URI`.
+   `DATABASE_URI`. (Note: Do not use Session pooler on port 5432, as serverless lambdas
+   will quickly exceed the 15 client connection limit).
 
 ## 2. Vercel project (10 min)
 
