@@ -8,9 +8,10 @@ import { mediaUrl } from '../../components/blocks'
 import { ProgressBar } from '../../components/ProgressBar'
 import '../../styles/site.css'
 
-// Revalidate every 60s so pages are cached at the Edge CDN for instant (0ms)
-// navigation while content edits in Payload CMS still update automatically.
-export const revalidate = 60
+// Dynamic rendering and 0-second revalidation ensure all edits in Payload CMS
+// reflect instantly on the live site.
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const sora = Sora({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-sora', display: 'swap' })

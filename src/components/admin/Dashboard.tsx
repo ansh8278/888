@@ -3,6 +3,7 @@ import { Gutter } from '@payloadcms/ui'
 import { getPayload, type Where } from 'payload'
 import config from '@payload-config'
 import { withBase } from '../../lib/base-path'
+import { LogoutButton } from './LogoutButton'
 
 /**
  * Replaces Payload's default dashboard entirely.
@@ -126,9 +127,7 @@ export const Dashboard = async () => {
           <a className="dash__view-site" href={SITE_URL} target="_blank" rel="noopener noreferrer">
             View live site ↗
           </a>
-          <a className="dash__logout" href={withBase('/admin/logout')}>
-            {signedInAs ? `Log out (${signedInAs})` : 'Log out'}
-          </a>
+          <LogoutButton signedInAs={signedInAs} />
         </div>
       </div>
 

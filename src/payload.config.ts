@@ -22,6 +22,7 @@ import { Navigation } from './globals/Navigation'
 import { HomePage } from './globals/HomePage'
 import { ComboTemplate } from './globals/ComboTemplate'
 import { PageCopy } from './globals/PageCopy'
+import { revalidateSite } from './lib/revalidate'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -137,6 +138,25 @@ export default buildConfig({
         },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
+    }),
+    // Automatically purge Next.js frontend cache whenever any document or global changes
+    (incomingConfig) => ({
+      ...incomingConfig,
+      collections: (incomingConfig.collections || []).map((col) => ({
+        ...col,
+        hooks: {
+          ...col.hooks,
+          afterChange: [...(col.hooks?.afterChange || []), revalidateSite],
+          afterDelete: [...(col.hooks?.afterDelete || []), revalidateSite],
+        },
+      })),
+      globals: (incomingConfig.globals || []).map((glob) => ({
+        ...glob,
+        hooks: {
+          ...glob.hooks,
+          afterChange: [...(glob.hooks?.afterChange || []), revalidateSite],
+        },
+      })),
     }),
   ],
 })
