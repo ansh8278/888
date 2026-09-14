@@ -16,6 +16,16 @@ LOG="$APP_DIR/deploy.log"
 # cPanel's Node lives in a "virtual environment"; this is its standard path.
 ACTIVATE=$(ls -d "$HOME"/nodevenv/888/*/bin/activate 2>/dev/null | head -1)
 
+# Never run two deploys at once: a second npm install collides with the
+# first one's half-extracted folders (ENOTEMPTY on rename).
+LOCK="$APP_DIR/.deploy.lock"
+if [ -f "$LOCK" ] && [ "$(find "$LOCK" -mmin -90 2>/dev/null)" ]; then
+  echo "$(date): another deploy is still running (lock is under 90 min old) — skipping" >> "$LOG"
+  exit 0
+fi
+touch "$LOCK"
+trap 'rm -f "$LOCK"' EXIT
+
 {
   echo "==================== $(date) ===================="
   echo "app dir : $APP_DIR"
@@ -31,8 +41,16 @@ ACTIVATE=$(ls -d "$HOME"/nodevenv/888/*/bin/activate 2>/dev/null | head -1)
   cd "$APP_DIR" || { echo "FAILED: cannot cd to $APP_DIR"; exit 1; }
   echo "node    : $(node -v)   npm: $(npm -v)"
 
-  echo; echo "---- 1/4 npm install ----"
+  echo; echo "---- 1/4 npm install ----  (started $(date +%H:%M), silent until done — can take 10-20 min here)"
+  # A killed or overlapping install leaves npm's temp folders behind
+  # (.name-XXXXXXXX) and the next install trips on them. Clear them first.
+  VENV_MODULES="$(dirname "$(dirname "$ACTIVATE")")/lib/node_modules"
+  if [ -d "$VENV_MODULES" ]; then
+    leftovers=$(find "$VENV_MODULES" -maxdepth 1 -type d -name '.*-????????' 2>/dev/null | wc -l)
+    [ "$leftovers" -gt 0 ] && { echo "removing $leftovers leftover temp folders from an interrupted install"; find "$VENV_MODULES" -maxdepth 1 -type d -name '.*-????????' -exec rm -rf {} + ; }
+  fi
   npm install --omit=dev --no-audit --no-fund 2>&1 || { echo "FAILED at npm install"; exit 1; }
+  echo "npm install finished $(date +%H:%M)"
 
   echo; echo "---- 2/4 build ----"
   # 1.5 GB ceiling: enough for this site, low enough for shared hosting.
