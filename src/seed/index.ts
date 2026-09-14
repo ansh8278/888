@@ -10,8 +10,17 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 /** Images still live in the original site folder, two levels up from web/src. */
 const ASSETS = path.resolve(dirname, '../../../')
 
+import { randomBytes } from 'crypto'
+
 const ADMIN_EMAIL = process.env.SEED_ADMIN_EMAIL || 'admin@888lockandkey.com'
-const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD || 'ChangeMe123!'
+
+/**
+ * No fallback password on purpose: a literal here ends up in git history and
+ * in every copy of the code. With SEED_ADMIN_PASSWORD unset, a random one is
+ * generated and printed exactly once, at seed time.
+ */
+const generatedPassword = !process.env.SEED_ADMIN_PASSWORD
+const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD || randomBytes(12).toString('base64url')
 
 const seed = async () => {
   const payload = await getPayload({ config })
@@ -39,6 +48,11 @@ const seed = async () => {
       },
     })
     payload.logger.info(`Created admin ${ADMIN_EMAIL}`)
+    if (generatedPassword) {
+      payload.logger.warn(
+        `No SEED_ADMIN_PASSWORD was set, so one was generated. Write it down now — it is not stored anywhere:\n\n    ${ADMIN_PASSWORD}\n`,
+      )
+    }
   }
 
   // ---------- media ----------

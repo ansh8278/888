@@ -32,9 +32,9 @@ npm start        # serve the production build
 npm run seed     # wipe content and reload the starter content (keeps users)
 ```
 
-**Admin login:** `admin@888lockandkey.com` / `ChangeMe123!`
-Change this immediately — it is a known default. Do it in the CMS under
-**Admin → Users**, or set `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` before seeding.
+**Admin login:** the email and password in your `.env` (`SEED_ADMIN_EMAIL` /
+`SEED_ADMIN_PASSWORD`). If the password is left blank, `npm run seed` generates
+one and prints it exactly once. There is no default password in the code.
 
 > If a port is already in use, Next silently starts on 3001 and you will be
 > looking at a stale server. Check the port it prints.
