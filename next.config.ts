@@ -44,6 +44,7 @@ const nextConfig: NextConfig = {
     ]
   },
   images: {
+    dangerouslyAllowLocalIP: true,
     // Uploads live on Vercel Blob when deployed there.
     remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com' }],
     localPatterns: [
