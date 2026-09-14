@@ -19,41 +19,31 @@ type Props = {
   columns?: Column[] | null
 }
 
-const DEFAULT_COLUMNS: Column[] = [
-  {
-    heading: 'Services',
-    links: [
-      { label: 'Car Lockout & Unlocking', href: '/services/car-lockout' },
-      { label: 'Residential Door Lockout', href: '/services/residential-lockout' },
-      { label: 'House Rekeying & Lock Change', href: '/services/house-rekey' },
-      { label: 'Car Key & Fob Programming', href: '/services/car-key-and-fob-replacement' },
-      { label: 'Smart Lock Installation', href: '/services/smart-lock-installation' },
-      { label: 'Commercial Access Control', href: '/services/commercial-and-access-control' },
-    ],
-  },
-  {
-    heading: 'Locations',
-    links: [
-      { label: 'San Jose, CA', href: '/locations/san-jose' },
-      { label: 'San Francisco, CA', href: '/locations/san-francisco' },
-      { label: 'Los Angeles, CA', href: '/locations/los-angeles' },
-      { label: 'Phoenix, AZ', href: '/locations/phoenix' },
-      { label: 'Scottsdale, AZ', href: '/locations/scottsdale' },
-      { label: 'New York City, NY', href: '/locations/new-york-city' },
-    ],
-  },
-  {
-    heading: 'Company',
-    links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Pricing Guide', href: '/pricing' },
-      { label: 'Customer Reviews', href: '/reviews' },
-      { label: 'FAQ', href: '/faq' },
-      { label: 'Contact Us', href: '/contact' },
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-    ],
-  },
+const DEFAULT_SERVICES = [
+  { label: 'Car Lockout & Unlocking', href: '/services/car-lockout' },
+  { label: 'Residential Door Lockout', href: '/services/residential-lockout' },
+  { label: 'House Rekey & Lock Change', href: '/services/house-rekey' },
+  { label: 'Car Key & Fob Replacement', href: '/services/car-key-and-fob-replacement' },
+  { label: 'Smart Lock Installation', href: '/services/smart-lock-installation' },
+  { label: 'Commercial & Access Control', href: '/services/commercial-and-access-control' },
+]
+
+const DEFAULT_LOCATIONS = [
+  { label: 'San Jose, CA', href: '/locations/san-jose' },
+  { label: 'San Francisco, CA', href: '/locations/san-francisco' },
+  { label: 'Los Angeles, CA', href: '/locations/los-angeles' },
+  { label: 'Phoenix, AZ', href: '/locations/phoenix' },
+  { label: 'Scottsdale, AZ', href: '/locations/scottsdale' },
+  { label: 'New York City, NY', href: '/locations/new-york-city' },
+]
+
+const DEFAULT_COMPANY = [
+  { label: 'About Us', href: '/about' },
+  { label: 'Pricing Guide', href: '/pricing' },
+  { label: 'Customer Reviews', href: '/reviews' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Request Service', href: '/book' },
+  { label: 'Contact Us', href: '/contact' },
 ]
 
 export const Footer = ({
@@ -67,36 +57,44 @@ export const Footer = ({
   note,
   columns,
 }: Props) => {
-  const activeColumns =
-    columns && columns.length > 0 && columns.some((c) => c.links && c.links.length > 0)
-      ? columns
-      : DEFAULT_COLUMNS
+  // Extract custom columns from CMS if available, otherwise use defaults
+  const servicesCol = columns?.find((c) => /service/i.test(c.heading))?.links?.length
+    ? columns.find((c) => /service/i.test(c.heading))!.links!
+    : DEFAULT_SERVICES
+
+  const locationsCol = columns?.find((c) => /location|city|area/i.test(c.heading))?.links?.length
+    ? columns.find((c) => /location|city|area/i.test(c.heading))!.links!
+    : DEFAULT_LOCATIONS
+
+  const companyCol = columns?.find((c) => /company|about/i.test(c.heading))?.links?.length
+    ? columns.find((c) => /company|about/i.test(c.heading))!.links!
+    : DEFAULT_COMPANY
 
   return (
     <footer className="site-footer">
-      {/* Top emergency dispatch ribbon */}
-      <div className="footer-status-bar">
-        <div className="wrap footer-status-inner">
-          <div className="footer-status-live">
-            <span className="live-pulse-dot" />
-            <span>24/7 Mobile Dispatch Active Now</span>
-            <span className="footer-status-sep">·</span>
-            <span className="footer-status-eta">Avg Arrival: 15–25 mins</span>
+      {/* Sleek top live dispatch bar */}
+      <div className="footer-top-bar">
+        <div className="wrap footer-top-inner">
+          <div className="footer-live-status">
+            <span className="live-dot" />
+            <span className="live-text">24/7 Mobile Dispatch Active</span>
+            <span className="dot-sep">•</span>
+            <span className="live-eta">Avg Arrival 15–25 Mins</span>
           </div>
-          <div className="footer-status-call">
-            <span>Locked out? Call direct:</span>
-            <a href={`tel:${phoneHref}`} className="footer-status-phone">
+          <div className="footer-quick-call">
+            <span className="quick-call-label">Need immediate service?</span>
+            <a href={`tel:${phoneHref}`} className="footer-call-pill">
               <Icon name="phone" />
-              {phone}
+              <span>{phone}</span>
             </a>
           </div>
         </div>
       </div>
 
       <div className="wrap">
-        <div className="footer-grid">
-          {/* Brand Column */}
-          <div className="footer-brand">
+        <div className="footer-main-grid">
+          {/* Brand Info */}
+          <div className="footer-brand-pane">
             <Link href="/" className="logo">
               <div className="logo-icon-box footer-logo-box">
                 <Icon name="lock" strokeWidth={2.2} />
@@ -107,84 +105,103 @@ export const Footer = ({
               </div>
             </Link>
 
-            <p className="footer-note">
+            <p className="footer-desc">
               {note ||
-                'Licensed, bonded, and insured mobile locksmith serving California, Arizona, and New York with 24/7 rapid roadside and on-site dispatch.'}
+                'Licensed, bonded, and insured 24/7 mobile locksmith service. On-site vehicle unlocking, residential rekeying, and commercial access control with upfront pricing.'}
             </p>
 
-            {/* Trust Badges */}
-            <div className="footer-trust-chips">
-              <div className="footer-chip">
-                <span className="chip-star">★</span>
+            <div className="footer-trust-row">
+              <div className="trust-pill">
+                <span className="star-icon">★</span>
                 <span><strong>4.9/5</strong> Rating (1,250+ Reviews)</span>
               </div>
               {licenseNumber ? (
-                <div className="footer-chip">
+                <div className="trust-pill">
                   <span>🛡️ {licenseNumber}</span>
                 </div>
               ) : null}
             </div>
           </div>
 
-          {/* Navigation link columns */}
-          {activeColumns.map((col) => (
-            <div key={col.heading} className="footer-col">
-              <h3>{col.heading}</h3>
-              <ul>
-                {(col.links ?? []).map((link) => (
-                  <li key={`${col.heading}-${link.href}`}>
-                    <Link href={link.href}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Services Column */}
+          <div className="footer-nav-col">
+            <h4 className="footer-heading">Services</h4>
+            <ul className="footer-links">
+              {servicesCol.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          {/* Dedicated 24/7 Dispatch Card */}
-          <div className="footer-col footer-dispatch-card">
-            <h3>24/7 Emergency Dispatch</h3>
-            <p className="dispatch-card-desc">
-              Mobile technician vans stationed locally and equipped for on-site key making and emergency door opening.
-            </p>
-            <a href={`tel:${phoneHref}`} className="footer-cta-call">
-              <Icon name="phone" />
-              <span>
-                <small>TAP TO CALL DISPATCH</small>
-                <strong>{phone}</strong>
-              </span>
-            </a>
-            <div className="dispatch-details">
-              {email ? (
-                <div className="dispatch-row">
-                  <span className="dispatch-label">Email:</span>
-                  <a href={`mailto:${email}`}>{email}</a>
+          {/* Locations Column */}
+          <div className="footer-nav-col">
+            <h4 className="footer-heading">Locations</h4>
+            <ul className="footer-links">
+              {locationsCol.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company & Support Column */}
+          <div className="footer-nav-col">
+            <h4 className="footer-heading">Company</h4>
+            <ul className="footer-links">
+              {companyCol.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/privacy">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link href="/terms">Terms of Service</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Direct Dispatch Column */}
+          <div className="footer-nav-col footer-contact-pane">
+            <h4 className="footer-heading">24/7 Dispatch</h4>
+            <div className="dispatch-box">
+              <p className="dispatch-text">
+                Mobile locksmith units on call 24 hours a day, 7 days a week including holidays.
+              </p>
+              <a href={`tel:${phoneHref}`} className="dispatch-phone-btn">
+                <div className="dispatch-phone-icon">
+                  <Icon name="phone" />
                 </div>
+                <div className="dispatch-phone-info">
+                  <span className="dispatch-phone-label">24/7 DISPATCH LINE</span>
+                  <span className="dispatch-phone-val">{phone}</span>
+                </div>
+              </a>
+              {email ? (
+                <a href={`mailto:${email}`} className="dispatch-email">
+                  {email}
+                </a>
               ) : null}
-              <div className="dispatch-row">
-                <span className="dispatch-label">Quotes:</span>
-                <span>Upfront pricing · No surprise fees</span>
-              </div>
-              <div className="dispatch-row">
-                <span className="dispatch-label">Payment:</span>
-                <span>Cards, Apple Pay, Cash</span>
+              <div className="dispatch-guarantee">
+                ✓ Upfront Pricing &amp; No Hidden Fees
               </div>
             </div>
           </div>
         </div>
 
-        {/* Footer Bottom Bar */}
-        <div className="footer-bottom">
-          <div className="footer-bottom-copy">
-            <span>
-              © {new Date().getFullYear()} {companyName}. All rights reserved.
-            </span>
-            {licenseNumber ? <span className="footer-bottom-dot">·</span> : null}
-            {licenseNumber ? <span>BSIS Licensed &amp; Insured</span> : null}
+        {/* Bottom copyright line */}
+        <div className="footer-sub-bottom">
+          <div className="sub-bottom-left">
+            <span>© {new Date().getFullYear()} {companyName}. All rights reserved.</span>
+            {serviceAreaLine ? <span className="sub-sep">·</span> : null}
+            {serviceAreaLine ? <span>{serviceAreaLine}</span> : null}
           </div>
-          <div className="footer-bottom-links">
-            <Link href="/privacy">Privacy Policy</Link>
-            <Link href="/terms">Terms of Service</Link>
-            <Link href="/contact">Support &amp; Dispatch</Link>
+          <div className="sub-bottom-right">
+            <span>Licensed, Bonded &amp; Insured Locksmith Service</span>
           </div>
         </div>
       </div>
