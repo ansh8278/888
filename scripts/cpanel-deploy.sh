@@ -32,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 7 (webpack build, /888 base path, reads .env)"
+  echo "script  : version 8 (safe .env loader, npm self-heal)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -48,8 +48,14 @@ trap 'rm -f "$LOCK"' EXIT
   # cPanel's Node.js env vars only reach the app via Passenger, not cron. The
   # build bakes in NEXT_PUBLIC_*, and migrate/seed need the secret and
   # database path, so load them from .env in the app folder.
+  # Read line by line instead of sourcing: a value like "888 Lock & Key"
+  # would otherwise be run as commands.
   if [ -f "$APP_DIR/.env" ]; then
-    set -a; . "$APP_DIR/.env"; set +a
+    while IFS= read -r line || [ -n "$line" ]; do
+      line=${line%$'\r'}
+      case "$line" in ''|'#'*) continue;; esac
+      export "$line"
+    done < "$APP_DIR/.env"
     echo "env     : loaded from .env (site url: ${NEXT_PUBLIC_SITE_URL:-unset}, base path: ${NEXT_PUBLIC_BASE_PATH:-none})"
   else
     echo "WARNING : no .env in $APP_DIR — build will use localhost URLs and seed may fail"
@@ -68,7 +74,20 @@ trap 'rm -f "$LOCK"' EXIT
     echo "clearing $VENV_MODULES for a fresh install"
     find "$VENV_MODULES" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
   fi
-  npm install --omit=dev --no-audit --no-fund 2>&1 || { echo "FAILED at npm install"; exit 1; }
+  rm -f "$APP_DIR/node_modules/.package-lock.json"
+  if ! npm install --omit=dev --no-audit --no-fund 2>&1; then
+    # "Invalid Version:" here means npm's own records got corrupted by the
+    # earlier overlapping runs. Wipe its cache and lockfile and go again.
+    echo; echo "npm install failed — clearing npm's cache and lockfile, then retrying once"
+    npm cache clean --force 2>&1
+    rm -f "$APP_DIR/package-lock.json"
+    find "$VENV_MODULES" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null
+    if ! npm install --omit=dev --no-audit --no-fund 2>&1; then
+      echo "FAILED at npm install. npm's own log:"
+      tail -n 40 "$(ls -t "$HOME"/.npm/_logs/*-debug-0.log 2>/dev/null | head -1)" 2>/dev/null
+      exit 1
+    fi
+  fi
   echo "npm install finished $(date +%H:%M)"
 
   echo; echo "---- 2/4 build ----  (started $(date +%H:%M))"
