@@ -122,104 +122,67 @@ const HomePage = async () => {
         </div>
       </section>
 
-      {/* About / Why 888 */}
+      {/* About Section */}
       <section className="sec sec-about" id="about">
         <div className="wrap">
-          <div className="about-split-head">
-            <div>
-              <div className="eyebrow eyebrow-dash">WHY 888 LOCK &amp; KEY</div>
-              <h2>Real Locksmiths. Real Shops. No Lead-Broker Scams.</h2>
-            </div>
-            <p className="about-lead-desc">
-              Most online locksmith listings are offshore call-centers quoting fake $15 service fees, only to dispatch unvetted subcontractors who drill your locks and demand $400+. 888 Lock &amp; Key was founded to be the licensed, transparent alternative.
-            </p>
-          </div>
+          <div className="about-home-grid">
+            <div className="about-home-text">
+              <div className="eyebrow eyebrow-dash">ABOUT 888 LOCK &amp; KEY</div>
+              <h2>Reliable Mobile Locksmith Services You Can Trust</h2>
+              <p className="about-home-lead">
+                888 Lock &amp; Key provides professional 24/7 mobile locksmith solutions across California, Arizona, and New York. We operate physical retail shops and a fleet of mobile workshop vans, delivering upfront pricing and quality workmanship for cars, homes, and businesses.
+              </p>
 
-          <div className="about-showcase-grid">
-            <div className="about-pillars-grid">
-              <div className="about-pillar-card">
-                <div className="pillar-icon-box">
-                  <Icon name="shield" />
+              <div className="about-home-features">
+                <div className="about-feature-item">
+                  <div className="feature-icon">
+                    <Icon name="shield" />
+                  </div>
+                  <div>
+                    <strong>Upfront, Transparent Pricing</strong>
+                    <p>Clear estimates confirmed before work begins—no unexpected charges or doorstep surprises.</p>
+                  </div>
                 </div>
-                <h3>100% Upfront Firm Pricing</h3>
-                <p>
-                  We quote your exact total on the phone before our technician is dispatched. What we quote is what you pay—never any travel fees or surprise doorstep upcharges.
-                </p>
+
+                <div className="about-feature-item">
+                  <div className="feature-icon">
+                    <Icon name="key" />
+                  </div>
+                  <div>
+                    <strong>Non-Destructive Entry Priority</strong>
+                    <p>Skilled lock-picking and bypass techniques to preserve your existing door hardware whenever possible.</p>
+                  </div>
+                </div>
+
+                <div className="about-feature-item">
+                  <div className="feature-icon">
+                    <Icon name="people" />
+                  </div>
+                  <div>
+                    <strong>Licensed &amp; Background-Checked</strong>
+                    <p>Qualified, insured locksmith technicians equipped with modern key cutting and diagnostic tools.</p>
+                  </div>
+                </div>
               </div>
 
-              <div className="about-pillar-card">
-                <div className="pillar-icon-box">
-                  <Icon name="key" />
-                </div>
-                <h3>Non-Destructive Entry First</h3>
-                <p>
-                  Over 96% of our lockout calls are resolved using precision lock-picks and bypass tools. We never drill your locks unless the hardware has suffered irreparable mechanical failure.
-                </p>
-              </div>
-
-              <div className="about-pillar-card">
-                <div className="pillar-icon-box">
-                  <Icon name="people" />
-                </div>
-                <h3>W-2 Badged &amp; Screened Techs</h3>
-                <p>
-                  Every locksmith is a direct employee, Live Scan fingerprinted, state licensed, and covered by $2,000,000 in commercial liability insurance for complete peace of mind.
-                </p>
-              </div>
-
-              <div className="about-pillar-card">
-                <div className="pillar-icon-box">
-                  <Icon name="building" />
-                </div>
-                <h3>Real Physical Shops &amp; Mobile Fleet</h3>
-                <p>
-                  We operate real walk-in retail service centers and a fleet of mobile workshop vans stocked with computerized laser key cutters and OBD-II key diagnostic computers.
-                </p>
+              <div className="about-home-actions">
+                <Link href="/about" className="btn btn-primary">
+                  Learn More About Us <Icon name="arrow" />
+                </Link>
+                <a href={`tel:${settings.phoneHref}`} className="btn btn-secondary">
+                  <Icon name="phone" /> Call {settings.phone}
+                </a>
               </div>
             </div>
 
-            <div className="about-showcase-img-card">
+            <div className="about-home-image-wrap">
               <Image
-                src="/images/about-van.jpg"
-                alt="888 Lock & Key licensed locksmith technician with mobile workshop service van"
+                src="/images/888-team.png"
+                alt="888 Lock & Key technician and mobile service van"
                 width={700}
-                height={550}
-                className="about-van-photo"
+                height={500}
+                className="about-home-photo"
               />
-              <div className="about-photo-glass-badge">
-                <span className="livedot" />
-                <div>
-                  <strong>Official 888 Mobile Workshop Fleet</strong>
-                  <span>Stocked with laser cutters, 1,500+ blanks &amp; diagnostic computers</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="about-banner-strip">
-            <div className="about-stat-item">
-              <span className="stat-num">15–25m</span>
-              <span className="stat-desc">Average Rapid Arrival</span>
-            </div>
-            <div className="about-stat-divider" />
-            <div className="about-stat-item">
-              <span className="stat-num">25,000+</span>
-              <span className="stat-desc">Completed Lockouts &amp; Installs</span>
-            </div>
-            <div className="about-stat-divider" />
-            <div className="about-stat-item">
-              <span className="stat-num">6 Hubs</span>
-              <span className="stat-desc">Physical Walk-in Locations</span>
-            </div>
-            <div className="about-stat-divider" />
-            <div className="about-stat-item">
-              <span className="stat-num">90 Days</span>
-              <span className="stat-desc">Workmanship &amp; Parts Warranty</span>
-            </div>
-            <div className="about-action-btn">
-              <Link href="/about" className="btn btn-primary">
-                Our Story &amp; Standards <Icon name="arrow" />
-              </Link>
             </div>
           </div>
         </div>
@@ -324,50 +287,27 @@ const HomePage = async () => {
       {/* FAQ */}
       <section className="sec sec-sand" id="faq">
         <div className="wrap">
-          <div className="faq-split-grid">
-            <div className="faq-intro-col">
-              <div className="eyebrow eyebrow-dash">{home.faqEyebrow ?? 'FREQUENTLY ASKED QUESTIONS'}</div>
-              <h2>{home.faqHeading ?? 'Clear answers before our van even rolls.'}</h2>
-              <p className="faq-intro-desc">
-                Have questions about pricing, lockouts, or arrival times? We believe in 100% upfront clarity—no surprises, no mystery call-out fees.
+          <div className="sec-head-center">
+            <div>
+              {home.faqEyebrow ? <div className="eyebrow eyebrow-dash">{home.faqEyebrow}</div> : null}
+              <h2>{home.faqHeading ?? 'Frequently Asked Questions'}</h2>
+              <p className="sec-sub-center">
+                Clear, straightforward answers about our mobile dispatch, pricing, and services.
               </p>
-
-              <div className="faq-dispatch-box">
-                <div className="faq-dispatch-img-wrap">
-                  <Image
-                    src="/images/faq-support.jpg"
-                    alt="24/7 Locksmith Live Emergency Dispatch Support Desk"
-                    width={500}
-                    height={320}
-                    className="faq-support-img"
-                  />
-                  <span className="faq-img-badge">
-                    <span className="livedot" /> Live GPS Dispatch
-                  </span>
-                </div>
-                <div className="faq-dispatch-header">
-                  <strong>24/7 Live Emergency Dispatch Desk</strong>
-                </div>
-                <p>Need urgent assistance? A licensed technician is staged near your neighborhood right now.</p>
-                <a href={`tel:${settings.phoneHref}`} className="btn btn-primary btn-block">
+            </div>
+          </div>
+          <div className="faq-wrap-center">
+            <FaqList faqs={faqs} />
+            <div className="faq-bottom-bar">
+              <span>Have more questions about our services?</span>
+              <div className="faq-bottom-links">
+                <Link href="/faq" className="btn btn-secondary btn-sm">
+                  View All FAQs <Icon name="arrow" />
+                </Link>
+                <a href={`tel:${settings.phoneHref}`} className="btn btn-primary btn-sm">
                   <Icon name="phone" /> Call {settings.phone}
                 </a>
-                <div className="faq-dispatch-badges">
-                  <span><Icon name="clock" /> 15–25 min avg arrival</span>
-                  <span><Icon name="shield" /> Licensed &amp; Insured</span>
-                </div>
               </div>
-
-              <div className="faq-more-link">
-                <span>Looking for car key or master key answers?</span>
-                <Link href="/faq" className="link-arrow">
-                  Explore full 20+ FAQ library <Icon name="arrow" />
-                </Link>
-              </div>
-            </div>
-
-            <div className="faq-list-col">
-              <FaqList faqs={faqs} />
             </div>
           </div>
         </div>

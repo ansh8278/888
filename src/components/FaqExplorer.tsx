@@ -2,159 +2,123 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Icon } from './Icon'
 import type { Faq } from '../payload-types'
 
 export type FaqCategory = 'all' | 'pricing' | 'automotive' | 'residential' | 'commercial'
 
-export interface EnrichedFaq {
+export interface CleanFaq {
   id: string | number
   question: string
   answer: string
   category: 'pricing' | 'automotive' | 'residential' | 'commercial'
 }
 
-export const COMPREHENSIVE_FAQS: EnrichedFaq[] = [
+export const AUTHENTIC_FAQS: CleanFaq[] = [
   {
-    id: 'pricing-1',
+    id: 'faq-1',
     category: 'pricing',
-    question: 'How do you price your locksmith services?',
+    question: 'Are you fully licensed and insured?',
     answer:
-      'We believe in 100% upfront flat-rate pricing. When you call our 24/7 dispatch, we ask about your lock or vehicle type and quote the exact total cost before a technician is dispatched. What we quote on the phone is what you pay—never any hidden call-out fees, mileage surcharges, or surprises on site.',
+      'Yes. 888 Lock & Key holds official state Locksmith Company licensing, and all technicians are individually background-checked, Live Scan fingerprinted, and badged.',
   },
   {
-    id: 'pricing-2',
+    id: 'faq-2',
     category: 'pricing',
-    question: 'How fast can a technician arrive at my location?',
+    question: 'How fast can a technician arrive?',
     answer:
-      'Our average arrival time across all service areas is 15 to 25 minutes. We operate mobile workshop vans staged strategically across California, Arizona, and New York, dispatched by real-time GPS tracking from the closest available unit.',
+      'Our mobile vans are mobile workshops dispatched by GPS from the closest service location in real time. We provide an estimated arrival time when you call.',
   },
   {
-    id: 'pricing-3',
+    id: 'faq-3',
     category: 'pricing',
-    question: 'Are your locksmiths fully licensed, bonded, and insured?',
+    question: 'How do you determine your pricing?',
     answer:
-      'Yes, 100%. 888 Lock & Key is a state-licensed locksmith company (BSIS Locksmith License #LCO-000000) and carries $2,000,000 in commercial general liability insurance. Every technician is a direct W-2 employee who has completed state Live Scan fingerprinting and comprehensive criminal background checks.',
+      'We quote a firm price on the phone before dispatching a technician. If an on-site inspection reveals additional work or parts are required, we explain the cost and obtain your approval before proceeding.',
   },
   {
-    id: 'pricing-4',
-    category: 'pricing',
-    question: 'Do you charge extra for night, weekend, or holiday calls?',
-    answer:
-      'Emergency call-outs between 10pm and 6am carry a clear, flat after-hours fee that is quoted to you on the phone before dispatch. Standard weekends and holidays carry no surge pricing—our flat daytime rates remain identical 365 days a year.',
-  },
-  {
-    id: 'pricing-5',
+    id: 'faq-4',
     category: 'pricing',
     question: 'What payment methods do you accept?',
     answer:
-      'All our mobile units carry secure point-of-sale card readers accepting Visa, MasterCard, American Express, Discover, Apple Pay, Google Pay, Zelle, and cash. You only pay once the job is fully completed and tested to your satisfaction.',
+      'We accept all major credit and debit cards, Apple Pay, Google Pay, Zelle, and cash. Payment is collected once the work is completed to your satisfaction.',
   },
   {
-    id: 'pricing-6',
+    id: 'faq-5',
     category: 'pricing',
-    question: 'What warranty do you offer on locks and workmanship?',
+    question: 'Do you charge extra at night, on weekends, or holidays?',
     answer:
-      'Every installation, rekey, and repair carries an all-inclusive 90-day workmanship warranty. Hardware we supply is additionally covered by full manufacturer warranties (up to lifetime on select commercial grade deadbolts). If anything fails, our technician returns and resolves it at no charge.',
+      'Emergency calls late at night carry a flat after-hours fee that is quoted to you on the phone before we dispatch. Standard weekend and holiday calls are billed at regular rates.',
   },
   {
-    id: 'auto-1',
+    id: 'faq-6',
+    category: 'pricing',
+    question: 'Is there a warranty on parts and labour?',
+    answer:
+      'Every installation carries a 90-day workmanship warranty. Hardware we supply carries the manufacturer warranty in addition to our installation coverage.',
+  },
+  {
+    id: 'faq-7',
     category: 'automotive',
-    question: 'Can you unlock my vehicle without scratching the paint or damaging weatherstripping?',
+    question: 'Can you unlock a car without damaging the door or paint?',
     answer:
-      'Yes, guaranteed. Our technicians use professional non-destructive automotive entry equipment—including scratch-free coated air wedges, long-reach bypass tools, and specialized Lishi keyway decoders. We never use coat hangers or pry bars that could bend doors or mar your paint.',
+      'Yes. We utilize specialized non-destructive automotive lock-picks and inflator wedges engineered specifically for all vehicle makes and models.',
   },
   {
-    id: 'auto-2',
+    id: 'faq-8',
     category: 'automotive',
-    question: 'Can you make a replacement car key if all original keys are lost?',
+    question: 'Can you make a replacement car key if I lost all original keys?',
     answer:
-      'Yes. Our mobile workshop vans are outfitted with computerized laser key cutting machines and OBD-II transponder programming computers. We can decode your vehicle ignition on site, cut a factory-spec high-security key blade, and program the transponder chip on the spot.',
+      'Yes. Our mobile service vans carry computerized key cutting equipment and OBD diagnostic programmers to cut and program replacement keys and transponder chips on site.',
   },
   {
-    id: 'auto-3',
+    id: 'faq-9',
     category: 'automotive',
-    question: 'Do you program proximity push-to-start smart key fobs?',
+    question: 'Do you program push-to-start smart key fobs?',
     answer:
-      'Yes. We program push-button start smart keys, flip keys, and proximity remotes for over 95% of domestic and import vehicles—including Toyota, Honda, Ford, Chevrolet, Nissan, BMW, Mercedes-Benz, Audi, Hyundai, Kia, and Subaru—at a fraction of dealership prices.',
+      'Yes. We program keyless entry remotes, flip keys, and proximity push-to-start fobs for most domestic and import vehicle brands.',
   },
   {
-    id: 'auto-4',
+    id: 'faq-10',
     category: 'automotive',
-    question: 'My key snapped off inside the ignition or door lock. Can it be saved?',
+    question: 'Can you remove a broken key snapped in an ignition or door lock?',
     answer:
-      'Yes. We use micro-hook broken key extractors to safely slide the broken piece out without damaging the internal tumblers. Once extracted, we can trace or code-cut a fresh replacement key immediately from the mobile workshop.',
+      'Yes. We use broken key extraction tools to safely remove the broken fragment without damaging the internal lock cylinder, and can cut a new replacement key on the spot.',
   },
   {
-    id: 'auto-5',
-    category: 'automotive',
-    question: 'Can you program foreign and luxury vehicle keys (BMW, Mercedes, Audi)?',
-    answer:
-      'Yes. Our advanced diagnostic programmers support European vehicles requiring EEPROM reading, CAS/FEM programming (BMW), EIS/FBS3 systems (Mercedes-Benz), and VAG immobilizers (Audi/VW). We test every function before completing the service.',
-  },
-  {
-    id: 'res-1',
+    id: 'faq-11',
     category: 'residential',
-    question: 'Should I rekey my locks or replace the hardware completely?',
+    question: 'What do you need from me to prove the property or car is mine?',
     answer:
-      'If your existing deadbolts and locksets are in good mechanical condition, rekeying is significantly faster and more economical. During a rekey, we replace the internal brass pins inside the cylinder so old keys no longer work. We only recommend replacement if the hardware is damaged, worn out, or if you want to upgrade to high-security or smart locks.',
+      'Photo ID matching the address, or for vehicles a registration, title, or insurance document. If your documents are locked inside, our technician will verify your identity immediately upon unlocking.',
   },
   {
-    id: 'res-2',
+    id: 'faq-12',
     category: 'residential',
-    question: 'What do I need to show to prove the home or apartment is mine?',
+    question: 'Can you rekey a lock instead of replacing it?',
     answer:
-      'To prevent unlawful entry and protect property owners, our technicians are legally required to verify ownership. You will need a valid government-issued photo ID matching the address, a current lease agreement, or recent utility bill. If your ID is locked inside, we verify it immediately upon unlocking the door.',
+      'Usually, yes—and it is much more economical. If the existing hardware is in good shape, we repin the cylinder so old keys stop working. We only recommend replacement when the hardware is worn or damaged.',
   },
   {
-    id: 'res-3',
+    id: 'faq-13',
     category: 'residential',
-    question: 'Can you install smart locks and keypad deadbolts that I purchased myself?',
+    question: 'Can you key all the doors in my home to open with one key?',
     answer:
-      'Yes. We install and calibrate all customer-supplied smart locks—including Schlage Encode, Yale Assure, August Wi-Fi, and Ultraloq. We ensure exact latch alignment so the motorized bolt extends smoothly without jamming or draining the lock batteries prematurely.',
+      'Yes, as long as the locks share the same keyway profile (such as Schlage or Kwikset), we can re-pin all your entry deadbolts and knobs to work with a single convenient key.',
   },
   {
-    id: 'res-4',
+    id: 'faq-14',
     category: 'residential',
-    question: 'Can you key all the doors in my home to open with a single key?',
+    question: 'Can you install smart locks and digital keypads?',
     answer:
-      'Yes! As long as your deadbolts and door knobs share the same keyway profile (such as Schlage C or Kwikset KW1), we can re-pin every lock in your home so you only need to carry one convenient master key for your front, back, and garage entry doors.',
+      'Yes. We install and align electronic deadbolts and smart locks from leading brands, ensuring smooth motorized bolt operation and proper door alignment.',
   },
   {
-    id: 'res-5',
-    category: 'residential',
-    question: 'Can you pick high-security deadbolts without drilling them?',
-    answer:
-      'Yes. Our technicians are trained in advanced lock manipulation, bypass techniques, and specialized pick tools. In over 96% of lockout calls, we open doors without drilling. We only drill as a last resort when the internal mechanism has physically failed, and only with your prior explicit consent.',
-  },
-  {
-    id: 'com-1',
+    id: 'faq-15',
     category: 'commercial',
-    question: 'What is a Master Key System and how does it protect my business?',
+    question: 'What commercial locksmith services do you provide?',
     answer:
-      'A Master Key System allows individual employees to open only their designated offices or store areas, while managers carry a single master key that opens all doors. We design, cut, and document custom master key matrices for commercial offices, retail plazas, clinics, and multi-tenant buildings.',
-  },
-  {
-    id: 'com-2',
-    category: 'commercial',
-    question: 'Do you install and service commercial panic exit crash bars and fire doors?',
-    answer:
-      'Yes. We supply and install heavy-duty ANSI Grade 1 rim and vertical rod panic exit bars, alarm-equipped exit devices, and hydraulic door closers compliant with NFPA 101 Life Safety Code and local fire marshal accessibility regulations.',
-  },
-  {
-    id: 'com-3',
-    category: 'commercial',
-    question: 'How fast can you rekey our commercial building after employee turnover?',
-    answer:
-      'We offer priority same-day and after-hours commercial rekeying to prevent business disruption. Our mobile technicians can re-pin standard mortise cylinders, interchangeable core (IC) cylinders, and keypads on site within a few hours.',
-  },
-  {
-    id: 'com-4',
-    category: 'commercial',
-    question: 'Do you offer keyless commercial access control systems?',
-    answer:
-      'Yes. We install standalone digital keypad locks, heavy-duty smart cylinders, electromagnetic locks, electric strikes, and proximity card/fob access systems tailored for offices, retail stores, and warehouse facilities.',
+      'We design and install master key systems, panic exit crash bars, commercial storefront mortise locks, door closers, and digital keypad access systems for offices, clinics, and retail stores.',
   },
 ]
 
@@ -167,20 +131,19 @@ type Props = {
 export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<FaqCategory>('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const [openId, setOpenId] = useState<string | number | null>('pricing-1')
+  const [openId, setOpenId] = useState<string | number | null>('faq-1')
 
-  // Merge CMS faqs if any are provided, classifying them cleanly
-  const allFaqs = useMemo<EnrichedFaq[]>(() => {
-    if (!initialFaqs || initialFaqs.length === 0) return COMPREHENSIVE_FAQS
+  const allFaqs = useMemo<CleanFaq[]>(() => {
+    if (!initialFaqs || initialFaqs.length === 0) return AUTHENTIC_FAQS
 
-    const cmsItems: EnrichedFaq[] = initialFaqs.map((f) => {
+    const cmsItems: CleanFaq[] = initialFaqs.map((f) => {
       const q = f.question.toLowerCase()
-      let cat: EnrichedFaq['category'] = 'pricing'
+      let cat: CleanFaq['category'] = 'pricing'
       if (q.includes('car') || q.includes('vehicle') || q.includes('ignition') || q.includes('fob')) {
         cat = 'automotive'
       } else if (q.includes('home') || q.includes('house') || q.includes('rekey') || q.includes('residential')) {
         cat = 'residential'
-      } else if (q.includes('business') || q.includes('commercial') || q.includes('master key') || q.includes('panic')) {
+      } else if (q.includes('commercial') || q.includes('business') || q.includes('master key') || q.includes('panic')) {
         cat = 'commercial'
       }
       return {
@@ -191,9 +154,8 @@ export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
       }
     })
 
-    // Combine with comprehensive list, avoiding duplicate questions
     const existingQuestions = new Set(cmsItems.map((c) => c.question.toLowerCase().trim()))
-    const uniqueDefaults = COMPREHENSIVE_FAQS.filter(
+    const uniqueDefaults = AUTHENTIC_FAQS.filter(
       (df) => !existingQuestions.has(df.question.toLowerCase().trim()),
     )
     return [...cmsItems, ...uniqueDefaults]
@@ -213,12 +175,12 @@ export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
     })
   }, [allFaqs, selectedCategory, searchQuery])
 
-  const categories: { key: FaqCategory; label: string; icon: 'key' | 'shield' | 'car' | 'home' | 'building' }[] = [
-    { key: 'all', label: 'All Questions', icon: 'key' },
-    { key: 'pricing', label: 'Pricing & Arrival', icon: 'shield' },
-    { key: 'automotive', label: 'Automotive & Keys', icon: 'car' },
-    { key: 'residential', label: 'Residential & Rekey', icon: 'home' },
-    { key: 'commercial', label: 'Commercial & Access', icon: 'building' },
+  const categories: { key: FaqCategory; label: string }[] = [
+    { key: 'all', label: 'All Questions' },
+    { key: 'pricing', label: 'Pricing & Service' },
+    { key: 'automotive', label: 'Automotive' },
+    { key: 'residential', label: 'Residential' },
+    { key: 'commercial', label: 'Commercial' },
   ]
 
   const toggleFaq = (id: string | number) => {
@@ -226,110 +188,84 @@ export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
   }
 
   return (
-    <div className="faq-explorer">
-      {/* Category Pills & Search Row */}
-      <div className="faq-controls">
-        <div className="faq-pills" role="tablist" aria-label="FAQ Categories">
+    <div className="faq-explorer-simple">
+      {/* Category Pills & Search */}
+      <div className="faq-filter-bar">
+        <div className="faq-pills-row" role="tablist">
           {categories.map((cat) => (
             <button
               key={cat.key}
               type="button"
               role="tab"
               aria-selected={selectedCategory === cat.key}
-              className={`faq-pill ${selectedCategory === cat.key ? 'active' : ''}`}
+              className={`faq-pill-btn ${selectedCategory === cat.key ? 'active' : ''}`}
               onClick={() => setSelectedCategory(cat.key)}
             >
-              <Icon name={cat.icon} />
-              <span>{cat.label}</span>
+              {cat.label}
             </button>
           ))}
         </div>
 
-        <div className="faq-search-wrapper">
-          <div className="faq-search-box">
-            <Icon name="search" className="faq-search-icon" />
-            <input
-              type="text"
-              placeholder="Search questions (e.g. car key, drill, quote, arrival, rekey)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="faq-search-input"
-              aria-label="Search frequently asked questions"
-            />
-            {searchQuery ? (
-              <button
-                type="button"
-                className="faq-search-clear"
-                onClick={() => setSearchQuery('')}
-                aria-label="Clear search query"
-              >
-                &times;
-              </button>
-            ) : null}
-          </div>
-          <div className="faq-result-count">
-            Showing <strong>{filteredFaqs.length}</strong> of {allFaqs.length} questions
-          </div>
+        <div className="faq-search-inline">
+          <Icon name="search" className="search-icon" />
+          <input
+            type="text"
+            placeholder="Search questions (e.g. car, rekey, pricing)..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+            aria-label="Search questions"
+          />
+          {searchQuery ? (
+            <button
+              type="button"
+              className="search-clear-btn"
+              onClick={() => setSearchQuery('')}
+              aria-label="Clear search"
+            >
+              &times;
+            </button>
+          ) : null}
         </div>
       </div>
 
       {/* Main Two-Column Layout */}
-      <div className="faq-main-layout">
-        {/* Accordion List Column */}
-        <div className="faq-accordion-col">
+      <div className="faq-columns-layout">
+        {/* Accordion Questions */}
+        <div className="faq-accordion-container">
           {filteredFaqs.length === 0 ? (
-            <div className="faq-empty-state">
-              <div className="faq-empty-icon">
-                <Icon name="search" />
-              </div>
-              <h3>No matching questions found</h3>
-              <p>We could not find any questions matching &ldquo;{searchQuery}&rdquo;.</p>
-              <div className="faq-empty-actions">
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => {
-                    setSearchQuery('')
-                    setSelectedCategory('all')
-                  }}
-                >
-                  Reset Filters
-                </button>
-                <a href={`tel:${phoneHref}`} className="btn btn-primary btn-sm">
-                  <Icon name="phone" /> Ask Our Dispatch Team
-                </a>
-              </div>
+            <div className="faq-empty-simple">
+              <p>No questions found matching &ldquo;{searchQuery}&rdquo;.</p>
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={() => {
+                  setSearchQuery('')
+                  setSelectedCategory('all')
+                }}
+              >
+                Clear Search
+              </button>
             </div>
           ) : (
-            <div className="faq-rich-list">
+            <div className="faq-clean-list">
               {filteredFaqs.map((faq) => {
                 const isOpen = openId === faq.id
                 return (
-                  <div key={faq.id} className={`faq-card-item ${isOpen ? 'is-open' : ''}`}>
+                  <div key={faq.id} className={`faq-clean-item ${isOpen ? 'open' : ''}`}>
                     <button
                       type="button"
-                      className="faq-card-head"
+                      className="faq-clean-btn"
                       onClick={() => toggleFaq(faq.id)}
                       aria-expanded={isOpen}
                     >
-                      <div className="faq-card-head-content">
-                        <span className="faq-cat-tag">
-                          {faq.category === 'automotive'
-                            ? 'Automotive'
-                            : faq.category === 'residential'
-                            ? 'Residential'
-                            : faq.category === 'commercial'
-                            ? 'Commercial'
-                            : 'Pricing & Policy'}
-                        </span>
-                        <h3 className="faq-card-q">{faq.question}</h3>
-                      </div>
-                      <span className={`faq-chevron-indicator ${isOpen ? 'rotate' : ''}`} aria-hidden="true">
+                      <span className="faq-question-text">{faq.question}</span>
+                      <span className="faq-toggle-icon" aria-hidden="true">
                         <Icon name="chevron" />
                       </span>
                     </button>
                     {isOpen ? (
-                      <div className="faq-card-body">
+                      <div className="faq-clean-answer">
                         <p>{faq.answer}</p>
                       </div>
                     ) : null}
@@ -340,63 +276,24 @@ export const FaqExplorer = ({ initialFaqs, phone, phoneHref }: Props) => {
           )}
         </div>
 
-        {/* Support & Dispatch Sidebar */}
-        <aside className="faq-sidebar-col">
-          <div className="faq-sidebar-card faq-dispatch-spotlight">
-            <div className="faq-dispatch-img-wrap">
-              <Image
-                src="/images/faq-support.jpg"
-                alt="24/7 Locksmith Live Emergency Dispatch Support Desk"
-                width={500}
-                height={320}
-                className="faq-support-img"
-              />
-              <span className="faq-img-badge">
-                <span className="livedot" /> 24/7 Live Operators
-              </span>
-            </div>
-            <div className="faq-spotlight-status">
-              <span className="livedot" />
-              <span className="faq-live-label">24/7 Mobile Dispatch Active</span>
-            </div>
-            <h3>Have an Emergency?</h3>
+        {/* Sidebar Dispatch Card */}
+        <aside className="faq-simple-sidebar">
+          <div className="faq-contact-card">
+            <h3>Need Immediate Help?</h3>
             <p>
-              Our vans are mobile workshops ready to dispatch right now. We arrive in an average of 15–25 minutes with upfront flat pricing.
+              Our mobile technicians are available 24/7 for automotive, home, and business locksmith emergencies.
             </p>
             <a href={`tel:${phoneHref}`} className="btn btn-primary btn-block">
               <Icon name="phone" /> Call {phone}
             </a>
-            <div className="faq-quick-perks">
-              <div className="faq-perk-item">
-                <Icon name="check" />
-                <span>100% Upfront Quotes (No Bait &amp; Switch)</span>
-              </div>
-              <div className="faq-perk-item">
-                <Icon name="check" />
-                <span>Non-Destructive Entry Priority (No Drilling)</span>
-              </div>
-              <div className="faq-perk-item">
-                <Icon name="check" />
-                <span>Licensed, Bonded &amp; Insured ($2M Coverage)</span>
-              </div>
-              <div className="faq-perk-item">
-                <Icon name="check" />
-                <span>90-Day Parts &amp; Workmanship Warranty</span>
-              </div>
+            <div className="faq-contact-links">
+              <Link href="/book" className="link-arrow">
+                Book a service appointment <Icon name="arrow" />
+              </Link>
+              <Link href="/locations" className="link-arrow">
+                View all service locations <Icon name="arrow" />
+              </Link>
             </div>
-          </div>
-
-          <div className="faq-sidebar-card faq-guarantee-box">
-            <div className="faq-shield-badge">
-              <Icon name="shield" />
-            </div>
-            <h4>Our 90-Day Guarantee</h4>
-            <p>
-              Every new lock installed, rekeyed cylinder, or key programmed comes with full 90-day coverage. If it sticks or fails, we return and resolve it at zero cost.
-            </p>
-            <Link href="/about" className="link-arrow">
-              Learn about our standards <Icon name="arrow" />
-            </Link>
           </div>
         </aside>
       </div>
