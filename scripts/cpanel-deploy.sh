@@ -32,7 +32,7 @@ trap 'rm -f "$LOCK"' EXIT
 
 {
   echo "==================== $(date) ===================="
-  echo "script  : version 10 (npm ci from package-lock.json)"
+  echo "script  : version 11 (reuses install, uses uploaded build)"
   echo "app dir : $APP_DIR"
 
   if [ -z "$ACTIVATE" ]; then
@@ -63,7 +63,11 @@ trap 'rm -f "$LOCK"' EXIT
   echo "node    : $(node -v)   npm: $(npm -v)"
   echo "glibc   : $(ldd --version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+$' || echo unknown)  (database needs 2.18, images 2.28)"
 
-  echo; echo "---- 1/4 npm install ----  (started $(date +%H:%M), silent until done — can take 10-20 min here)"
+  echo; echo "---- 1/4 npm install ----"
+  if [ -f "$APP_DIR/node_modules/.package-lock.json" ] && [ -d "$APP_DIR/node_modules/next" ] && [ -d "$APP_DIR/node_modules/payload" ]; then
+    echo "already installed — skipping (delete node_modules/.package-lock.json to force a reinstall)"
+  else
+  echo "(started $(date +%H:%M), silent until done — can take 10-20 min here)"
   # Clean slate. Earlier runs on this slow host overlapped and left npm's
   # half-extracted folders everywhere; patching around them failed twice.
   # Killing any stray install and reinstalling from empty is the reliable fix.
@@ -106,13 +110,21 @@ trap 'rm -f "$LOCK"' EXIT
     exit 1
   fi
   echo "npm ci finished $(date +%H:%M)"
+  fi
 
-  echo; echo "---- 2/4 build ----  (started $(date +%H:%M))"
+  echo; echo "---- 2/4 build ----"
+  # Plan B: the build was uploaded from a computer (this host kills it for
+  # memory). A .next folder with a BUILD_ID is a finished build — use it.
+  if [ -f "$APP_DIR/.next/BUILD_ID" ]; then
+    echo "using uploaded build $(cat "$APP_DIR/.next/BUILD_ID") — skipping (delete .next to build here instead)"
+  else
+  echo "(started $(date +%H:%M))"
   # --webpack: this host's system libraries are older than Next's native
   # compiler needs (GLIBC 2.30), so the fast Turbopack path cannot load.
   # Webpack uses a portable fallback. Slower, but it works here.
   NODE_OPTIONS=--max-old-space-size=2048 npx next build --webpack 2>&1 || { echo "FAILED at build (if it says 'heap out of memory' or 'Killed', use Plan B in DEPLOY-CPANEL.md)"; exit 1; }
   echo "build finished $(date +%H:%M)"
+  fi
 
   echo; echo "---- 3/4 migrate ----"
   npx payload migrate 2>&1 || { echo "FAILED at migrate"; exit 1; }

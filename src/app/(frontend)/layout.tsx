@@ -7,6 +7,10 @@ import { getNavigation, getSiteSettings } from '../../lib/data'
 import { mediaUrl } from '../../components/blocks'
 import '../../styles/site.css'
 
+// Render from the database on every request so admin edits show up
+// immediately instead of being frozen into the build.
+export const dynamic = 'force-dynamic'
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const sora = Sora({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-sora', display: 'swap' })
 const caveat = Caveat({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-caveat', display: 'swap' })

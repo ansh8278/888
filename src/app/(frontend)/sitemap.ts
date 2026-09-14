@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next'
 import { getServices, getLocations, getPages, getComboPairs } from '../../lib/data'
 import { SITE_URL } from '../../lib/schema'
 
+export const dynamic = 'force-dynamic'
+
 /** Every generated page, including the service-in-city combinations. */
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const [services, locations, pages, combos] = await Promise.all([
