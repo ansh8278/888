@@ -405,7 +405,7 @@ const seed = async () => {
       services: {
         eyebrow: 'What We Do',
         title: 'Locksmith Services Throughout the Bay Area',
-        intro: 'Automotive, residential, commercial and emergency locksmith services — dispatched to you across San Jose and the Bay Area, with the price confirmed before work begins.',
+        intro: 'Automotive, residential, commercial and emergency locksmith services, dispatched across San Jose and the Bay Area with the price confirmed before work begins.',
       },
       ctaSubtitle: 'Mobile technicians dispatched across San Jose & the Bay Area.',
       callCardSubtitle: 'Mobile technicians dispatched across the Bay Area.',

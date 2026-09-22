@@ -38,7 +38,7 @@ export const PageCopy: GlobalConfig = {
             heading('services', 'Services page', {
               eyebrow: 'One call. Every solution.',
               title: 'Locksmith Services',
-              intro: 'Automotive, residential, commercial and emergency locksmith services — dispatched to you across San Jose and the Bay Area, with the price confirmed before work begins.',
+              intro: 'Automotive, residential, commercial and emergency locksmith services, dispatched across San Jose and the Bay Area with the price confirmed before work begins.',
             }),
             heading('locations', 'Locations page', {
               eyebrow: 'Coverage Area',

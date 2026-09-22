@@ -10,7 +10,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
     title: copy.contact?.title ?? 'Contact Us',
-    description: copy.contact?.intro ?? undefined,
+    description: copy.contact?.intro || 'Contact 888 Lock & Key — mobile locksmith dispatched across San Jose and the Bay Area. Send a request or call.',
     alternates: { canonical: absolute('/contact') },
   }
 }

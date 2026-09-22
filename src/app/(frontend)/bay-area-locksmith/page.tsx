@@ -12,12 +12,11 @@ import { JsonLd, localBusinessSchema, breadcrumbSchema, absolute } from '../../.
 const HUB_TITLE = 'Mobile Locksmith Serving San Jose & the Entire Bay Area'
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const [copy, settings] = await Promise.all([getPageCopy(), getSiteSettings()])
+  const settings = await getSiteSettings()
   return {
-    title: { absolute: `Bay Area Locksmith | ${copy.locations?.title ?? HUB_TITLE} | ${settings.companyName}` },
-    description:
-      copy.locations?.intro ??
-      `${settings.companyName} provides mobile locksmith services throughout San Jose and the Bay Area — South Bay, Peninsula, East Bay & Tri-Valley.`,
+    // The client's exact title; description adds Tri-Valley to the client's meta (their own city list includes it — KI-2).
+    title: { absolute: `Bay Area Locksmith | Mobile Locksmith Serving San Jose & the Bay Area | ${settings.companyName}` },
+    description: `${settings.companyName} provides mobile locksmith services throughout San Jose and the Bay Area — South Bay, Peninsula, East Bay & Tri-Valley.`,
     alternates: { canonical: absolute('/bay-area-locksmith') },
   }
 }

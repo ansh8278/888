@@ -18,7 +18,9 @@
     "migrate:create": "payload migrate:create",
     "backup": "node scripts/backup.mjs",
     "versions:backfill": "payload run src/scripts/backfill-versions.ts",
-    "package:cpanel": "node scripts/package-for-cpanel.mjs"
+    "package:cpanel": "node scripts/package-for-cpanel.mjs",
+    "crawl": "node scripts/crawl.mjs",
+    "seo:check": "node scripts/seo-check.mjs"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

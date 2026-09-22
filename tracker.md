@@ -4,7 +4,7 @@
 
 Overall Status: IN PROGRESS
 Last Updated: 2026-09-22
-Current Phase: Phase 7 — SEO / internal linking (Phases 0–6 complete)
+Current Phase: Phase 8 — Business data & compliance (Phases 0–7 complete)
 
 Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-2026-09-22`
 
@@ -21,7 +21,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | Phase 4 - Homepage | DONE | 100% | Client section order; reviews/pricing hidden until real data |
 | Phase 5 - Location Pages | DONE | 100% | Hub + 20 cities + 4 districts, client template, SAB schema |
 | Phase 6 - Service Pages | DONE | 100% | 4 categories + 9 services + garage (disclaimer kept); three renderings on one route |
-| Phase 6 - SEO/Internal Linking | NOT STARTED | 0% | |
+| Phase 7 - SEO/Internal Linking | DONE | 100% | 49 pages: no 404s, no orphans, all in sitemap; 0 SEO problems (`npm run crawl`, `npm run seo:check`) |
 | Phase 7 - Business/Compliance | BLOCKED | 0% | Needs real phone, BSIS licence, hours, domain, reviews |
 | Phase 8 - Responsive/Conversion | NOT STARTED | 0% | |
 | Phase 9 - QA | NOT STARTED | 0% | |
@@ -60,8 +60,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T051 | Service page: category / service / standalone renderings | 6 | DONE | P0 | services/[slug]/page.tsx | Garage disclaimer must stay |
 | T052 | Areas We Serve + Related Services blocks | 6 | DONE | P1 | components | |
 | T053 | Disable combo pages by default; exclude from sitemap | 6 | DONE | P1 | seed, sitemap.ts | D4 |
-| T060 | Metadata from JSON; breadcrumb JSON-LD; sitemap/robots | 7 | NOT STARTED | P0 | pages, sitemap.ts | |
-| T061 | Link crawl script (no 404s, no orphans) | 7 | NOT STARTED | P1 | scripts/ | |
+| T060 | Metadata from JSON; breadcrumb JSON-LD; sitemap/robots | 7 | DONE | P0 | pages, sitemap.ts | |
+| T061 | Link crawl script (no 404s, no orphans) | 7 | DONE | P1 | scripts/ | |
 | T070 | Admin "Missing before launch" panel | 8 | NOT STARTED | P1 | components/admin/Dashboard.tsx | |
 | T071 | Enter real phone / licence / hours / domain / rating / count | 8 | NEEDS CLIENT INPUT | P0 | site-settings | |
 | T080 | Responsive + conversion test at 5 widths | 9 | NOT STARTED | P0 | headless Chrome | |
@@ -97,7 +97,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 - KI-9 `home-page` global still has unused "shops" fields (schema cleanup, P3).
 
 - KI-1 Existing Supabase database holds the old CA/AZ/NY content; the new seed must be run with `SEED_RESET=1` once (destructive by design, documented).
-- KI-2 Client hub meta description omits Tri-Valley — used as supplied, flagged.
+- KI-2 Client hub meta description omitted Tri-Valley; the site's version adds it (the client's own city list includes Tri-Valley). Flag to client.
+- KI-10 Several client-supplied titles exceed ~70 characters (e.g. category pages, San Jose). Kept verbatim; Google may truncate. Listed under Warnings in `seo-qa-report.md`.
 - KI-3 Client category-page heading bug ("… Services Services") — not reproduced; rendered as "What's included".
 - KI-4 `city-pages-content.json._readme` says 16 cities; file has 24. Cosmetic.
 - KI-5 Combo pages (`/services/[slug]/[city]`) exist in code; disabled by default (D4).
@@ -117,6 +118,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Change Log
+
+- 2026-09-22 — Phase 7: `scripts/crawl.mjs` (broken links, orphans, forbidden text) and `scripts/seo-check.mjs` (unique title/description, single H1, canonical, JSON-LD validity, img alt → `seo-qa-report.md`) added; both clean on the seeded build. Contact page description, `/services` title and hub title/description tightened.
 
 - 2026-09-22 — Phase 6: `/services/[slug]` rebuilt: category pages list their services as cards (Automotive, Residential) or an included-list (Commercial, Emergency); Garage keeps its lock-only disclaimer box; individual services sit under their category in the breadcrumb (Home / Services / Category / Service); every service page has the emergency band, "Areas We Serve" (first 8 hub cities + link to all) and "You May Also Need" from `related`; `/services` shows the 4 categories + Garage. Combo pages remain disabled and out of the sitemap.
 

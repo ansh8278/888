@@ -8,7 +8,7 @@ import { phoneOf } from '../../../lib/contact'
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
-    title: { absolute: `${copy.services?.title ?? 'Locksmith Services'} | San Jose & Bay Area | ${(await getSiteSettings()).companyName}` },
+    title: { absolute: `Locksmith Services | San Jose & Bay Area | ${(await getSiteSettings()).companyName}` },
     description: copy.services?.intro ?? undefined,
     alternates: { canonical: absolute('/services') },
   }
