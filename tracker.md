@@ -63,7 +63,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T060 | Metadata from JSON; breadcrumb JSON-LD; sitemap/robots | 7 | DONE | P0 | pages, sitemap.ts | |
 | T061 | Link crawl script (no 404s, no orphans) | 7 | DONE | P1 | scripts/ | |
 | T070 | Admin "Missing before launch" panel | 8 | DONE | P1 | components/admin/Dashboard.tsx | |
-| T071 | Enter real phone / licence / hours / domain / rating / count | 8 | NEEDS CLIENT INPUT | P0 | site-settings | |
+| T071 | Enter real phone / licence / hours / domain / rating / count | 8 | NEEDS CLIENT INPUT | P0 | site-settings | Phone done 2026-09-22: (669) 366-5249. Licence, hours, domain, rating/count, prices, hub ZIP still pending. |
 | T080 | Responsive + conversion test at 5 widths | 9 | DONE | P0 | headless Chrome | |
 | T090 | Content/visual QA every page | 10 | DONE | P0 | — | |
 | T091 | Technical QA (build, tests, routes, console) | 11 | DONE | P0 | — | |
@@ -77,7 +77,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 
 | Information | Status | Value | Required Before |
 |-------------|--------|-------|-----------------|
-| Business phone | Pending | — | Production |
+| Business phone | **DONE** | (669) 366-5249 | — |
 | BSIS license | Pending | — | Production (P0 — CA Locksmith Act) |
 | Dispatch hubs | Partial | 3315 Montgomery Dr, Santa Clara (ZIP not supplied) | Production |
 | Operating hours | Pending | — | Production (no "24/7" until confirmed) |
@@ -121,6 +121,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Change Log
+
+- 2026-09-22 — Staging live at https://888-eosin.vercel.app with the Bay Area content (`SEED_RESET=1 npm run seed` against Supabase). Verified on the live site: 49 pages, no broken links/orphans, 0 SEO problems, 45 responsive renders clean, booking form submits and saves, admin reachable, Service Area Business schema correct. Real business phone **(669) 366-5249** entered — every call button is now a tel: link and the number is in the structured data. `NEXT_PUBLIC_SITE_URL` fixed to the live URL (was 888.vercel.app).
 
 - 2026-09-22 — Phases 8–9: admin dashboard shows a "Missing before launch" checklist (phone, BSIS licence, hours, rating/count, hub ZIP) and no longer mentions shops/combo pages; `scripts/responsive-check.mjs` (headless Chrome, 5 widths, real tap on the menu, console errors, admin render); sticky bar now shows below 860px like the client prototype; FAQ buttons wrap on narrow phones; Hero shows one button when there is no phone; pricing and reviews pages have honest empty states; the "24/7" decal was painted out of the placeholder images; seed uploads stay local when the Blob token is unset. Verified with a phone/licence/hours entered via the API: every call button becomes a tel: link with the client's CTA wording, licence and hours appear, structured data carries the phone.
 
