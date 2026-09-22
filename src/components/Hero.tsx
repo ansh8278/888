@@ -128,12 +128,15 @@ export const PageHero = ({
   intro,
   image,
   crumbs,
+  actions,
 }: {
   eyebrow?: string | null
   title: string
   intro?: string | null
   image?: unknown
   crumbs?: { label: string; href?: string }[]
+  /** Call / Request buttons under the intro, as on the client's city and service pages. */
+  actions?: React.ReactNode
 }) => {
   const url = mediaUrl(image)
   return (
@@ -158,6 +161,7 @@ export const PageHero = ({
         {eyebrow ? <div className="hero-eyebrow">{eyebrow}</div> : null}
         <h1>{title}</h1>
         {intro ? <p className="page-hero-intro">{intro}</p> : null}
+        {actions ? <div className="hero-cta page-hero-actions">{actions}</div> : null}
       </div>
     </section>
   )

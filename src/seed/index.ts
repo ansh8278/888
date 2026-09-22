@@ -397,6 +397,23 @@ const seed = async () => {
     },
   })
 
+  // Page headings that older databases may still hold with the old wording.
+  await payload.updateGlobal({
+    slug: 'page-copy',
+    data: {
+      locations: { eyebrow: 'Coverage Area', title: content.hub.h1, intro: content.hub.intro },
+      services: {
+        eyebrow: 'What We Do',
+        title: 'Locksmith Services Throughout the Bay Area',
+        intro: 'Automotive, residential, commercial and emergency locksmith services — dispatched to you across San Jose and the Bay Area, with the price confirmed before work begins.',
+      },
+      ctaSubtitle: 'Mobile technicians dispatched across San Jose & the Bay Area.',
+      callCardSubtitle: 'Mobile technicians dispatched across the Bay Area.',
+      contactShopsHeading: 'Our dispatch hub',
+      serviceCitySubtitle: 'Pick your city to see local coverage and neighborhoods.',
+    },
+  })
+
   // Service-in-city pages are not part of the client's site structure (D4).
   await payload.updateGlobal({ slug: 'combo-template', data: { enabled: false } })
 

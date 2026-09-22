@@ -3183,3 +3183,27 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .services-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 @media (max-width: 1000px) { .services-grid-4 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .services-grid-4 { grid-template-columns: 1fr; } }
+.page-hero-actions { margin-top: 22px; }
+
+/* City / service page blocks (client prototype) --------------------- */
+.pill-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.pill-list li {
+  padding: 8px 14px; border-radius: var(--radius-pill); background: var(--surface);
+  border: 1px solid var(--line-strong); font-size: 0.9rem; font-weight: 600; color: var(--txt);
+}
+.link-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.link-pills a {
+  display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: var(--radius-pill);
+  background: var(--surface); border: 1px solid var(--line-strong); color: var(--txt); font-weight: 600;
+  font-size: 0.92rem; text-decoration: none;
+}
+.link-pills a:hover { border-color: var(--orange); color: var(--orange-hover); }
+.link-pills a svg { width: 15px; height: 15px; color: var(--orange); }
+.disclaimer-box {
+  margin: 18px 0 0; padding: 14px 18px; border-radius: 12px; background: var(--orange-light);
+  border: 1px solid var(--orange-border); color: var(--txt); font-size: 0.95rem; line-height: 1.55;
+}
+.check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px; list-style: none; margin: 0; padding: 0; }
+.check-grid li { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
+.check-grid li svg { width: 18px; height: 18px; color: var(--green); flex-shrink: 0; margin-top: 3px; }
+@media (max-width: 640px) { .check-grid { grid-template-columns: 1fr; } }

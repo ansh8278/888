@@ -19,7 +19,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const staticPages: MetadataRoute.Sitemap = [
     { url: url('/'), priority: 1, changeFrequency: 'weekly', lastModified: now },
     { url: url('/services'), priority: 0.9, changeFrequency: 'monthly', lastModified: now },
-    { url: url('/locations'), priority: 0.9, changeFrequency: 'monthly', lastModified: now },
+    { url: url('/bay-area-locksmith'), priority: 0.9, changeFrequency: 'monthly', lastModified: now },
     { url: url('/pricing'), priority: 0.8, changeFrequency: 'monthly', lastModified: now },
     { url: url('/reviews'), priority: 0.6, changeFrequency: 'weekly', lastModified: now },
     { url: url('/faq'), priority: 0.6, changeFrequency: 'monthly', lastModified: now },

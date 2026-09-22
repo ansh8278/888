@@ -4,7 +4,7 @@
 
 Overall Status: IN PROGRESS
 Last Updated: 2026-09-22
-Current Phase: Phase 5 — Location pages (Phases 0–4 complete)
+Current Phase: Phase 6 — Service pages (Phases 0–5 complete)
 
 Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-2026-09-22`
 
@@ -19,7 +19,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | Phase 2 - Architecture | DONE | 100% | Model extended, seed from client JSON, CallButton fallback, redirects, migrations (both engines) verified |
 | Phase 3 - Core Website | DONE | 100% | Header/footer/sticky bar/global copy; About + FAQ from CMS only; SAB structured data |
 | Phase 4 - Homepage | DONE | 100% | Client section order; reviews/pricing hidden until real data |
-| Phase 4b - Location Pages | NOT STARTED | 0% | Hub + 20 cities + 4 sub-areas |
+| Phase 5 - Location Pages | DONE | 100% | Hub + 20 cities + 4 districts, client template, SAB schema |
 | Phase 5 - Service Pages | NOT STARTED | 0% | 4 categories + 9 services + garage |
 | Phase 6 - SEO/Internal Linking | NOT STARTED | 0% | |
 | Phase 7 - Business/Compliance | BLOCKED | 0% | Needs real phone, BSIS licence, hours, domain, reviews |
@@ -52,9 +52,9 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T022 | Remove "24/7" and CA/AZ/NY wording from layout, footer, PageCopy, ComboTemplate, HomePage, contact/faq/about | 3 | DONE | P0 | many | Rule 9 |
 | T023 | Licence line renders only when set | 3 | DONE | P0 | Footer, Header, Hero | |
 | T030 | Homepage re-frame per client index.html | 4 | DONE | P0 | src/app/(frontend)/page.tsx, HomePage global | |
-| T040 | `/bay-area-locksmith` hub page | 5 | NOT STARTED | P0 | new route | |
-| T041 | Location page template per client (breadcrumb, pills, 8 cards, FAQ, Also Serving) | 5 | NOT STARTED | P0 | locations/[slug]/page.tsx | |
-| T042 | Sub-area pages (parent breadcrumb, sibling links) | 5 | NOT STARTED | P0 | same | |
+| T040 | `/bay-area-locksmith` hub page | 5 | DONE | P0 | new route | |
+| T041 | Location page template per client (breadcrumb, pills, 8 cards, FAQ, Also Serving) | 5 | DONE | P0 | locations/[slug]/page.tsx | |
+| T042 | Sub-area pages (parent breadcrumb, sibling links) | 5 | DONE | P0 | same | |
 | T043 | Service-area schema (no city PostalAddress) | 5 | DONE | P0 | src/lib/schema.tsx | |
 | T050 | `/services` index (categories + garage) | 6 | NOT STARTED | P1 | services/page.tsx | |
 | T051 | Service page: category / service / standalone renderings | 6 | NOT STARTED | P0 | services/[slug]/page.tsx | Garage disclaimer must stay |
@@ -117,6 +117,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Change Log
+
+- 2026-09-22 — Phase 5: `/bay-area-locksmith` hub (4 regions, 20 cities, category links); `/locations/[slug]` rebuilt to the client template (breadcrumb Home / Bay Area / [San Jose /] City, H1 "Mobile Locksmith in X, CA", intro + CTAs, neighborhood pills, 8 service cards with {city} text, emergency band, city FAQs — arrival question only with a verified figure — and "Also Serving" from `nearby`); old `/locations` listing removed (redirects to hub); PageHero gained an actions slot; seed also resets page-copy wording for existing databases.
 
 - 2026-09-22 — Phases 3–4: homepage rebuilt in the client's section order (hero → 4-region dispatch grid → emergency band → 4 categories → about → FAQ; reviews/pricing only when data exists); About page text now comes from the admin "About Us" page, hubs from Site settings; FAQ page uses admin FAQs only; JSON-LD is a Service Area Business (hub address, 20 cities as areaServed, no invented hours/prices); SQLite migration FKs fixed (cascade) so `SEED_RESET=1` works; cities ordered as in the client's hub listing.
 
