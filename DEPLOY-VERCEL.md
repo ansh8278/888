@@ -95,6 +95,26 @@ Then open `https://<project>.vercel.app/admin` and log in with
   `DATABASE_URI=<supabase uri> npm run migrate:create -- <name>` locally and
   commit the new file in `src/migrations-pg/`; the next deploy applies it.
 
+## Where the code runs
+
+`vercel.json` pins the serverless functions to **bom1 (Mumbai)** because the
+Supabase database is in `ap-south-1`. Code and database must sit in the same
+region: when they were apart (functions in Washington DC, database in Mumbai)
+every admin query crossed the planet twice and the admin took seconds per
+screen.
+
+Public pages are unaffected either way — they are cached at the edge nearest
+the visitor and load in ~0.2s worldwide.
+
+**If the business later wants the lowest possible latency for US customers**
+(form submissions and uncached renders), move both together:
+
+1. Create a new Supabase project in a US region (e.g. `us-west-1`).
+2. `pg_dump` the old database and restore into the new one, or re-run
+   `npx payload migrate` + `SEED_RESET=1 npm run seed` if there is no live
+   data worth keeping.
+3. Update `DATABASE_URI` in Vercel, change `regions` to `["sfo1"]`, redeploy.
+
 ## Notes
 
 - Vercel's free (Hobby) plan is for non-commercial use; a business site
