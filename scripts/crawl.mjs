@@ -32,7 +32,7 @@ const norm = (href, from) => {
 while (queue.length) {
   const path = queue.shift()
   if (seen.has(path)) continue
-  const res = await fetch(base + path, { redirect: 'manual' })
+  let res; for (let i = 0; i < 3; i++) { try { res = await fetch(base + path, { redirect: 'manual', signal: AbortSignal.timeout(30000) }); break } catch (e) { if (i === 2) throw e } }
   seen.set(path, res.status)
   if (res.status >= 300 && res.status < 400) {
     const to = norm(res.headers.get('location') ?? '', path)

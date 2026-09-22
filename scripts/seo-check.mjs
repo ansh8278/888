@@ -8,7 +8,9 @@
 import { writeFileSync } from 'node:fs'
 
 const base = (process.argv[2] || 'http://localhost:3000').replace(/\/$/, '')
-const sm = await (await fetch(base + '/sitemap.xml')).text()
+// Remote sites time out now and then; try three times before giving up.
+const get = async (url) => { let err; for (let i = 0; i < 3; i++) { try { return await fetch(url, { signal: AbortSignal.timeout(30000) }) } catch (e) { err = e } } throw err }
+const sm = await (await get(base + '/sitemap.xml')).text()
 const urls = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
 
 const rows = []
@@ -19,7 +21,7 @@ const decode = (s) => s.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/
 
 for (const url of urls) {
   const path = new URL(url).pathname
-  const res = await fetch(url)
+  const res = await get(url)
   const html = await res.text()
   const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '')
   const desc = decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '')

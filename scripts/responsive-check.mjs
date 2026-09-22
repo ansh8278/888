@@ -40,7 +40,9 @@ for (const width of WIDTHS) {
   for (const path of PAGES) {
     events.length = 0
     await send('Page.navigate', { url: base + path })
-    await wait(1800)
+    // Wait for the page to actually load (remote sites are slower than localhost).
+    for (let i = 0; i < 40; i++) { if ((await evalJs('document.readyState')) === 'complete' && (await evalJs('!!document.querySelector("main")'))) break; await wait(250) }
+    await wait(600)
     const r = await evalJs(`(() => {
       const w = document.documentElement.clientWidth
       const wide = [...document.querySelectorAll('body *')].filter(el => { const b = el.getBoundingClientRect(); return b.width > 0 && b.right > w + 1 }).map(el => el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '')).slice(0, 5)
@@ -52,6 +54,7 @@ for (const width of WIDTHS) {
     })()`)
     const errors = events.filter((e) => (e.method === 'Runtime.exceptionThrown') || (e.method === 'Log.entryAdded' && e.params.entry.level === 'error' && !/favicon/.test(e.params.entry.text))).map((e) => e.params.exceptionDetails?.text || e.params.entry?.text)
     const tag = `${width}${path.replace(/\//g, '_') || '_home'}`
+    if (!r) { findings.push(`${tag}: page did not render`); continue }
     if (r.wide.length) findings.push(`${tag}: overflow ${r.wide.join(', ')}`)
     if (width < 800 && !r.barShown) findings.push(`${tag}: sticky bar not visible on phone`)
     if (width >= 800 && r.barShown) findings.push(`${tag}: sticky bar visible on desktop`)
