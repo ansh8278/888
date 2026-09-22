@@ -22,7 +22,7 @@ const PricingPage = async () => {
     getHomeFaqs(),
     getPageCopy(),
   ])
-  const priced = services.filter((s) => s.showInPricingTable)
+  const priced = services.filter((s) => s.showInPricingTable && s.startingPrice)
 
   return (
     <>
@@ -38,8 +38,20 @@ const PricingPage = async () => {
 
       <section className="sec">
         <div className="wrap">
-          <PricingTable services={priced} />
-          {copy.pricingNote ? <p className="table-note">{copy.pricingNote}</p> : null}
+          {priced.length > 0 ? (
+            <>
+              <PricingTable services={priced} />
+              {copy.pricingNote ? <p className="table-note">{copy.pricingNote}</p> : null}
+            </>
+          ) : (
+            // Honest empty state until the client confirms starting prices (D6).
+            <div className="empty-state">
+              <h2>Pricing is confirmed on the phone</h2>
+              <p>
+                Every job is quoted before a technician is sent, and the price is confirmed with you before any work begins. Call or send a request and a dispatcher will give you the price for your job.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

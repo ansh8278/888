@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { PageHero } from '../../../../components/Hero'
 import { FaqList } from '../../../../components/FaqList'
 import { Prose, CtaBanner, SectionHead } from '../../../../components/blocks'
-import { CallButton } from '../../../../components/CallButton'
+import { HeroActions } from '../../../../components/CallButton'
 import { Icon } from '../../../../components/Icon'
 import { ServiceCardGrid, AreasWeServe, LinkPills, asDocs } from '../../../../components/ServiceBlocks'
 import { getService, getServices, getLocations, getSiteSettings } from '../../../../lib/data'
@@ -72,14 +72,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
         intro={service.intro}
         image={service.heroImage ?? settings.defaultHeroImage}
         crumbs={crumbs.map((c, i) => (i === crumbs.length - 1 ? { label: c.label } : c))}
-        actions={
-          <>
-            <CallButton phone={phone} label={service.ctaLabel || 'Call Now —'} hideNumber={Boolean(service.ctaLabel)} primary />
-            <Link href="/book" className="btn-hero-secondary">
-              Request Service
-            </Link>
-          </>
-        }
+        actions={<HeroActions phone={phone} label={service.ctaLabel} hideNumber={Boolean(service.ctaLabel)} />}
       />
 
       {service.disclaimer ? (

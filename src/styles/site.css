@@ -2314,9 +2314,7 @@ button:active,
   .page-hero h1 { max-width: none; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; }
-  /* Leave room for the sticky Call / Request bar. */
-  body { padding-bottom: 64px; }
-  .stickybar { display: flex; }
+
   .cta-banner-actions { width: 100%; }
   .cta-banner-actions > * { flex: 1 1 100%; justify-content: center; }
 }
@@ -3207,3 +3205,18 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .check-grid li { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
 .check-grid li svg { width: 18px; height: 18px; color: var(--green); flex-shrink: 0; margin-top: 3px; }
 @media (max-width: 640px) { .check-grid { grid-template-columns: 1fr; } }
+
+/* Sticky Call / Request bar: phones and tablets, as in the client prototype (< 860px). */
+@media (max-width: 859px) {
+  body { padding-bottom: 64px; }
+  .stickybar { display: flex; }
+}
+/* FAQ footer buttons wrap on narrow phones instead of overflowing. */
+.faq-bottom-bar, .faq-bottom-links { flex-wrap: wrap; }
+@media (max-width: 480px) {
+  .faq-bottom-links { width: 100%; }
+  .faq-bottom-links .btn { flex: 1 1 100%; justify-content: center; }
+}
+.empty-state { max-width: 640px; padding: 28px 30px; border-radius: var(--radius); background: var(--bg-sand); border: 1px solid var(--line-sand); }
+.empty-state h2 { margin: 0 0 8px; font-size: 1.3rem; }
+.empty-state p { margin: 0; color: var(--muted); line-height: 1.6; }

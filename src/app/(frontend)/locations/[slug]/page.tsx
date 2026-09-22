@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { PageHero } from '../../../../components/Hero'
 import { FaqList } from '../../../../components/FaqList'
 import { CtaBanner, SectionHead } from '../../../../components/blocks'
-import { CallButton } from '../../../../components/CallButton'
+import { HeroActions } from '../../../../components/CallButton'
 import { ServiceCardGrid, LinkPills, asDocs } from '../../../../components/ServiceBlocks'
 import { getLocation, getLocations, getServices, getSiteSettings, servicesForLocation, regionLabel } from '../../../../lib/data'
 import { phoneOf } from '../../../../lib/contact'
@@ -85,14 +85,7 @@ const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
         intro={location.intro}
         image={location.image ?? settings.defaultHeroImage}
         crumbs={crumbs.map((c, i) => (i === crumbs.length - 1 ? { label: c.label } : c))}
-        actions={
-          <>
-            <CallButton phone={phone} label="Call Now —" primary />
-            <Link href="/book" className="btn-hero-secondary">
-              Request Service
-            </Link>
-          </>
-        }
+        actions={<HeroActions phone={phone} />}
       />
 
       {(location.neighbourhoods ?? []).length > 0 ? (

@@ -68,7 +68,7 @@ export const PageCopy: GlobalConfig = {
               name: 'pricingNote',
               type: 'textarea',
               label: 'Note under the price table',
-              defaultValue: 'Prices are starting points for standard work during normal hours. After-hours call-outs carry a flat fee quoted on the phone before we dispatch.',
+              defaultValue: 'Prices are starting points for standard work. Your technician confirms the exact price before any work begins.',
             },
           ],
         },

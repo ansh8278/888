@@ -24,9 +24,9 @@ const SECTIONS: { title: string; tiles: Tile[] }[] = [
     tiles: [
       { href: '/admin/globals/home-page', label: 'Home page', hint: 'Hero text, headings, buttons', icon: '🏠' },
       { href: '/admin/collections/pages', label: 'Standalone pages', hint: 'About Us, Privacy Policy, Terms', icon: '📃' },
-      { href: '/admin/collections/services', label: 'Services (6 pages)', hint: 'Prices, descriptions, FAQs per service', icon: '🔧' },
-      { href: '/admin/collections/locations', label: 'Locations (6 pages)', hint: 'Cities, shops, phone, hours', icon: '📍' },
-      { href: '/admin/globals/combo-template', label: 'City page template (36 pages)', hint: 'Wording for [service]-in-[city] pages', icon: '📄' },
+      { href: '/admin/collections/services', label: 'Services', hint: 'Categories, individual services, FAQs', icon: '🔧' },
+      { href: '/admin/collections/locations', label: 'Service areas', hint: 'Bay Area cities and San Jose districts', icon: '📍' },
+      { href: '/admin/globals/page-copy', label: 'Page text', hint: 'Headings and intros on index pages', icon: '📄' },
       { href: '/admin/collections/reviews', label: 'Reviews', hint: 'Customer quotes shown on the site', icon: '⭐' },
       { href: '/admin/collections/faqs', label: 'FAQs', hint: 'Questions and answers', icon: '💬' },
     ],
@@ -34,7 +34,7 @@ const SECTIONS: { title: string; tiles: Tile[] }[] = [
   {
     title: 'Settings & Media',
     tiles: [
-      { href: '/admin/globals/site-settings', label: 'Site settings', hint: 'Phone, licence, hours, ratings', icon: '⚙️' },
+      { href: '/admin/globals/site-settings', label: 'Site settings', hint: 'Phone, licence, hours, dispatch hub', icon: '⚙️' },
       { href: '/admin/globals/navigation', label: 'Menus', hint: 'Top menu and footer links', icon: '🧭' },
       { href: '/admin/collections/media', label: 'Images', hint: 'Photos used across the site', icon: '🖼️' },
       { href: '/admin/collections/users', label: 'Staff logins', hint: 'Who can sign in here', icon: '👤' },
@@ -96,11 +96,25 @@ export const Dashboard = async () => {
     count(payload, 'pages'),
   ])
 
-  // Every service is offered in every city unless a location narrows it down,
-  // which is the same arithmetic the site uses to generate those pages.
-  const comboPages = services * locations
-  // 8 core static pages + services + locations + comboPages + standalone pages (about, terms, privacy)
-  const totalPages = 8 + services + locations + comboPages + standalonePages
+  // Home, Bay Area hub, services index, pricing, reviews, FAQ, contact, request + every service, city and info page.
+  const totalPages = 8 + services + locations + standalonePages
+
+  // Business details the client still has to supply. Nothing fake is shown on
+  // the site in their place, but the site cannot launch without them.
+  let missing: { label: string; why: string }[] = []
+  try {
+    const st = await payload.findGlobal({ slug: 'site-settings', depth: 0 })
+    const checks: [unknown, string, string][] = [
+      [st.phone, 'Business phone number', 'Call buttons currently send visitors to the request form.'],
+      [st.licenseNumber, 'California BSIS licence number', 'Legally required on all advertising before launch.'],
+      [st.hours, 'Operating hours', 'No hours are shown; "24/7" must not be claimed unless true.'],
+      [st.rating && st.reviewCount, 'Google rating & review count', 'Trust badges and star markup are hidden until verified.'],
+      [(st.dispatchHubs ?? []).some((h) => h.postcode), 'ZIP code of the Santa Clara dispatch hub', 'Completes the business address for Google.'],
+    ]
+    missing = checks.filter(([v]) => !v).map(([, label, why]) => ({ label, why }))
+  } catch {
+    missing = []
+  }
 
   let latest: Lead[] = []
   try {
@@ -165,6 +179,23 @@ export const Dashboard = async () => {
         </ul>
       ) : null}
 
+      {missing.length > 0 ? (
+        <section className="dash__missing">
+          <h2 className="dash__title">Missing before launch</h2>
+          <p>
+            These come from the business and cannot be invented. Enter them under{' '}
+            <a href={withBase('/admin/globals/site-settings')}>Site settings</a>.
+          </p>
+          <ul>
+            {missing.map((m) => (
+              <li key={m.label}>
+                <strong>{m.label}</strong> — {m.why}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       {SECTIONS.map((section) => (
         <section key={section.title}>
           <h2 className="dash__title">{section.title}</h2>
@@ -193,10 +224,6 @@ export const Dashboard = async () => {
           <span>Cities</span>
         </div>
         <div className="dash__stat">
-          <b>{comboPages}</b>
-          <span>City combo pages</span>
-        </div>
-        <div className="dash__stat">
           <b>{standalonePages}</b>
           <span>Info pages (About/Legal)</span>
         </div>
@@ -207,7 +234,7 @@ export const Dashboard = async () => {
       </div>
 
       <p className="dash__note">
-        Your website currently serves <b>{totalPages} live pages</b>. Adding a service or a city automatically creates its individual page, its service-in-city combo pages, menu links, and sitemap entries.
+        Your website currently serves <b>{totalPages} live pages</b>. Adding a service or a city automatically creates its page and sitemap entry; add it to the menus under Menus.
       </p>
     </Gutter>
   )

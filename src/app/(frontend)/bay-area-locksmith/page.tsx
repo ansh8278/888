@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { PageHero } from '../../../components/Hero'
 import { RegionGrid } from '../../../components/RegionGrid'
 import { CtaBanner, SectionHead } from '../../../components/blocks'
-import { CallButton } from '../../../components/CallButton'
+import { HeroActions } from '../../../components/CallButton'
 import { LinkPills } from '../../../components/ServiceBlocks'
 import { getLocations, getServices, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { phoneOf } from '../../../lib/contact'
@@ -46,14 +46,7 @@ const BayAreaPage = async () => {
         intro={copy.locations?.intro}
         image={settings.defaultHeroImage}
         crumbs={[crumbs[0], { label: crumbs[1].label }]}
-        actions={
-          <>
-            <CallButton phone={phone} label="Call Now —" primary />
-            <Link href="/book" className="btn-hero-secondary">
-              Request Service
-            </Link>
-          </>
-        }
+        actions={<HeroActions phone={phone} />}
       />
 
       <section className="sec">

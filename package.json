@@ -20,7 +20,8 @@
     "versions:backfill": "payload run src/scripts/backfill-versions.ts",
     "package:cpanel": "node scripts/package-for-cpanel.mjs",
     "crawl": "node scripts/crawl.mjs",
-    "seo:check": "node scripts/seo-check.mjs"
+    "seo:check": "node scripts/seo-check.mjs",
+    "qa:responsive": "node scripts/responsive-check.mjs"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

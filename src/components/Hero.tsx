@@ -57,10 +57,12 @@ export const Hero = ({ home, settings }: Props) => {
 
           <div className="hero-cta">
             <CallButton phone={phoneOf(settings)} label={home.primaryCtaLabel ?? 'Call'} primary />
-            <Link href="/book" className="btn-hero-secondary">
-              {home.secondaryCtaLabel ?? 'Request Service'}
-              <Icon name="arrow" />
-            </Link>
+            {phoneOf(settings) ? (
+              <Link href="/book" className="btn-hero-secondary">
+                {home.secondaryCtaLabel ?? 'Request Service'}
+                <Icon name="arrow" />
+              </Link>
+            ) : null}
           </div>
 
           {url ? (
