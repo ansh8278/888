@@ -73,6 +73,31 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 
 ---
 
+## Production readiness — what is left
+
+**Done (nothing more needed from the developer side):**
+security headers, HTTPS/HSTS, 404 page, robots + sitemap, OpenGraph + Twitter
+card, favicon, form spam protection (Zod + rate limit + honeypot, all verified
+live), admin/API locked down (403 to anonymous), cached pages with instant
+purge on save (TTFB ~0.25–0.45s), Analytics/Search Console fields ready to
+fill in, Supabase daily backups, Vercel logs for errors.
+
+**Still required, in order:**
+
+| # | Item | Who | Notes |
+|---|---|---|---|
+| 1 | BSIS licence number | Client | **Legal blocker** — CA Locksmith Act requires it on all advertising |
+| 2 | Operating hours | Client | No hours shown until then; never claim 24/7 unless true |
+| 3 | Google rating + review count, and real reviews | Client | Reviews page and star markup stay hidden until entered |
+| 4 | Starting prices per service | Client | Pricing page shows "quoted on the phone" until then |
+| 5 | ZIP for 3315 Montgomery Dr, Santa Clara | Client | Completes the address for Google |
+| 6 | Real photos | Client | Current hero/team images are AI placeholders |
+| 7 | Business email for alerts + sending | Client | Live site still uses a personal Gmail for SMTP and `NOTIFY_EMAIL` |
+| 8 | Production domain | Client | Then: add in Vercel → Domains, update `NEXT_PUBLIC_SITE_URL`, redeploy |
+| 9 | Rotate the admin password; add staff logins | Owner | `admin@888lockandkey.com` currently the only account |
+| 10 | Google Analytics + Search Console IDs | Client | Paste into Admin → Site settings → Tracking; submit the sitemap |
+| 11 | Client approval of content | Client | Including the North/South/East/West San Jose grouping and Tri-Valley wording |
+
 ## Client Information Pending
 
 | Information | Status | Value | Required Before |
