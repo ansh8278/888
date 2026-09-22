@@ -308,12 +308,20 @@ const seed = async () => {
   })
 
   // ---------- globals ----------
-  // Business details deliberately left empty: see the file header.
+  // Business details deliberately left empty (see the file header) — and
+  // explicitly cleared, so an older database cannot keep placeholder values.
   await payload.updateGlobal({
     slug: 'site-settings',
     data: {
       companyName: '888 Lock & Key',
       tagline: 'AUTO · HOME · BUSINESS',
+      phone: '',
+      phoneHref: '',
+      licenseNumber: '',
+      hours: '',
+      rating: '',
+      reviewCount: null,
+      averageArrival: '',
       serviceAreaLine: 'Serving San Jose & the Entire Bay Area',
       scriptLine: 'Your Security Our Priority',
       dispatchHubs: [{ name: 'Santa Clara dispatch hub', addressLine: '3315 Montgomery Dr', city: 'Santa Clara', stateAbbr: 'CA' }],
