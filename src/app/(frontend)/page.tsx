@@ -24,6 +24,8 @@ import {
   getPageCopy,
 } from '../../lib/data'
 import { localBusinessSchema, faqSchema, JsonLd, absolute } from '../../lib/schema'
+import { CallButton } from '../../components/CallButton'
+import { phoneOf } from '../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const [home, settings] = await Promise.all([getHomePage(), getSiteSettings()])
@@ -169,9 +171,7 @@ const HomePage = async () => {
                 <Link href="/about" className="btn btn-primary">
                   Learn More About Us <Icon name="arrow" />
                 </Link>
-                <a href={`tel:${settings.phoneHref}`} className="btn btn-secondary">
-                  <Icon name="phone" /> Call {settings.phone}
-                </a>
+                <CallButton phone={phoneOf(settings)} className="btn btn-secondary" />
               </div>
             </div>
 
@@ -200,8 +200,7 @@ const HomePage = async () => {
           <div className="reviews-row">
             <ReviewMarquee reviews={reviews} />
             <CallCard
-              phone={settings.phone}
-              phoneHref={settings.phoneHref}
+              phone={phoneOf(settings)}
               title={copy.callCardTitle}
               subtitle={copy.callCardSubtitle}
               note={copy.callCardNote}
@@ -249,12 +248,6 @@ const HomePage = async () => {
                           </span>
                         </div>
                       ) : null}
-                      <div>
-                        <Icon name="phone" />
-                        <a href={`tel:${location.phone || settings.phoneHref}`}>
-                          {location.phone || settings.phone}
-                        </a>
-                      </div>
                     </div>
                     {location.hours ? (
                       <div className="loc-open-status">
@@ -305,9 +298,7 @@ const HomePage = async () => {
                 <Link href="/faq" className="btn btn-secondary btn-sm">
                   View All FAQs <Icon name="arrow" />
                 </Link>
-                <a href={`tel:${settings.phoneHref}`} className="btn btn-primary btn-sm">
-                  <Icon name="phone" /> Call {settings.phone}
-                </a>
+                <CallButton phone={phoneOf(settings)} className="btn btn-primary btn-sm" />
               </div>
             </div>
           </div>

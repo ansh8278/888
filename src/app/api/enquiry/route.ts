@@ -21,7 +21,7 @@ export const POST = async (request: Request) => {
   const limit = rateLimit(`enquiry:${clientKey(request)}`, MAX_PER_WINDOW, WINDOW_MS)
   if (!limit.allowed) {
     return NextResponse.json(
-      { error: 'Too many requests. Please call us instead — we answer 24/7.' },
+      { error: 'Too many requests. Please call us instead.' },
       { status: 429, headers: { 'Retry-After': String(limit.retryAfter) } },
     )
   }

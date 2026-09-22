@@ -4,6 +4,7 @@ import { PricingTable, CtaBanner } from '../../../components/blocks'
 import { FaqList } from '../../../components/FaqList'
 import { getServices, getSiteSettings, getHomeFaqs, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, faqSchema, absolute } from '../../../lib/schema'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
@@ -53,7 +54,7 @@ const PricingPage = async () => {
         </div>
       </section>
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
+      <CtaBanner phone={phoneOf(settings)} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

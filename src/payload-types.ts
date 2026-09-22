@@ -173,7 +173,7 @@ export interface Enquiry {
   createdAt: string;
 }
 /**
- * Each service gets its own page, and one page per city it is offered in.
+ * Service categories (Automotive, Residential…) and the individual services under them. Each gets its own page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
@@ -184,6 +184,14 @@ export interface Service {
    * e.g. "Car Lockout"
    */
   title: string;
+  /**
+   * A category lists its services; a service sits under a category.
+   */
+  kind: 'category' | 'service' | 'standalone';
+  /**
+   * For services only: the category this belongs to.
+   */
+  category?: (number | null) | Service;
   /**
    * One or two lines. Shown on the home page service card.
    */
@@ -219,7 +227,7 @@ export interface Service {
     [k: string]: unknown;
   } | null;
   /**
-   * Short checklist shown beside the write-up.
+   * Checklist shown on the page (used for Commercial, Emergency and Garage).
    */
   bullets?:
     | {
@@ -228,13 +236,38 @@ export interface Service {
       }[]
     | null;
   /**
+   * Every city page shows the same service cards. Leave blank to keep this service off city pages.
+   */
+  cityCard?: {
+    /**
+     * Short label, e.g. "Rekey / Lock Change". Defaults to the page title.
+     */
+    title?: string | null;
+    /**
+     * One line. Write {city} where the city name should go.
+     */
+    text?: string | null;
+  };
+  /**
+   * Shown in a highlighted box under the intro. Used on the Garage page to say this is lock service only, not garage door repair.
+   */
+  disclaimer?: string | null;
+  /**
+   * Optional call-button wording for this page, e.g. "LOCKED OUT? CALL NOW".
+   */
+  ctaLabel?: string | null;
+  /**
+   * Links shown at the bottom of the page.
+   */
+  related?: (number | Service)[] | null;
+  /**
    * Questions shown on this service page.
    */
   faqs?: (number | Faq)[] | null;
   /**
-   * e.g. "$95" or "From $45 / lock" or "Custom quote"
+   * Confirmed starting price only, e.g. "$95" or "From $45 / lock". Leave blank until pricing is confirmed — nothing is shown then.
    */
-  startingPrice: string;
+  startingPrice?: string | null;
   /**
    * Shown in the pricing table Notes column.
    */
@@ -311,7 +344,7 @@ export interface Faq {
   createdAt: string;
 }
 /**
- * Cities you serve. Each one gets a page, plus a page for every service.
+ * Cities and San Jose districts you serve. Each one gets a page. This is a service area, not a list of shops.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "locations".
@@ -331,15 +364,27 @@ export interface Location {
    */
   stateAbbr: string;
   /**
-   * Label on the shop card, e.g. "California HQ".
+   * Which part of the Bay Area this city belongs to. Groups it on the Bay Area page.
+   */
+  subregion: 'south-bay' | 'peninsula' | 'east-bay' | 'tri-valley';
+  /**
+   * Only for districts inside a city (e.g. North San Jose → San Jose). Nested under the parent in breadcrumbs and left out of the Bay Area page.
+   */
+  parent?: (number | null) | Location;
+  /**
+   * Shown as links at the bottom of the page.
+   */
+  nearby?: (number | Location)[] | null;
+  /**
+   * Small label above the page heading. Defaults to the region name.
    */
   badge?: string | null;
   /**
-   * e.g. "888 Lock & Key — San Jose"
+   * Only if there is a real, confirmed shop or dispatch hub here. Leave blank otherwise.
    */
   shopName?: string | null;
   /**
-   * e.g. "Main shop & dispatch center"
+   * e.g. "Dispatch hub". Leave blank if there is no physical location.
    */
   shopSubtitle?: string | null;
   /**
@@ -347,7 +392,7 @@ export interface Location {
    */
   image?: (number | null) | Media;
   /**
-   * Street address
+   * Street address of a real location only
    */
   addressLine?: string | null;
   /**
@@ -359,7 +404,7 @@ export interface Location {
    */
   phone?: string | null;
   /**
-   * e.g. "Open 24 hours · walk-ins 8am–7pm"
+   * Confirmed opening hours for a physical location here. Leave blank otherwise.
    */
   hours?: string | null;
   /**
@@ -367,7 +412,7 @@ export interface Location {
    */
   mapUrl?: string | null;
   /**
-   * Listed on the location page. Helps local search.
+   * Listed as pills on the page. Helps local search.
    */
   neighbourhoods?:
     | {
@@ -395,7 +440,7 @@ export interface Location {
     [k: string]: unknown;
   } | null;
   /**
-   * Services offered here. Leave empty to offer every service.
+   * Service cards shown on this page, in order. Leave empty to show every service.
    */
   services?: (number | Service)[] | null;
   /**
@@ -425,7 +470,7 @@ export interface Location {
    */
   order?: number | null;
   /**
-   * Show in the home page city strip.
+   * Show in the home page and footer city lists.
    */
   featured?: boolean | null;
   updatedAt: string;
@@ -681,6 +726,8 @@ export interface EnquiriesSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
+  kind?: T;
+  category?: T;
   shortDescription?: T;
   icon?: T;
   heroImage?: T;
@@ -692,6 +739,15 @@ export interface ServicesSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  cityCard?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+      };
+  disclaimer?: T;
+  ctaLabel?: T;
+  related?: T;
   faqs?: T;
   startingPrice?: T;
   priceNote?: T;
@@ -719,6 +775,9 @@ export interface LocationsSelect<T extends boolean = true> {
   city?: T;
   state?: T;
   stateAbbr?: T;
+  subregion?: T;
+  parent?: T;
+  nearby?: T;
   badge?: T;
   shopName?: T;
   shopSubtitle?: T;
@@ -916,11 +975,11 @@ export interface HomePage {
     | {
         icon: 'clock' | 'shield' | 'people' | 'star';
         /**
-         * Bold line, e.g. "24/7"
+         * Bold line, e.g. "Licensed & Insured"
          */
         value: string;
         /**
-         * Grey line, e.g. "Emergency Service"
+         * Grey line, e.g. "CA BSIS"
          */
         label: string;
         id?: string | null;
@@ -1144,27 +1203,59 @@ export interface SiteSetting {
   companyName: string;
   tagline?: string | null;
   /**
-   * Displayed, e.g. "(408) 555-0888"
+   * As displayed, e.g. "(408) 000-0000". REQUIRED before launch.
    */
-  phone: string;
+  phone?: string | null;
   /**
-   * Dialled, e.g. "+14085550888"
+   * As dialled, digits only with country code, e.g. "+14080000000".
    */
-  phoneHref: string;
+  phoneHref?: string | null;
   email?: string | null;
   /**
-   * e.g. "BSIS #LCO-000000"
+   * California BSIS locksmith licence, e.g. "CA BSIS Lic. #LCO 1234". REQUIRED by law on all advertising before launch.
    */
   licenseNumber?: string | null;
+  /**
+   * Confirmed operating hours, e.g. "Mon–Sun 7am–10pm". Leave blank until confirmed — never claim 24/7 unless it is true.
+   */
   hours?: string | null;
   /**
-   * e.g. "Across California, Arizona & New York"
+   * One line shown in the footer and header strip.
    */
   serviceAreaLine?: string | null;
+  /**
+   * Confirmed physical addresses only. This is a mobile service area business — cities are served from these hubs, they do not each have a shop.
+   */
+  dispatchHubs?:
+    | {
+        /**
+         * e.g. "Santa Clara dispatch hub"
+         */
+        name: string;
+        addressLine: string;
+        city: string;
+        stateAbbr: string;
+        /**
+         * ZIP
+         */
+        postcode?: string | null;
+        /**
+         * Optional Google Maps link.
+         */
+        mapUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Verified rating, e.g. "4.8/5"
+   */
   rating?: string | null;
+  /**
+   * Verified review count
+   */
   reviewCount?: number | null;
   /**
-   * e.g. "24 MIN"
+   * Only a tracked, verified average, e.g. "25 min". Leave blank otherwise.
    */
   averageArrival?: string | null;
   /**
@@ -1407,6 +1498,17 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   licenseNumber?: T;
   hours?: T;
   serviceAreaLine?: T;
+  dispatchHubs?:
+    | T
+    | {
+        name?: T;
+        addressLine?: T;
+        city?: T;
+        stateAbbr?: T;
+        postcode?: T;
+        mapUrl?: T;
+        id?: T;
+      };
   rating?: T;
   reviewCount?: T;
   averageArrival?: T;

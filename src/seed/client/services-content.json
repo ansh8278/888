@@ -1,0 +1,339 @@
+{
+  "_readme": "Content for service category pages, their sub-service pages, the standalone Garage Locksmith page, and the Bay Area hub page. Pairs with city-pages-content.json (locations) for a complete site. Replace [REAL PHONE] / [REAL LICENSE NUMBER] site-wide before publishing.",
+  "categories": [
+    {
+      "slug": "automotive-locksmith",
+      "title": "Automotive Locksmith Services | Car Lockout, Key Replacement & More | 888 Lock & Key",
+      "meta": "Mobile automotive locksmith across San Jose & the Bay Area — car lockouts, key replacement, key fob & transponder programming, ignition repair. Call now.",
+      "h1": "Automotive Locksmith Services",
+      "intro": "From a car lockout in a parking lot to a lost key fob that needs programming on-site, our mobile automotive locksmiths come to you anywhere in San Jose and the Bay Area — no tow truck, no dealership wait.",
+      "subservices": [
+        "car-lockout",
+        "car-key-replacement",
+        "key-fob-programming",
+        "transponder-key-programming",
+        "ignition-repair"
+      ],
+      "related": [
+        "residential-locksmith",
+        "emergency-locksmith"
+      ]
+    },
+    {
+      "slug": "residential-locksmith",
+      "title": "Residential Locksmith Services | House Lockout, Rekey, Lock Change | 888 Lock & Key",
+      "meta": "Mobile residential locksmith across San Jose & the Bay Area — house lockouts, rekey, lock change, smart lock installation. Licensed & insured. Call now.",
+      "h1": "Residential Locksmith Services",
+      "intro": "Locked out of your home, moving into a new place, or upgrading to a smart lock — our residential locksmiths handle it on-site across San Jose and the Bay Area.",
+      "subservices": [
+        "house-lockout",
+        "rekey-locks",
+        "lock-change",
+        "smart-lock-installation"
+      ],
+      "related": [
+        "automotive-locksmith",
+        "garage-locksmith",
+        "emergency-locksmith"
+      ]
+    },
+    {
+      "slug": "commercial-locksmith",
+      "title": "Commercial Locksmith Services | Master Key, Rekey & Storefront Locks | 888 Lock & Key",
+      "meta": "Mobile commercial locksmith across San Jose & the Bay Area — office lockouts, master key systems, commercial rekeying, storefront & panic hardware.",
+      "h1": "Commercial Locksmith Services",
+      "intro": "From a single office lockout to a full master-key system across multiple doors, our commercial locksmiths serve businesses throughout San Jose and the Bay Area.",
+      "included": [
+        "Business / Office Lockout",
+        "Commercial Rekeying",
+        "Commercial Lock Change",
+        "Commercial Lock Replacement",
+        "Master Key Systems",
+        "High-Security Locks",
+        "Keyless / Keypad Locks",
+        "Storefront Locks",
+        "Commercial Door Hardware",
+        "Panic / Exit Devices"
+      ],
+      "related": [
+        "residential-locksmith",
+        "emergency-locksmith"
+      ]
+    },
+    {
+      "slug": "emergency-locksmith",
+      "title": "Emergency Locksmith | Urgent Lockout & Lost Key Service | 888 Lock & Key",
+      "meta": "Emergency mobile locksmith serving San Jose & the Bay Area — urgent car, house, apartment & business lockouts, lost keys, and rekeying. Call now.",
+      "h1": "Emergency Locksmith Services",
+      "intro": "Locked out and need help right now? Our mobile locksmiths handle urgent car, home, and business lockouts, lost or broken keys, and rekeying after lost or stolen keys throughout San Jose and the Bay Area.",
+      "included": [
+        "Car, house, apartment and business lockouts",
+        "Lost or broken keys",
+        "Urgent lock changes",
+        "Rekeying after lost/stolen keys",
+        "Broken lock assistance"
+      ],
+      "related": [
+        "automotive-locksmith",
+        "residential-locksmith",
+        "commercial-locksmith"
+      ]
+    }
+  ],
+  "garage": {
+    "slug": "garage-locksmith",
+    "title": "Garage Entry Door Locksmith | Lockout, Rekey & Lock Replacement | 888 Lock & Key",
+    "meta": "Mobile locksmith for garage side-entry doors across San Jose & the Bay Area — lockout, rekey, lock replacement, smart locks. Not a garage door repair company.",
+    "h1": "Garage Locksmith Services",
+    "intro": "We handle the lock on your garage's side-entry or man-door — lockouts, rekeying, replacement, and smart lock installation — anywhere in San Jose and the Bay Area.",
+    "included": [
+      "Garage side-entry door lockout",
+      "Garage entry-door rekey",
+      "Garage entry lock replacement",
+      "Deadbolt installation",
+      "Smart lock installation",
+      "Keypad / electronic entry locks",
+      "Broken key extraction",
+      "Supported exterior / gate locks"
+    ],
+    "disclaimer": "We are a locksmith company, not a garage door repair company. We do not service garage door springs, tracks, rollers, motors, openers, or cables — only the lock on the entry door itself.",
+    "related": [
+      "residential-locksmith",
+      "commercial-locksmith"
+    ]
+  },
+  "services": [
+    {
+      "slug": "car-lockout",
+      "parent": "automotive-locksmith",
+      "title": "Car Lockout Service | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Locked out of your car in San Jose or the Bay Area? Non-destructive car lockout service, all makes and models. Mobile, licensed & insured. Call now.",
+      "h1": "Car Lockout",
+      "cta": "LOCKED OUT? CALL NOW",
+      "content": "Locked keys in the car, keys locked in the trunk, or a jammed car door — our mobile technicians open all makes and models without damaging the paint or door, anywhere in San Jose and the Bay Area.",
+      "related": [
+        "car-key-replacement",
+        "key-fob-programming",
+        "emergency-locksmith"
+      ]
+    },
+    {
+      "slug": "car-key-replacement",
+      "parent": "automotive-locksmith",
+      "title": "Car Key Replacement | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Lost or broken car key? Mobile car key replacement, cutting & programming on-site across San Jose & the Bay Area. Transponder & push-to-start keys.",
+      "h1": "Car Key Replacement",
+      "cta": "NEED A CAR KEY? CALL NOW",
+      "content": "Lost car key replacement, spare keys, key cutting, transponder keys, key fob replacement and programming, push-to-start keys, and broken key extraction — all done on-site with mobile service.",
+      "related": [
+        "key-fob-programming",
+        "transponder-key-programming",
+        "car-lockout"
+      ]
+    },
+    {
+      "slug": "key-fob-programming",
+      "parent": "automotive-locksmith",
+      "title": "Key Fob Programming & Replacement | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Mobile key fob replacement and programming across San Jose & the Bay Area. Cut and programmed on-site. Call now for same-day service.",
+      "h1": "Key Fob Programming",
+      "cta": "NEED A KEY FOB? CALL NOW",
+      "content": "Lost, broken, or non-working key fob — we cut and program a replacement on-site, no dealership appointment or wait required.",
+      "related": [
+        "car-key-replacement",
+        "transponder-key-programming"
+      ]
+    },
+    {
+      "slug": "transponder-key-programming",
+      "parent": "automotive-locksmith",
+      "title": "Transponder Key Programming | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Mobile transponder key programming across San Jose & the Bay Area. On-site chip key cutting and programming for most makes and models.",
+      "h1": "Transponder Key Programming",
+      "cta": "NEED A TRANSPONDER KEY? CALL NOW",
+      "content": "Modern vehicles require a programmed transponder chip key to start. We cut and program transponder keys on-site across San Jose and the Bay Area.",
+      "related": [
+        "car-key-replacement",
+        "key-fob-programming"
+      ]
+    },
+    {
+      "slug": "ignition-repair",
+      "parent": "automotive-locksmith",
+      "title": "Ignition Locksmith Service | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Mobile ignition locksmith service across San Jose & the Bay Area for supported makes and models. Call to check availability for your vehicle.",
+      "h1": "Ignition Locksmith Service",
+      "cta": "IGNITION ISSUE? CALL NOW",
+      "content": "We offer supported ignition locksmith services for select makes and models. Call to confirm availability for your specific vehicle before booking.",
+      "related": [
+        "car-key-replacement",
+        "car-lockout"
+      ]
+    },
+    {
+      "slug": "house-lockout",
+      "parent": "residential-locksmith",
+      "title": "House Lockout Service | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Locked out of your house or apartment in San Jose or the Bay Area? Mobile lockout service with ID verification, no-damage entry. Call now.",
+      "h1": "House Lockout",
+      "cta": "LOCKED OUT? CALL NOW",
+      "content": "Locked out of your house, apartment, or condo — our technicians verify ownership on arrival and open the door without damaging your lock or frame whenever possible.",
+      "related": [
+        "rekey-locks",
+        "lock-change",
+        "emergency-locksmith"
+      ]
+    },
+    {
+      "slug": "rekey-locks",
+      "parent": "residential-locksmith",
+      "title": "Lock Rekey Service | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Mobile lock rekey service across San Jose & the Bay Area — new home, new tenant, or lost keys. Same-day rekey, cheaper than replacement.",
+      "h1": "Lock Rekey",
+      "cta": "NEED A REKEY? CALL NOW",
+      "content": "Moving into a new home, changing tenants, or lost a key — rekeying repins your existing lock so old keys stop working, without replacing the hardware. Usually faster and cheaper than a full lock change.",
+      "related": [
+        "lock-change",
+        "house-lockout",
+        "smart-lock-installation"
+      ]
+    },
+    {
+      "slug": "lock-change",
+      "parent": "residential-locksmith",
+      "title": "Lock Change & Replacement | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Mobile lock change and replacement service across San Jose & the Bay Area. Deadbolts, door locks, and hardware upgrades. Call now.",
+      "h1": "Lock Change & Replacement",
+      "cta": "NEED A LOCK CHANGE? CALL NOW",
+      "content": "When a lock is worn, damaged, or below the security grade you need, we install a full replacement — deadbolts, door locks, and upgraded hardware.",
+      "related": [
+        "rekey-locks",
+        "smart-lock-installation",
+        "house-lockout"
+      ]
+    },
+    {
+      "slug": "smart-lock-installation",
+      "parent": "residential-locksmith",
+      "title": "Smart Lock Installation | San Jose & Bay Area | 888 Lock & Key",
+      "meta": "Mobile smart lock and keyless entry installation across San Jose & the Bay Area. Setup included. Call now for a quote.",
+      "h1": "Smart Lock Installation",
+      "cta": "WANT A SMART LOCK? CALL NOW",
+      "content": "Install and set up smart locks and keyless entry systems — we walk you through the app setup on-site so it's ready to use before we leave.",
+      "related": [
+        "lock-change",
+        "rekey-locks",
+        "garage-locksmith"
+      ]
+    }
+  ],
+  "hub": {
+    "slug": "bay-area-locksmith",
+    "title": "Bay Area Locksmith | Mobile Locksmith Serving San Jose & the Bay Area | 888 Lock & Key",
+    "meta": "888 Lock & Key provides mobile locksmith services throughout San Jose and the Bay Area — South Bay, Peninsula & East Bay.",
+    "h1": "Mobile Locksmith Serving San Jose & the Entire Bay Area",
+    "intro": "888 Lock & Key dispatches mobile automotive, residential, and commercial locksmith technicians throughout San Jose and every corner of the Bay Area. Find your area below."
+  },
+  "city_index": [
+    {
+      "slug": "san-jose-locksmith",
+      "city": "San Jose",
+      "subregion": "South Bay"
+    },
+    {
+      "slug": "santa-clara-locksmith",
+      "city": "Santa Clara",
+      "subregion": "South Bay"
+    },
+    {
+      "slug": "sunnyvale-locksmith",
+      "city": "Sunnyvale",
+      "subregion": "South Bay"
+    },
+    {
+      "slug": "cupertino-locksmith",
+      "city": "Cupertino",
+      "subregion": "South Bay"
+    },
+    {
+      "slug": "campbell-locksmith",
+      "city": "Campbell",
+      "subregion": "South Bay"
+    },
+    {
+      "slug": "milpitas-locksmith",
+      "city": "Milpitas",
+      "subregion": "South Bay"
+    },
+    {
+      "slug": "mountain-view-locksmith",
+      "city": "Mountain View",
+      "subregion": "Peninsula"
+    },
+    {
+      "slug": "palo-alto-locksmith",
+      "city": "Palo Alto",
+      "subregion": "Peninsula"
+    },
+    {
+      "slug": "redwood-city-locksmith",
+      "city": "Redwood City",
+      "subregion": "Peninsula"
+    },
+    {
+      "slug": "san-mateo-locksmith",
+      "city": "San Mateo",
+      "subregion": "Peninsula"
+    },
+    {
+      "slug": "fremont-locksmith",
+      "city": "Fremont",
+      "subregion": "East Bay"
+    },
+    {
+      "slug": "oakland-locksmith",
+      "city": "Oakland",
+      "subregion": "East Bay"
+    },
+    {
+      "slug": "hayward-locksmith",
+      "city": "Hayward",
+      "subregion": "East Bay"
+    },
+    {
+      "slug": "san-leandro-locksmith",
+      "city": "San Leandro",
+      "subregion": "East Bay"
+    },
+    {
+      "slug": "union-city-locksmith",
+      "city": "Union City",
+      "subregion": "East Bay"
+    },
+    {
+      "slug": "newark-locksmith",
+      "city": "Newark",
+      "subregion": "East Bay"
+    },
+    {
+      "slug": "pleasanton-locksmith",
+      "city": "Pleasanton",
+      "subregion": "Tri-Valley"
+    },
+    {
+      "slug": "dublin-locksmith",
+      "city": "Dublin",
+      "subregion": "Tri-Valley"
+    },
+    {
+      "slug": "san-ramon-locksmith",
+      "city": "San Ramon",
+      "subregion": "Tri-Valley"
+    },
+    {
+      "slug": "walnut-creek-locksmith",
+      "city": "Walnut Creek",
+      "subregion": "Tri-Valley"
+    }
+  ]
+}

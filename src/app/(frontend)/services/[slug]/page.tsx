@@ -8,6 +8,8 @@ import { Icon } from '../../../../components/Icon'
 import { getService, getServices, getLocations, getSiteSettings, getPageCopy } from '../../../../lib/data'
 import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
 import type { Faq } from '../../../../payload-types'
+import { CallButton } from '../../../../components/CallButton'
+import { phoneOf } from '../../../../lib/contact'
 
 export const generateStaticParams = async () => {
   const services = await getServices()
@@ -88,10 +90,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
               <div className="price-card-label">Starting at</div>
               <div className="price-card-value">{service.startingPrice}</div>
               {service.priceNote ? <p className="price-card-note">{service.priceNote}</p> : null}
-              <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary price-card-cta" data-call-cta>
-                <Icon name="phone" />
-                Call {settings.phone}
-              </a>
+              <CallButton phone={phoneOf(settings)} className="btn-hero-primary price-card-cta" primary />
               <Link href="/book" className="btn-hero-secondary price-card-cta">
                 Request Service
               </Link>
@@ -142,8 +141,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
       ) : null}
 
       <CtaBanner
-        phone={settings.phone}
-        phoneHref={settings.phoneHref}
+        phone={phoneOf(settings)}
         heading={`Need ${service.title.toLowerCase()} now?`}
       />
     </>

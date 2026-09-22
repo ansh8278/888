@@ -6,6 +6,7 @@ import { CtaBanner } from '../../../components/blocks'
 import { getSiteSettings, getLocations, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, localBusinessSchema, absolute } from '../../../lib/schema'
 import { Icon } from '../../../components/Icon'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const settings = await getSiteSettings()
@@ -172,8 +173,7 @@ const AboutPage = async () => {
       </section>
 
       <CtaBanner
-        phone={settings.phone}
-        phoneHref={settings.phoneHref}
+        phone={phoneOf(settings)}
         heading={copy.ctaHeading ?? 'Need a locksmith near you?'}
         subtitle={copy.ctaSubtitle ?? 'Call our 24/7 live dispatch team for immediate assistance.'}
       />

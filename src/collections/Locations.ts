@@ -8,11 +8,11 @@ export const Locations: CollectionConfig = {
   labels: { singular: 'Location', plural: 'Locations' },
   admin: {
     useAsTitle: 'city',
-    defaultColumns: ['city', 'state', 'phone', 'order'],
+    defaultColumns: ['city', 'subregion', 'parent', 'order'],
     group: 'Pages',
     // Gives each document a "Preview" button pointing at its live page.
     preview: (doc) => (doc?.slug ? `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/locations/${doc.slug}` : null),
-    description: 'Cities you serve. Each one gets a page, plus a page for every service.',
+    description: 'Cities and San Jose districts you serve. Each one gets a page. This is a service area, not a list of shops.',
   },
   access: { read: anyone, create: staff, update: staff, delete: staff },
   defaultSort: 'order',
@@ -39,19 +39,49 @@ export const Locations: CollectionConfig = {
               admin: { description: 'Two letters, e.g. "CA". Used in addresses.' },
             },
             {
+              name: 'subregion',
+              type: 'select',
+              required: true,
+              defaultValue: 'south-bay',
+              admin: { description: 'Which part of the Bay Area this city belongs to. Groups it on the Bay Area page.' },
+              options: [
+                { label: 'South Bay / Silicon Valley', value: 'south-bay' },
+                { label: 'Peninsula', value: 'peninsula' },
+                { label: 'East Bay', value: 'east-bay' },
+                { label: 'Tri-Valley', value: 'tri-valley' },
+              ],
+            },
+            {
+              name: 'parent',
+              type: 'relationship',
+              relationTo: 'locations',
+              admin: {
+                description:
+                  'Only for districts inside a city (e.g. North San Jose → San Jose). Nested under the parent in breadcrumbs and left out of the Bay Area page.',
+              },
+            },
+            {
+              name: 'nearby',
+              type: 'relationship',
+              relationTo: 'locations',
+              hasMany: true,
+              label: 'Also serving (nearby areas)',
+              admin: { description: 'Shown as links at the bottom of the page.' },
+            },
+            {
               name: 'badge',
               type: 'text',
-              admin: { description: 'Label on the shop card, e.g. "California HQ".' },
+              admin: { description: 'Small label above the page heading. Defaults to the region name.' },
             },
             {
               name: 'shopName',
               type: 'text',
-              admin: { description: 'e.g. "888 Lock & Key — San Jose"' },
+              admin: { description: 'Only if there is a real, confirmed shop or dispatch hub here. Leave blank otherwise.' },
             },
             {
               name: 'shopSubtitle',
               type: 'text',
-              admin: { description: 'e.g. "Main shop & dispatch center"' },
+              admin: { description: 'e.g. "Dispatch hub". Leave blank if there is no physical location.' },
             },
             {
               name: 'image',
@@ -63,11 +93,13 @@ export const Locations: CollectionConfig = {
         },
         {
           label: 'Contact',
+          description:
+            'Only fill in an address if there is a real, confirmed shop or dispatch hub in this city. Cities without one are still served — never invent an address.',
           fields: [
             {
               type: 'row',
               fields: [
-                { name: 'addressLine', type: 'text', admin: { width: '50%', description: 'Street address' } },
+                { name: 'addressLine', type: 'text', admin: { width: '50%', description: 'Street address of a real location only' } },
                 { name: 'postcode', type: 'text', admin: { width: '50%', description: 'ZIP code' } },
               ],
             },
@@ -79,8 +111,7 @@ export const Locations: CollectionConfig = {
             {
               name: 'hours',
               type: 'text',
-              defaultValue: 'Open 24 hours',
-              admin: { description: 'e.g. "Open 24 hours · walk-ins 8am–7pm"' },
+              admin: { description: 'Confirmed opening hours for a physical location here. Leave blank otherwise.' },
             },
             {
               name: 'mapUrl',
@@ -90,8 +121,8 @@ export const Locations: CollectionConfig = {
             {
               name: 'neighbourhoods',
               type: 'array',
-              label: 'Areas covered',
-              admin: { description: 'Listed on the location page. Helps local search.' },
+              label: 'Neighborhoods we serve',
+              admin: { description: 'Listed as pills on the page. Helps local search.' },
               fields: [{ name: 'name', type: 'text', required: true }],
             },
           ],
@@ -111,7 +142,7 @@ export const Locations: CollectionConfig = {
               relationTo: 'services',
               hasMany: true,
               admin: {
-                description: 'Services offered here. Leave empty to offer every service.',
+                description: 'Service cards shown on this page, in order. Leave empty to show every service.',
               },
             },
           ],
@@ -130,7 +161,7 @@ export const Locations: CollectionConfig = {
       name: 'featured',
       type: 'checkbox',
       defaultValue: true,
-      admin: { position: 'sidebar', description: 'Show in the home page city strip.' },
+      admin: { position: 'sidebar', description: 'Show in the home page and footer city lists.' },
     },
   ],
 }

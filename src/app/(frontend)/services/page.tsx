@@ -3,6 +3,7 @@ import { PageHero } from '../../../components/Hero'
 import { ServiceCard, CtaBanner } from '../../../components/blocks'
 import { getServices, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
@@ -41,7 +42,7 @@ const ServicesIndex = async () => {
         </div>
       </section>
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
+      <CtaBanner phone={phoneOf(settings)} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

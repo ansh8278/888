@@ -32,7 +32,7 @@ export const ComboTemplate: GlobalConfig = {
       type: 'textarea',
       required: true,
       defaultValue:
-        'Need {service} in {city}? Our mobile vans are dispatched by GPS from the closest shop, arriving in about {arrival} on average. Upfront pricing from {price}, licensed and insured technicians, 24 hours a day.',
+        'Need {service} in {city}? Our mobile technicians are dispatched to you anywhere in {city} — licensed, insured, and with the price confirmed before work begins.',
     },
     {
       name: 'bodyHeading',
@@ -54,13 +54,13 @@ export const ComboTemplate: GlobalConfig = {
     {
       name: 'seoTitle',
       type: 'text',
-      defaultValue: '{service} in {city}, {state} | 24/7 Mobile Locksmith',
+      defaultValue: '{service} in {city}, {state} | Mobile Locksmith | 888 Lock & Key',
     },
     {
       name: 'seoDescription',
       type: 'textarea',
       defaultValue:
-        '{service} in {city}. Average arrival {arrival}, pricing from {price}, licensed and insured. Call {phone} — open 24 hours.',
+        '{service} in {city}, {state}. Mobile, licensed and insured locksmith dispatched across San Jose and the Bay Area. Call now.',
     },
   ],
 }

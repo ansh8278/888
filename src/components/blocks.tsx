@@ -5,6 +5,8 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import { Icon, GoogleG, type IconName } from './Icon'
 import type { Media, Service, Location, Review } from '../payload-types'
 import { withBase } from '../lib/base-path'
+import { CallButton } from './CallButton'
+import type { Phone } from '../lib/contact'
 
 /**
  * Media relationships come back as an id or the populated doc, depending on depth.
@@ -155,13 +157,11 @@ export const ReviewMarquee = ({ reviews }: { reviews: Review[] }) => {
 
 export const CallCard = ({
   phone,
-  phoneHref,
   title = 'Need a Locksmith?',
-  subtitle = "We're here 24/7.",
+  subtitle = 'Mobile technicians dispatched across the Bay Area.',
   note = 'Same day service. No call-centre. Real people.',
 }: {
-  phone: string
-  phoneHref: string
+  phone: Phone | null
   title?: string | null
   subtitle?: string | null
   note?: string | null
@@ -177,10 +177,7 @@ export const CallCard = ({
       </div>
     </div>
     <div>
-      <a href={`tel:${phoneHref}`} className="btn-dark-call" data-call-cta>
-        <Icon name="phone" />
-        Call {phone}
-      </a>
+      <CallButton phone={phone} className="btn-dark-call" primary />
       {note ? <div className="dark-card-note">{note}</div> : null}
     </div>
   </article>
@@ -213,30 +210,30 @@ export const PricingTable = ({ services }: { services: Service[] }) => (
 
 export const CtaBanner = ({
   phone,
-  phoneHref,
   heading,
   subtitle,
+  label,
 }: {
-  phone: string
-  phoneHref: string
+  phone: Phone | null
   heading?: string | null
   subtitle?: string | null
+  /** Call button wording, e.g. "LOCKED OUT? CALL NOW". */
+  label?: string | null
 }) => (
   <section className="cta-banner">
     <div className="wrap cta-banner-inner">
       <div>
         <h2>{heading || 'Locked out right now?'}</h2>
-        <p>{subtitle || 'One call. A real dispatcher. A van on the way.'}</p>
+        <p>{subtitle || 'Mobile technicians dispatched across the Bay Area. Call for immediate assistance.'}</p>
       </div>
       <div className="cta-banner-actions">
-        <a href={`tel:${phoneHref}`} className="btn-hero-primary" data-call-cta>
-          <Icon name="phone" />
-          Call {phone}
-        </a>
-        <Link href="/book" className="btn-hero-secondary">
-          Request Service
-          <Icon name="arrow" />
-        </Link>
+        <CallButton phone={phone} label={label ? label : 'Call Now —'} hideNumber={Boolean(label)} primary />
+        {phone ? (
+          <Link href="/book" className="btn-hero-secondary">
+            Request Service
+            <Icon name="arrow" />
+          </Link>
+        ) : null}
       </div>
     </div>
   </section>

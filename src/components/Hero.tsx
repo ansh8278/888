@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Icon, type IconName } from './Icon'
 import { mediaUrl, mediaAlt } from './blocks'
+import { CallButton } from './CallButton'
+import { phoneOf } from '../lib/contact'
 import type { HomePage, SiteSetting } from '../payload-types'
 
 type Props = {
@@ -54,12 +56,9 @@ export const Hero = ({ home, settings }: Props) => {
           ) : null}
 
           <div className="hero-cta">
-            <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary" data-call-cta>
-              <Icon name="phone" />
-              {home.primaryCtaLabel ?? 'Call'} {settings.phone}
-            </a>
+            <CallButton phone={phoneOf(settings)} label={home.primaryCtaLabel ?? 'Call'} primary />
             <Link href="/book" className="btn-hero-secondary">
-              {home.secondaryCtaLabel ?? 'Get a Free Quote'}
+              {home.secondaryCtaLabel ?? 'Request Service'}
               <Icon name="arrow" />
             </Link>
           </div>

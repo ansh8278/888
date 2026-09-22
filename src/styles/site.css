@@ -2265,22 +2265,34 @@ button:active,
 }
 .burger span.is-open { background: transparent; }
 
-/* Sticky call button (phones only) ----------------------------- */
-.sticky-call {
+/* Sticky Call / Request bar (phones only) — per client prototype -------- */
+.stickybar {
   display: none;
   position: fixed;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 900;
-  padding: 15px 20px;
-  border-radius: var(--radius-pill);
-  background: var(--orange-radial);
-  color: #fff;
-  font-weight: 700;
-  text-align: center;
-  box-shadow: 0 14px 30px -8px rgba(234, 88, 12, 0.55);
+  background: var(--dark-card);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.25);
 }
+.stickybar a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 8px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 0;
+}
+.stickybar .stickybar-call { background: var(--orange-radial); }
+.stickybar .stickybar-book { background: transparent; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.mobile-nav-actions { display: grid; gap: 10px; }
 
 /* ============================================================
    RESPONSIVE — 5 tested widths: 360 / 768 / 1024 / 1440 / 1920
@@ -2302,9 +2314,9 @@ button:active,
   .page-hero h1 { max-width: none; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; }
-  /* Leave room for the sticky call button. */
-  body { padding-bottom: 76px; }
-  .sticky-call { display: block; }
+  /* Leave room for the sticky Call / Request bar. */
+  body { padding-bottom: 64px; }
+  .stickybar { display: flex; }
   .cta-banner-actions { width: 100%; }
   .cta-banner-actions > * { flex: 1 1 100%; justify-content: center; }
 }
@@ -2330,7 +2342,7 @@ button:active,
 }
 
 @media print {
-  header, .sticky-call, .cta-banner, .mobile-nav, .rev-marquee { display: none !important; }
+  header, .stickybar, .cta-banner, .mobile-nav, .rev-marquee { display: none !important; }
 }
 
 /* The drawer sets display:flex, which outranks the browser's [hidden] rule —
@@ -2544,16 +2556,6 @@ html, body { max-width: 100%; overflow-x: hidden; }
   flex: 0 0 auto;
   justify-content: center;
   align-items: center;
-}
-/* Sticky call hides while a real call button is on screen (see StickyCall.tsx).
-   Fades rather than snapping, and stops taking taps while hidden. */
-.sticky-call {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.sticky-call--hidden {
-  opacity: 0;
-  transform: translateY(120%);
-  pointer-events: none;
 }
 
 /* ============================================================

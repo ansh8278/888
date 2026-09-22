@@ -4,6 +4,7 @@ import { PageHero } from '../../../components/Hero'
 import { Prose, CtaBanner } from '../../../components/blocks'
 import { getPage, getPages, getSiteSettings } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateStaticParams = async () => {
   const pages = await getPages()
@@ -50,7 +51,7 @@ const CmsPage = async (props: { params: Promise<{ slug: string }> }) => {
         </div>
       </section>
 
-      {page.showCta ? <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} /> : null}
+      {page.showCta ? <CtaBanner phone={phoneOf(settings)} /> : null}
     </>
   )
 }

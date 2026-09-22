@@ -19,6 +19,8 @@ import {
 import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, locationSchema, absolute } from '../../../../../lib/schema'
 import { fillTemplate } from '../../../../../lib/template'
 import type { Faq } from '../../../../../payload-types'
+import { CallButton } from '../../../../../components/CallButton'
+import { phoneOf } from '../../../../../lib/contact'
 
 export const generateStaticParams = async () => {
   const pairs = await getComboPairs()
@@ -149,10 +151,7 @@ const ComboPage = async (props: { params: Promise<{ slug: string; city: string }
               </div>
               <div className="price-card-value">{service.startingPrice}</div>
               {service.priceNote ? <p className="price-card-note">{service.priceNote}</p> : null}
-              <a href={`tel:${location.phone || settings.phoneHref}`} className="btn-hero-primary price-card-cta" data-call-cta>
-                <Icon name="phone" />
-                Call {location.phone || settings.phone}
-              </a>
+              <CallButton phone={phoneOf(settings, location.phone)} className="btn-hero-primary price-card-cta" primary />
               <Link href="/book" className="btn-hero-secondary price-card-cta">
                 Request Service
               </Link>
@@ -222,8 +221,7 @@ const ComboPage = async (props: { params: Promise<{ slug: string; city: string }
       ) : null}
 
       <CtaBanner
-        phone={location.phone || settings.phone}
-        phoneHref={location.phone || settings.phoneHref}
+        phone={phoneOf(settings, location.phone)}
         heading={fillTemplate(template.ctaHeading, vars) || `Need ${service.title} in ${location.city}?`}
       />
     </>

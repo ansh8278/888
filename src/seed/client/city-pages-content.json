@@ -1,0 +1,576 @@
+{
+  "_readme": "Content data for all 16 priority city pages. Each entry maps to the template in san-jose-locksmith.html (URL pattern: /locations/{slug}). Fields marked [VERIFY] were not in the original brief and should be checked/adjusted by someone with local knowledge before publishing. Replace [REAL PHONE] and [REAL LICENSE NUMBER] site-wide before launch — see legal note in the PDF (BSIS Locksmith Act requires the real license number on all advertising).",
+  "cities": [
+    {
+      "slug": "san-jose-locksmith",
+      "city": "San Jose",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith San Jose, CA | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving all of San Jose, CA — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in San Jose, CA",
+      "intro": "888 Lock & Key dispatches mobile locksmith technicians across all of San Jose — from Willow Glen and Rose Garden to Evergreen and Almaden Valley. Whether you're locked out of your car on Santana Row, need a house rekey in Cambrian, or a commercial master-key system downtown, our nearest available technician is on the way.",
+      "neighborhoods": [
+        "Downtown",
+        "North San Jose",
+        "South San Jose",
+        "East San Jose",
+        "West San Jose",
+        "Willow Glen",
+        "Berryessa",
+        "Evergreen",
+        "Cambrian",
+        "Almaden Valley",
+        "Rose Garden",
+        "Japantown",
+        "Blossom Valley",
+        "Santa Teresa",
+        "Alum Rock"
+      ],
+      "nearby": [
+        "north-san-jose-locksmith",
+        "south-san-jose-locksmith",
+        "east-san-jose-locksmith",
+        "west-san-jose-locksmith",
+        "santa-clara-locksmith",
+        "sunnyvale-locksmith",
+        "milpitas-locksmith",
+        "campbell-locksmith",
+        "cupertino-locksmith"
+      ]
+    },
+    {
+      "slug": "santa-clara-locksmith",
+      "city": "Santa Clara",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith Santa Clara, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Santa Clara, CA — car lockouts, key fob programming, house rekey, commercial locksmith near Santa Clara University & Rivermark. Call now.",
+      "h1": "Mobile Locksmith in Santa Clara, CA",
+      "intro": "Dispatched throughout Santa Clara — from the Old Quad and Rivermark to the tech campuses near Lawrence Station and Agnew. Fast response for car lockouts near Levi's Stadium and Great America, plus residential and commercial locksmith service across the city.",
+      "neighborhoods": [
+        "Central Santa Clara",
+        "Old Quad",
+        "Rivermark",
+        "North Santa Clara",
+        "Santa Clara University area",
+        "Lawrence Station",
+        "Agnew",
+        "Great America area"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "sunnyvale-locksmith",
+        "milpitas-locksmith",
+        "cupertino-locksmith"
+      ]
+    },
+    {
+      "slug": "sunnyvale-locksmith",
+      "city": "Sunnyvale",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith Sunnyvale, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Sunnyvale, CA — car lockouts, key replacement, house lockouts & rekey throughout Downtown Sunnyvale, Moffett Park & surrounding areas.",
+      "h1": "Mobile Locksmith in Sunnyvale, CA",
+      "intro": "Serving Sunnyvale from Downtown and the Heritage District out to Moffett Park and Lakewood. Whether it's a car lockout near the Caltrain station or a rekey in Cherry Chase, our technicians dispatch across the whole city.",
+      "neighborhoods": [
+        "Downtown Sunnyvale",
+        "Sunnyvale West",
+        "Cherry Chase",
+        "Birdland",
+        "Ponderosa",
+        "Lakewood",
+        "Moffett Park",
+        "Heritage District",
+        "North Sunnyvale"
+      ],
+      "nearby": [
+        "santa-clara-locksmith",
+        "mountain-view-locksmith",
+        "cupertino-locksmith",
+        "san-jose-locksmith"
+      ]
+    },
+    {
+      "slug": "fremont-locksmith",
+      "city": "Fremont",
+      "subregion": "East Bay",
+      "seo_title": "Locksmith Fremont, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Fremont, CA — car lockouts, key replacement, house rekey & commercial locksmith across Mission San Jose, Irvington, Niles & Centerville.",
+      "h1": "Mobile Locksmith in Fremont, CA",
+      "intro": "Dispatched throughout Fremont — Mission San Jose, Irvington, Niles, Centerville and beyond. From a car key replacement near Pacific Commons to a house rekey in Ardenwood, our technicians cover the entire city.",
+      "neighborhoods": [
+        "Central Fremont",
+        "Warm Springs",
+        "Mission San Jose",
+        "Irvington",
+        "Niles",
+        "Centerville",
+        "Ardenwood",
+        "Glenmoor",
+        "Northgate",
+        "Weibel"
+      ],
+      "nearby": [
+        "newark-locksmith",
+        "union-city-locksmith",
+        "milpitas-locksmith",
+        "hayward-locksmith"
+      ]
+    },
+    {
+      "slug": "milpitas-locksmith",
+      "city": "Milpitas",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith Milpitas, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Milpitas, CA — car lockouts, key fob programming, house lockouts & rekey near Great Mall, Midtown & Calaveras Hills.",
+      "h1": "Mobile Locksmith in Milpitas, CA",
+      "intro": "Serving all of Milpitas — from Midtown and Sunnyhills to the Great Mall area and Calaveras Hills. Quick response for car lockouts, key replacement, and residential locksmith needs throughout the city.",
+      "neighborhoods": [
+        "Midtown",
+        "Sunnyhills",
+        "Hillview",
+        "Parktown",
+        "McCarthy Ranch",
+        "Great Mall area",
+        "Calaveras Hills"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "santa-clara-locksmith",
+        "fremont-locksmith"
+      ]
+    },
+    {
+      "slug": "mountain-view-locksmith",
+      "city": "Mountain View",
+      "subregion": "Peninsula",
+      "seo_title": "Locksmith Mountain View, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Mountain View, CA — car lockouts, key replacement, house rekey & commercial locksmith near Downtown, Shoreline & Old Mountain View.",
+      "h1": "Mobile Locksmith in Mountain View, CA",
+      "intro": "Dispatched across Mountain View — Downtown, Old Mountain View, Shoreline West and Cuesta Park. From a car lockout near Castro Street to a house rekey in Monta Loma, our technicians are on the way.",
+      "neighborhoods": [
+        "Downtown",
+        "Old Mountain View",
+        "North Whisman",
+        "Shoreline West",
+        "Monta Loma",
+        "Cuesta Park",
+        "Rex Manor",
+        "Waverly Park"
+      ],
+      "nearby": [
+        "sunnyvale-locksmith",
+        "palo-alto-locksmith",
+        "cupertino-locksmith"
+      ]
+    },
+    {
+      "slug": "palo-alto-locksmith",
+      "city": "Palo Alto",
+      "subregion": "Peninsula",
+      "seo_title": "Locksmith Palo Alto, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Palo Alto, CA — car lockouts, key replacement, house rekey & commercial locksmith across Downtown, Midtown & Crescent Park.",
+      "h1": "Mobile Locksmith in Palo Alto, CA",
+      "intro": "Serving Palo Alto from Downtown and Midtown to Crescent Park and College Terrace. Whether it's a car lockout near University Avenue or a rekey in Barron Park, our mobile technicians cover the entire city.",
+      "neighborhoods": [
+        "Downtown",
+        "Midtown",
+        "Old Palo Alto",
+        "College Terrace",
+        "Barron Park",
+        "Crescent Park",
+        "Professorville",
+        "South Palo Alto"
+      ],
+      "nearby": [
+        "mountain-view-locksmith",
+        "redwood-city-locksmith"
+      ]
+    },
+    {
+      "slug": "cupertino-locksmith",
+      "city": "Cupertino",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith Cupertino, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Cupertino, CA — car lockouts, key fob programming, house rekey & lock change near Monta Vista, Stevens Creek & West Cupertino.",
+      "h1": "Mobile Locksmith in Cupertino, CA",
+      "intro": "Dispatched throughout Cupertino — Monta Vista, Rancho Rinconada, Oak Valley and Stevens Creek. From key fob programming near the Apple campus to a house lockout in Seven Springs, our technicians cover the whole city.",
+      "neighborhoods": [
+        "Monta Vista",
+        "Rancho Rinconada",
+        "Garden Gate",
+        "Oak Valley",
+        "Seven Springs",
+        "Stevens Creek",
+        "West Cupertino"
+      ],
+      "nearby": [
+        "sunnyvale-locksmith",
+        "san-jose-locksmith",
+        "campbell-locksmith"
+      ]
+    },
+    {
+      "slug": "campbell-locksmith",
+      "city": "Campbell",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith Campbell, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Campbell, CA — car lockouts, key replacement, house rekey & lock change near Downtown Campbell, Pruneyard & San Tomas.",
+      "h1": "Mobile Locksmith in Campbell, CA",
+      "intro": "Dispatched across Campbell — Downtown, the Pruneyard, Dry Creek and San Tomas. From a car lockout near Hamilton Avenue to a house rekey in Campbell Village, our technicians cover the whole city.",
+      "neighborhoods": [
+        "Downtown Campbell",
+        "Pruneyard",
+        "Dry Creek",
+        "San Tomas",
+        "Campbell Village",
+        "West Campbell",
+        "Hamilton Avenue area"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "cupertino-locksmith"
+      ]
+    },
+    {
+      "slug": "redwood-city-locksmith",
+      "city": "Redwood City",
+      "subregion": "Peninsula",
+      "seo_title": "Locksmith Redwood City, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Redwood City, CA — car lockouts, key replacement, house rekey & commercial locksmith near Downtown & Redwood Shores.",
+      "h1": "Mobile Locksmith in Redwood City, CA",
+      "intro": "Serving Redwood City from Downtown and Redwood Shores to Woodside Plaza and Mount Carmel. Whether it's a car lockout near Courthouse Square or a rekey in Friendly Acres, our mobile technicians are on the way.",
+      "neighborhoods": [
+        "Downtown",
+        "Redwood Shores",
+        "Woodside Plaza",
+        "Roosevelt",
+        "Friendly Acres",
+        "Palm Park",
+        "Centennial",
+        "Mount Carmel"
+      ],
+      "nearby": [
+        "san-mateo-locksmith",
+        "palo-alto-locksmith"
+      ]
+    },
+    {
+      "slug": "san-mateo-locksmith",
+      "city": "San Mateo",
+      "subregion": "Peninsula",
+      "seo_title": "Locksmith San Mateo, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving San Mateo, CA — car lockouts, key replacement, house rekey & commercial locksmith near Downtown, Hillsdale & Baywood.",
+      "h1": "Mobile Locksmith in San Mateo, CA",
+      "intro": "Dispatched throughout San Mateo — Downtown, Hillsdale, Baywood and Shoreview. From a car lockout near Central Park to a house rekey in Aragon, our technicians cover the entire city.",
+      "neighborhoods": [
+        "Downtown",
+        "Baywood",
+        "Hillsdale",
+        "San Mateo Park",
+        "Shoreview",
+        "Fiesta Gardens",
+        "North Central",
+        "Hayward Park",
+        "Aragon"
+      ],
+      "nearby": [
+        "redwood-city-locksmith"
+      ]
+    },
+    {
+      "slug": "oakland-locksmith",
+      "city": "Oakland",
+      "subregion": "East Bay",
+      "seo_title": "Locksmith Oakland, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Oakland, CA — car lockouts, key replacement, house rekey & commercial locksmith near Downtown, Lake Merritt & Rockridge.",
+      "h1": "Mobile Locksmith in Oakland, CA",
+      "intro": "Serving Oakland across Downtown, Uptown, Jack London Square, Lake Merritt, Temescal and Rockridge, all the way to Fruitvale and East Oakland. Whether it's a car lockout downtown or a commercial rekey near Piedmont Avenue, our technicians dispatch citywide.",
+      "neighborhoods": [
+        "Downtown",
+        "Uptown",
+        "Jack London Square",
+        "Lake Merritt",
+        "Temescal",
+        "Rockridge",
+        "Piedmont Avenue",
+        "Montclair",
+        "Fruitvale",
+        "Chinatown",
+        "Grand Lake",
+        "West Oakland",
+        "East Oakland"
+      ],
+      "nearby": [
+        "san-leandro-locksmith",
+        "hayward-locksmith"
+      ]
+    },
+    {
+      "slug": "hayward-locksmith",
+      "city": "Hayward",
+      "subregion": "East Bay",
+      "seo_title": "Locksmith Hayward, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Hayward, CA — car lockouts, key replacement, house rekey & commercial locksmith near Downtown, Southgate & Mission-Foothill.",
+      "h1": "Mobile Locksmith in Hayward, CA",
+      "intro": "Dispatched across Hayward — Downtown, Southgate, Fairway Park and Mission-Foothill. From a car lockout near the BART station to a house rekey in Mount Eden, our technicians cover the whole city.",
+      "neighborhoods": [
+        "Downtown",
+        "Southgate",
+        "Fairway Park",
+        "Mission-Foothill",
+        "Jackson Triangle",
+        "Burbank",
+        "Mount Eden",
+        "Glen Eden"
+      ],
+      "nearby": [
+        "san-leandro-locksmith",
+        "fremont-locksmith",
+        "oakland-locksmith"
+      ]
+    },
+    {
+      "slug": "san-leandro-locksmith",
+      "city": "San Leandro",
+      "subregion": "East Bay",
+      "seo_title": "Locksmith San Leandro, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving San Leandro, CA — car lockouts, key replacement, house rekey & lock change near Downtown, Marina Faire & Washington Manor.",
+      "h1": "Mobile Locksmith in San Leandro, CA",
+      "intro": "Serving San Leandro from Downtown and Marina Faire to Washington Manor and Bay-O-Vista. Whether it's a car lockout near the marina or a rekey in Estudillo Estates, our mobile technicians are on the way.",
+      "neighborhoods": [
+        "Downtown",
+        "Marina Faire",
+        "Washington Manor",
+        "Broadmoor",
+        "Estudillo Estates",
+        "Bay-O-Vista",
+        "Floresta Gardens"
+      ],
+      "nearby": [
+        "oakland-locksmith",
+        "hayward-locksmith"
+      ]
+    },
+    {
+      "slug": "union-city-locksmith",
+      "city": "Union City",
+      "subregion": "East Bay",
+      "seo_title": "Locksmith Union City, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Union City, CA — car lockouts, key replacement, house rekey & lock change throughout Decoto, Alvarado & Union Landing.",
+      "h1": "Mobile Locksmith in Union City, CA",
+      "intro": "Serving Union City from Decoto and Alvarado to Union Landing and the Station District. Whether it's a car lockout near the BART station or a house rekey in Seven Hills, our mobile technicians cover the whole city.",
+      "neighborhoods": [
+        "Decoto",
+        "Alvarado",
+        "Seven Hills",
+        "Station District",
+        "Union Landing area"
+      ],
+      "nearby": [
+        "fremont-locksmith",
+        "newark-locksmith",
+        "hayward-locksmith"
+      ]
+    },
+    {
+      "slug": "newark-locksmith",
+      "city": "Newark",
+      "subregion": "East Bay",
+      "seo_title": "Locksmith Newark, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Newark, CA — car lockouts, key replacement, house rekey & lock change near Central Newark, Newark Lake & NewPark.",
+      "h1": "Mobile Locksmith in Newark, CA",
+      "intro": "Dispatched across Newark — Central Newark, Newark Lake, Civic Center and the NewPark area. From a car lockout near Newpark Mall to a house rekey in Lido Faire, our technicians cover the whole city.",
+      "neighborhoods": [
+        "Central Newark",
+        "Newark Lake",
+        "Civic Center",
+        "Lido Faire",
+        "NewPark area"
+      ],
+      "nearby": [
+        "fremont-locksmith",
+        "union-city-locksmith"
+      ]
+    },
+    {
+      "slug": "pleasanton-locksmith",
+      "city": "Pleasanton",
+      "subregion": "Tri-Valley",
+      "seo_title": "Locksmith Pleasanton, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Pleasanton, CA — car lockouts, key replacement, house rekey & lock change near Downtown, Hacienda & Ruby Hill.",
+      "h1": "Mobile Locksmith in Pleasanton, CA",
+      "intro": "Serving Pleasanton from Downtown and Hacienda Business Park to Vintage Hills and Ruby Hill. Whether it's a car lockout near Main Street or a house rekey in Valley Trails, our mobile technicians cover the whole city.",
+      "neighborhoods": [
+        "Downtown",
+        "Hacienda Business Park",
+        "Pleasanton Meadows",
+        "Valley Trails",
+        "Vintage Hills",
+        "Ruby Hill",
+        "Stoneridge"
+      ],
+      "nearby": [
+        "dublin-locksmith",
+        "san-ramon-locksmith",
+        "walnut-creek-locksmith"
+      ]
+    },
+    {
+      "slug": "dublin-locksmith",
+      "city": "Dublin",
+      "subregion": "Tri-Valley",
+      "seo_title": "Locksmith Dublin, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Dublin, CA — car lockouts, key replacement, house rekey & lock change near Downtown, Dublin Ranch & Emerald Glen.",
+      "h1": "Mobile Locksmith in Dublin, CA",
+      "intro": "Dispatched throughout Dublin — Downtown, East and West Dublin, Dublin Ranch and Emerald Glen. From a car lockout near Hacienda Crossings to a house rekey in Positano, our technicians cover the whole city.",
+      "neighborhoods": [
+        "Downtown",
+        "East Dublin",
+        "West Dublin",
+        "Dublin Ranch",
+        "Tassajara",
+        "Positano",
+        "Emerald Glen",
+        "Hacienda Crossings"
+      ],
+      "nearby": [
+        "pleasanton-locksmith",
+        "san-ramon-locksmith"
+      ]
+    },
+    {
+      "slug": "san-ramon-locksmith",
+      "city": "San Ramon",
+      "subregion": "Tri-Valley",
+      "seo_title": "Locksmith San Ramon, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving San Ramon, CA — car lockouts, key replacement, house rekey & lock change near City Center, Bishop Ranch & Dougherty Valley.",
+      "h1": "Mobile Locksmith in San Ramon, CA",
+      "intro": "Serving San Ramon from City Center and Bishop Ranch to Dougherty Valley and Gale Ranch. Whether it's a car lockout near the office parks or a house rekey in Windemere, our mobile technicians cover the whole city.",
+      "neighborhoods": [
+        "City Center",
+        "Bishop Ranch",
+        "Dougherty Valley",
+        "Gale Ranch",
+        "Windemere",
+        "Twin Creeks",
+        "Bollinger Hills"
+      ],
+      "nearby": [
+        "dublin-locksmith",
+        "pleasanton-locksmith",
+        "walnut-creek-locksmith"
+      ]
+    },
+    {
+      "slug": "walnut-creek-locksmith",
+      "city": "Walnut Creek",
+      "subregion": "Tri-Valley",
+      "seo_title": "Locksmith Walnut Creek, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving Walnut Creek, CA — car lockouts, key replacement, house rekey & lock change near Downtown, Northgate & Ygnacio Valley.",
+      "h1": "Mobile Locksmith in Walnut Creek, CA",
+      "intro": "Dispatched across Walnut Creek — Downtown, Northgate, Rossmoor and Ygnacio Valley. From a car lockout near Broadway Plaza to a house rekey in Saranap, our technicians cover the whole city.",
+      "neighborhoods": [
+        "Downtown",
+        "Northgate",
+        "Rossmoor",
+        "Saranap",
+        "Ygnacio Valley",
+        "Walnut Heights",
+        "Parkmead"
+      ],
+      "nearby": [
+        "san-ramon-locksmith",
+        "pleasanton-locksmith"
+      ]
+    },
+    {
+      "slug": "north-san-jose-locksmith",
+      "city": "North San Jose",
+      "parent_slug": "san-jose-locksmith",
+      "parent_city": "San Jose",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith North San Jose, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving North San Jose, CA — car lockouts, key replacement, house rekey & commercial locksmith near the North First Street tech corridor & Berryessa.",
+      "h1": "Mobile Locksmith in North San Jose, CA",
+      "intro": "Dispatched throughout North San Jose — the North First Street tech corridor, Berryessa, and Japantown. From a car lockout near a North San Jose office park to a house rekey near Berryessa BART, our technicians are on the way.",
+      "neighborhoods": [
+        "North First Street corridor",
+        "Berryessa",
+        "Japantown",
+        "North San Jose business park area"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "east-san-jose-locksmith",
+        "milpitas-locksmith",
+        "santa-clara-locksmith"
+      ]
+    },
+    {
+      "slug": "south-san-jose-locksmith",
+      "city": "South San Jose",
+      "parent_slug": "san-jose-locksmith",
+      "parent_city": "San Jose",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith South San Jose, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving South San Jose, CA — car lockouts, key replacement, house rekey & lock change near Almaden Valley, Blossom Valley & Santa Teresa.",
+      "h1": "Mobile Locksmith in South San Jose, CA",
+      "intro": "Serving South San Jose from Almaden Valley and Blossom Valley to Santa Teresa and Cambrian. Whether it's a car lockout near Blossom Hill Road or a house rekey in Almaden, our mobile technicians cover the whole area.",
+      "neighborhoods": [
+        "South San Jose",
+        "Almaden Valley",
+        "Blossom Valley",
+        "Santa Teresa",
+        "Cambrian"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "campbell-locksmith",
+        "west-san-jose-locksmith"
+      ]
+    },
+    {
+      "slug": "east-san-jose-locksmith",
+      "city": "East San Jose",
+      "parent_slug": "san-jose-locksmith",
+      "parent_city": "San Jose",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith East San Jose, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving East San Jose, CA — car lockouts, key replacement, house rekey & lock change near Alum Rock and Evergreen.",
+      "h1": "Mobile Locksmith in East San Jose, CA",
+      "intro": "Dispatched across East San Jose — Alum Rock and Evergreen. From a car lockout near Alum Rock Avenue to a house rekey near Evergreen Valley, our technicians cover the whole area.",
+      "neighborhoods": [
+        "East San Jose",
+        "Alum Rock",
+        "Evergreen"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "milpitas-locksmith",
+        "north-san-jose-locksmith"
+      ]
+    },
+    {
+      "slug": "west-san-jose-locksmith",
+      "city": "West San Jose",
+      "parent_slug": "san-jose-locksmith",
+      "parent_city": "San Jose",
+      "subregion": "South Bay / Silicon Valley",
+      "seo_title": "Locksmith West San Jose, CA | Mobile Locksmith Service | 888 Lock & Key",
+      "meta_description": "Mobile locksmith serving West San Jose, CA — car lockouts, key replacement, house rekey & lock change near Willow Glen and Rose Garden.",
+      "h1": "Mobile Locksmith in West San Jose, CA",
+      "intro": "Serving West San Jose from Willow Glen to Rose Garden, near Santana Row and Winchester. Whether it's a car lockout downtown-adjacent or a house rekey in Willow Glen, our mobile technicians cover the whole area.",
+      "neighborhoods": [
+        "West San Jose",
+        "Willow Glen",
+        "Rose Garden"
+      ],
+      "nearby": [
+        "san-jose-locksmith",
+        "santa-clara-locksmith",
+        "campbell-locksmith",
+        "south-san-jose-locksmith"
+      ]
+    }
+  ]
+}

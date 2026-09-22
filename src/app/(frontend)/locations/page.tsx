@@ -5,6 +5,7 @@ import { LocationCard, CtaBanner, SectionHead } from '../../../components/blocks
 import { Icon } from '../../../components/Icon'
 import { getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
@@ -69,7 +70,7 @@ const LocationsIndex = async () => {
         </section>
       ))}
 
-      <CtaBanner phone={settings.phone} phoneHref={settings.phoneHref} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
+      <CtaBanner phone={phoneOf(settings)} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>
   )
 }

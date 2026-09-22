@@ -4,18 +4,19 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Icon } from './Icon'
+import { CallButton } from './CallButton'
+import type { Phone } from '../lib/contact'
 
 export type NavItem = { label: string; href: string }
 
 type Props = {
   companyName: string
   tagline?: string | null
-  phone: string
-  phoneHref: string
+  phone: Phone | null
   items: NavItem[]
 }
 
-export const Header = ({ companyName, tagline, phone, phoneHref, items }: Props) => {
+export const Header = ({ companyName, tagline, phone, items }: Props) => {
   const [open, setOpen] = useState(false)
   const [stuck, setStuck] = useState(false)
   const pathname = usePathname()
@@ -80,10 +81,12 @@ export const Header = ({ companyName, tagline, phone, phoneHref, items }: Props)
           </nav>
 
           <div className="nav-actions">
-            <a href={`tel:${phoneHref}`} className="nav-phone-pill">
-              <Icon name="phone" />
-              {phone}
-            </a>
+            {phone ? (
+              <a href={`tel:${phone.href}`} className="nav-phone-pill">
+                <Icon name="phone" />
+                {phone.display}
+              </a>
+            ) : null}
             <Link href="/book" className="btn-request-nav">
               Request Service
             </Link>
@@ -124,13 +127,12 @@ export const Header = ({ companyName, tagline, phone, phoneHref, items }: Props)
             </li>
           ))}
         </ul>
-        <a href={`tel:${phoneHref}`} className="btn-hero-primary mobile-nav-call" onClick={() => setOpen(false)}>
-          <Icon name="phone" />
-          Call {phone}
-        </a>
-        <Link href="/book" className="btn-hero-secondary mobile-nav-book" onClick={() => setOpen(false)}>
-          Request Service
-        </Link>
+        <div onClick={() => setOpen(false)} className="mobile-nav-actions">
+          {phone ? <CallButton phone={phone} className="btn-hero-primary mobile-nav-call" /> : null}
+          <Link href="/book" className="btn-hero-secondary mobile-nav-book">
+            Request Service
+          </Link>
+        </div>
       </div>
       {open ? <button className="mobile-nav-scrim" aria-hidden="true" tabIndex={-1} onClick={() => setOpen(false)} /> : null}
     </>

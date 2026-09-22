@@ -79,6 +79,9 @@ const db = () =>
           authToken: process.env.DATABASE_AUTH_TOKEN,
         },
         migrationDir: path.resolve(dirname, 'migrations'),
+        // Schema changes ship as migrations (npm run migrate:create), the same
+        // way as on Postgres — no silent dev-time schema pushes.
+        push: false,
       })
 
 const csrfAllowlist: string[] = [

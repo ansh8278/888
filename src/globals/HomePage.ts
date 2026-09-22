@@ -14,19 +14,19 @@ export const HomePage: GlobalConfig = {
         {
           label: 'Hero',
           fields: [
-            { name: 'eyebrow', type: 'text', defaultValue: 'Fast • Reliable • Professional' },
+            { name: 'eyebrow', type: 'text', defaultValue: 'Mobile Locksmith' },
             {
               name: 'headingLine1',
               type: 'text',
               required: true,
-              defaultValue: 'Locked Out?',
+              defaultValue: 'Serving All of San Jose',
               admin: { description: 'Shown in dark navy.' },
             },
             {
               name: 'headingLine2',
               type: 'text',
               required: true,
-              defaultValue: "We're Already On The Way.",
+              defaultValue: '& the Entire Bay Area',
               admin: { description: 'Shown in orange, below the first line.' },
             },
             { name: 'lede', type: 'textarea', required: true },
@@ -40,7 +40,7 @@ export const HomePage: GlobalConfig = {
               type: 'row',
               fields: [
                 { name: 'primaryCtaLabel', type: 'text', defaultValue: 'Call', admin: { width: '50%', description: 'The phone number is added automatically.' } },
-                { name: 'secondaryCtaLabel', type: 'text', defaultValue: 'Get a Free Quote', admin: { width: '50%' } },
+                { name: 'secondaryCtaLabel', type: 'text', defaultValue: 'Request Service', admin: { width: '50%' } },
               ],
             },
             {
@@ -60,8 +60,8 @@ export const HomePage: GlobalConfig = {
                     { label: 'Star', value: 'star' },
                   ],
                 },
-                { name: 'value', type: 'text', required: true, admin: { description: 'Bold line, e.g. "24/7"' } },
-                { name: 'label', type: 'text', required: true, admin: { description: 'Grey line, e.g. "Emergency Service"' } },
+                { name: 'value', type: 'text', required: true, admin: { description: 'Bold line, e.g. "Licensed & Insured"' } },
+                { name: 'label', type: 'text', required: true, admin: { description: 'Grey line, e.g. "CA BSIS"' } },
               ],
             },
             {
@@ -89,14 +89,14 @@ export const HomePage: GlobalConfig = {
         {
           label: 'Sections',
           fields: [
-            { name: 'locationsEyebrow', type: 'text', defaultValue: 'We Serve Multiple Cities' },
-            { name: 'locationsHeading', type: 'text', defaultValue: 'Find a locksmith near you' },
-            { name: 'servicesEyebrow', type: 'text', defaultValue: 'One call. Every solution.' },
-            { name: 'servicesHeading', type: 'text', defaultValue: 'Our Locksmith Services' },
+            { name: 'locationsEyebrow', type: 'text', defaultValue: 'Where We Dispatch' },
+            { name: 'locationsHeading', type: 'text', defaultValue: 'Mobile Locksmith Coverage Across the Bay Area' },
+            { name: 'servicesEyebrow', type: 'text', defaultValue: 'What We Do' },
+            { name: 'servicesHeading', type: 'text', defaultValue: 'Locksmith Services Throughout the Bay Area' },
             { name: 'reviewsHeading', type: 'text', defaultValue: 'What Our Customers Say' },
             { name: 'reviewsSubtitle', type: 'text', defaultValue: 'Real people. Real reviews.' },
-            { name: 'shopsEyebrow', type: 'text', defaultValue: 'Three Shops, One Dispatch' },
-            { name: 'shopsHeading', type: 'text', defaultValue: 'Walk in, or we drive to you.' },
+            { name: 'shopsEyebrow', type: 'text', defaultValue: 'Where We Are Based' },
+            { name: 'shopsHeading', type: 'text', defaultValue: 'Dispatched from our hub, to you.' },
             { name: 'shopsSubtitle', type: 'text' },
             { name: 'pricingEyebrow', type: 'text', defaultValue: 'Transparent Pricing' },
             { name: 'pricingHeading', type: 'text', defaultValue: 'Starting prices, published up front.' },

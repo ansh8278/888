@@ -15,6 +15,8 @@ import {
   servicesForLocation,
 } from '../../../../lib/data'
 import { JsonLd, locationSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
+import { CallButton } from '../../../../components/CallButton'
+import { phoneOf } from '../../../../lib/contact'
 
 export const generateStaticParams = async () => {
   const locations = await getLocations()
@@ -100,10 +102,7 @@ const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
                 </div>
               ) : null}
 
-              <a href={`tel:${location.phone || settings.phoneHref}`} className="btn-hero-primary price-card-cta" data-call-cta>
-                <Icon name="phone" />
-                Call {location.phone || settings.phone}
-              </a>
+              <CallButton phone={phoneOf(settings, location.phone)} className="btn-hero-primary price-card-cta" primary />
               <Link href="/book" className="btn-hero-secondary price-card-cta">
                 Request Service
               </Link>
@@ -196,8 +195,7 @@ const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
       ) : null}
 
       <CtaBanner
-        phone={location.phone || settings.phone}
-        phoneHref={location.phone || settings.phoneHref}
+        phone={phoneOf(settings, location.phone)}
         heading={`Need a locksmith in ${location.city}?`}
       />
     </>

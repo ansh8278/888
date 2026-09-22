@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { EnquiryForm } from '../book/EnquiryForm'
-import { Icon } from '../../../components/Icon'
+import { ContactCard, DispatchHubs } from '../../../components/ContactCard'
+import { phoneOf } from '../../../lib/contact'
 import { getServices, getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 
@@ -29,7 +30,7 @@ const ContactPage = async () => {
       <PageHero
         eyebrow={copy.contact?.eyebrow}
         title={copy.contact?.title ?? 'Contact us'}
-        intro={copy.contact?.intro || `${settings.hours} · ${settings.serviceAreaLine ?? ''}`}
+        intro={copy.contact?.intro || settings.serviceAreaLine || undefined}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
       />
 
@@ -49,51 +50,12 @@ const ContactPage = async () => {
           </div>
 
           <aside className="form-aside">
-            <div className="price-card">
-              <div className="price-card-label">24/7 dispatch</div>
-              <div className="price-card-value small">{settings.phone}</div>
-              <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary price-card-cta" data-call-cta>
-                <Icon name="phone" />
-                Call now
-              </a>
-              {settings.email ? (
-                <a href={`mailto:${settings.email}`} className="btn-hero-secondary price-card-cta">
-                  {settings.email}
-                </a>
-              ) : null}
-              {settings.licenseNumber ? (
-                <p className="price-card-note">{settings.licenseNumber}</p>
-              ) : null}
-            </div>
+            <ContactCard settings={settings} phone={phoneOf(settings)} />
           </aside>
         </div>
       </section>
 
-      <section className="sec sec-sand">
-        <div className="wrap">
-          <h2>{copy.contactShopsHeading ?? 'Our shops'}</h2>
-          <div className="contact-grid">
-            {locations.map((loc) => (
-              <div className="contact-card" key={loc.id}>
-                <h3>{loc.shopName ?? loc.city}</h3>
-                {loc.addressLine ? (
-                  <p>
-                    {loc.addressLine}
-                    <br />
-                    {loc.city}, {loc.stateAbbr} {loc.postcode}
-                  </p>
-                ) : null}
-                <a href={`tel:${loc.phone || settings.phoneHref}`}>{loc.phone || settings.phone}</a>
-                {loc.hours ? (
-                  <div className="loc-open-status">
-                    <span className="livedot" /> {loc.hours}
-                  </div>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DispatchHubs settings={settings} heading={copy.contactShopsHeading} />
     </>
   )
 }

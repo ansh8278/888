@@ -38,12 +38,12 @@ export const PageCopy: GlobalConfig = {
             heading('services', 'Services page', {
               eyebrow: 'One call. Every solution.',
               title: 'Locksmith Services',
-              intro: 'Cars, homes and businesses — handled by our own background-checked technicians, 24 hours a day, at a price agreed before we set off.',
+              intro: 'Automotive, residential, commercial and emergency locksmith services — dispatched to you across San Jose and the Bay Area, with the price confirmed before work begins.',
             }),
             heading('locations', 'Locations page', {
-              eyebrow: 'We Serve Multiple Cities',
-              title: 'Find a locksmith near you',
-              intro: 'Mobile locksmith coverage across California, Arizona and New York. Find your city for local pricing, shop details and arrival times.',
+              eyebrow: 'Coverage Area',
+              title: 'Mobile Locksmith Serving San Jose & the Entire Bay Area',
+              intro: '888 Lock & Key dispatches mobile automotive, residential, and commercial locksmith technicians throughout San Jose and every corner of the Bay Area. Find your area below.',
             }),
             heading('reviews', 'Reviews page', {
               title: 'What our customers say',
@@ -52,7 +52,7 @@ export const PageCopy: GlobalConfig = {
             heading('faq', 'FAQ page', {
               eyebrow: 'Before You Call',
               title: 'Frequently Asked Questions',
-              intro: 'Straight answers on pricing, arrival times, ID checks and warranty.',
+              intro: 'Straight answers on pricing, ID checks, what we can open and how dispatch works.',
             }),
           ],
         },
@@ -78,7 +78,7 @@ export const PageCopy: GlobalConfig = {
             heading('book', 'Request Service page', {
               eyebrow: 'Book Online',
               title: 'Request service or a free quote',
-              intro: 'Tell us where you are and what you need. A dispatcher calls you back with a firm price — usually within minutes.',
+              intro: 'Tell us where you are and what you need. A dispatcher calls you back to confirm the price before anyone is sent.',
             }),
             {
               name: 'bookSideTitle',
@@ -90,14 +90,14 @@ export const PageCopy: GlobalConfig = {
               name: 'bookSideText',
               type: 'textarea',
               label: 'Side panel text',
-              defaultValue: 'If you are locked out right now, call. Someone answers 24 hours a day and the van is dispatched while you are still on the line.',
+              defaultValue: 'If you are locked out right now, calling is faster than a form — a dispatcher can send the nearest technician while you are still on the line.',
             },
             heading('contact', 'Contact page', {
               eyebrow: 'Get in touch',
               title: 'Contact us',
             }),
             { name: 'contactFormHeading', type: 'text', defaultValue: 'Send us a message' },
-            { name: 'contactShopsHeading', type: 'text', defaultValue: 'Our shops' },
+            { name: 'contactShopsHeading', type: 'text', defaultValue: 'Our dispatch hub' },
           ],
         },
         {
@@ -152,11 +152,11 @@ export const PageCopy: GlobalConfig = {
               name: 'serviceCitySubtitle',
               type: 'text',
               label: 'Service page — "near you" line',
-              defaultValue: 'Pick your city for local pricing, arrival times and shop details.',
+              defaultValue: 'Pick your city to see local coverage and neighborhoods.',
               admin: { description: 'Shown under "[Service] near you" on every service page.' },
             },
             { name: 'callCardTitle', type: 'text', label: 'Home page call card heading', defaultValue: 'Need a Locksmith?' },
-            { name: 'callCardSubtitle', type: 'text', label: 'Home page call card line', defaultValue: "We're here 24/7." },
+            { name: 'callCardSubtitle', type: 'text', label: 'Home page call card line', defaultValue: 'Mobile technicians dispatched across the Bay Area.' },
             { name: 'callCardNote', type: 'text', label: 'Home page call card small print', defaultValue: 'Same day service. No call-centre. Real people.' },
             heading('notFound', '404 page', {
               eyebrow: '404',

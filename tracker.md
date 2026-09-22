@@ -4,7 +4,7 @@
 
 Overall Status: IN PROGRESS
 Last Updated: 2026-09-22
-Current Phase: Phase 2 — Architecture (Phases 0–1 complete)
+Current Phase: Phase 3 — Core website (Phases 0–2 complete)
 
 Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-2026-09-22`
 
@@ -16,8 +16,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 |------|--------|----------|-------|
 | Phase 0 - Audit | DONE | 100% | Existing project + client package inventoried; baseline tsc/tests/build green |
 | Phase 1 - Planning | DONE | 100% | Page mapping, 39-vs-40 resolved, decisions D1–D7 |
-| Phase 2 - Architecture | NOT STARTED | 0% | Content model + routes + shared components |
-| Phase 3 - Core Website | NOT STARTED | 0% | Header/footer/sticky bar/global copy |
+| Phase 2 - Architecture | DONE | 100% | Model extended, seed from client JSON, CallButton fallback, redirects, migrations (both engines) verified |
+| Phase 3 - Core Website | IN PROGRESS | 60% | Footer, sticky bar, layout metadata, contact/book cards done; homepage/about/FAQ copy pending |
 | Phase 4 - Location Pages | NOT STARTED | 0% | Hub + 20 cities + 4 sub-areas |
 | Phase 5 - Service Pages | NOT STARTED | 0% | 4 categories + 9 services + garage |
 | Phase 6 - SEO/Internal Linking | NOT STARTED | 0% | |
@@ -39,17 +39,17 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T004 | Git checkpoint tag | 0 | DONE | P0 | git | `checkpoint-pre-bayarea-2026-09-22` |
 | T005 | Resolve 39 vs 40 page discrepancy | 1 | DONE | P1 | plan | Services are 14 not 15; 39 structural + homepage = 40 files |
 | T006 | Existing → client page mapping | 1 | DONE | P1 | plan | |
-| T010 | `site-settings`: remove fake defaults, add `dispatchHubs`, clear 24/7 | 2 | NOT STARTED | P0 | src/globals/SiteSettings.ts | |
-| T011 | `locations`: add subregion, parent, nearby; drop fake hours default | 2 | NOT STARTED | P0 | src/collections/Locations.ts | |
-| T012 | `services`: add kind, category, related, ctaLabel, disclaimer | 2 | NOT STARTED | P0 | src/collections/Services.ts | |
-| T013 | Copy client JSON into `src/seed/client/`; rewrite seed from it; `SEED_RESET` flag | 2 | NOT STARTED | P0 | src/seed | No reviews, no prices, no fake business data |
-| T014 | Migrations (sqlite + postgres) for schema changes | 2 | NOT STARTED | P0 | src/migrations, src/migrations-pg | |
-| T015 | `CallButton` shared component with no-phone fallback | 2 | NOT STARTED | P0 | src/components | Replaces ad-hoc tel: links |
-| T016 | Redirects: `/locations`→hub, old service slugs→new | 2 | NOT STARTED | P1 | next.config.ts | |
-| T020 | Header nav + footer columns per client | 3 | NOT STARTED | P1 | Navigation seed, Footer.tsx | |
-| T021 | Sticky two-button mobile bar | 3 | NOT STARTED | P0 | StickyCall.tsx, site.css | |
-| T022 | Remove "24/7" and CA/AZ/NY wording from layout, footer, PageCopy, ComboTemplate, HomePage, contact/faq/about | 3 | NOT STARTED | P0 | many | Rule 9 |
-| T023 | Licence line renders only when set | 3 | NOT STARTED | P0 | Footer, Header, Hero | |
+| T010 | `site-settings`: remove fake defaults, add `dispatchHubs`, clear 24/7 | 2 | DONE | P0 | src/globals/SiteSettings.ts | |
+| T011 | `locations`: add subregion, parent, nearby; drop fake hours default | 2 | DONE | P0 | src/collections/Locations.ts | |
+| T012 | `services`: add kind, category, related, ctaLabel, disclaimer | 2 | DONE | P0 | src/collections/Services.ts | |
+| T013 | Copy client JSON into `src/seed/client/`; rewrite seed from it; `SEED_RESET` flag | 2 | DONE | P0 | src/seed | No reviews, no prices, no fake business data |
+| T014 | Migrations (sqlite + postgres) for schema changes | 2 | DONE | P0 | src/migrations, src/migrations-pg | |
+| T015 | `CallButton` shared component with no-phone fallback | 2 | DONE | P0 | src/components | Replaces ad-hoc tel: links |
+| T016 | Redirects: `/locations`→hub, old service slugs→new | 2 | DONE | P1 | next.config.ts | |
+| T020 | Header nav + footer columns per client | 3 | DONE | P1 | Navigation seed, Footer.tsx | |
+| T021 | Sticky two-button mobile bar | 3 | DONE | P0 | StickyCall.tsx, site.css | |
+| T022 | Remove "24/7" and CA/AZ/NY wording from layout, footer, PageCopy, ComboTemplate, HomePage, contact/faq/about | 3 | IN PROGRESS | P0 | many | Rule 9 |
+| T023 | Licence line renders only when set | 3 | DONE | P0 | Footer, Header, Hero | |
 | T030 | Homepage re-frame per client index.html | 4 | NOT STARTED | P0 | src/app/(frontend)/page.tsx, HomePage global | |
 | T040 | `/bay-area-locksmith` hub page | 5 | NOT STARTED | P0 | new route | |
 | T041 | Location page template per client (breadcrumb, pills, 8 cards, FAQ, Also Serving) | 5 | NOT STARTED | P0 | locations/[slug]/page.tsx | |
@@ -58,7 +58,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T050 | `/services` index (categories + garage) | 6 | NOT STARTED | P1 | services/page.tsx | |
 | T051 | Service page: category / service / standalone renderings | 6 | NOT STARTED | P0 | services/[slug]/page.tsx | Garage disclaimer must stay |
 | T052 | Areas We Serve + Related Services blocks | 6 | NOT STARTED | P1 | components | |
-| T053 | Disable combo pages by default; exclude from sitemap | 6 | NOT STARTED | P1 | seed, sitemap.ts | D4 |
+| T053 | Disable combo pages by default; exclude from sitemap | 6 | IN PROGRESS | P1 | seed, sitemap.ts | D4 |
 | T060 | Metadata from JSON; breadcrumb JSON-LD; sitemap/robots | 7 | NOT STARTED | P0 | pages, sitemap.ts | |
 | T061 | Link crawl script (no 404s, no orphans) | 7 | NOT STARTED | P1 | scripts/ | |
 | T070 | Admin "Missing before launch" panel | 8 | NOT STARTED | P1 | components/admin/Dashboard.tsx | |
@@ -90,6 +90,9 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 
 ## Known Issues
 
+- KI-6 FaqExplorer previously merged a hard-coded FAQ list with unverified claims (arrival time, fees, warranty, payment methods) into every FAQ page — removed; FAQs now come only from the admin. Those questions can be re-added by the client once the answers are confirmed.
+- KI-7 Homepage, About and the location/service page templates still contain old CA/AZ/NY / "24/7" wording — replaced in Phases 3–6 (T022, T030, T041, T051).
+
 - KI-1 Existing Supabase database holds the old CA/AZ/NY content; the new seed must be run with `SEED_RESET=1` once (destructive by design, documented).
 - KI-2 Client hub meta description omits Tri-Valley — used as supplied, flagged.
 - KI-3 Client category-page heading bug ("… Services Services") — not reproduced; rendered as "What's included".
@@ -111,5 +114,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Change Log
+
+- 2026-09-22 — Phase 2 done: `locations` (+subregion, parent, nearby), `services` (+kind, category, related, cityCard, ctaLabel, disclaimer; price optional), `site-settings` (fake defaults removed, +dispatchHubs), globals' defaults re-worded; seed rewritten to load `src/seed/client/*.json` (14 services, 24 locations, nav, no business data; `SEED_RESET=1` to replace old content); `CallButton` + `phoneOf()` replace every hard-coded tel: link (no phone → Request Service); Footer/StickyCall rebuilt per client; Contact/Book show dispatch hubs, not shops; redirects for old URLs; SQLite dev-push disabled (migrations only); migrations for both engines; tests +contact. Verified: tsc, 7 test suites, build, all routes 200, no `tel:null`.
 
 - 2026-09-22 — Phase 0/1: audit complete, `implementation_plan.md` and `tracker.md` created, git checkpoint tagged. No application code changed.

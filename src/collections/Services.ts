@@ -8,11 +8,11 @@ export const Services: CollectionConfig = {
   labels: { singular: 'Service', plural: 'Services' },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'startingPrice', 'order'],
+    defaultColumns: ['title', 'kind', 'category', 'order'],
     group: 'Pages',
     // Gives each document a "Preview" button pointing at its live page.
     preview: (doc) => (doc?.slug ? `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/services/${doc.slug}` : null),
-    description: 'Each service gets its own page, and one page per city it is offered in.',
+    description: 'Service categories (Automotive, Residential…) and the individual services under them. Each gets its own page.',
   },
   access: { read: anyone, create: staff, update: staff, delete: staff },
   defaultSort: 'order',
@@ -31,6 +31,30 @@ export const Services: CollectionConfig = {
           label: 'Content',
           fields: [
             { name: 'title', type: 'text', required: true, admin: { description: 'e.g. "Car Lockout"' } },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'kind',
+                  type: 'select',
+                  required: true,
+                  defaultValue: 'service',
+                  admin: { width: '50%', description: 'A category lists its services; a service sits under a category.' },
+                  options: [
+                    { label: 'Category (Automotive, Residential…)', value: 'category' },
+                    { label: 'Service under a category', value: 'service' },
+                    { label: 'Standalone page (e.g. Garage)', value: 'standalone' },
+                  ],
+                },
+                {
+                  name: 'category',
+                  type: 'relationship',
+                  relationTo: 'services',
+                  filterOptions: { kind: { equals: 'category' } },
+                  admin: { width: '50%', description: 'For services only: the category this belongs to.' },
+                },
+              ],
+            },
             {
               name: 'shortDescription',
               type: 'textarea',
@@ -74,8 +98,39 @@ export const Services: CollectionConfig = {
               name: 'bullets',
               type: 'array',
               label: 'What is included',
-              admin: { description: 'Short checklist shown beside the write-up.' },
+              admin: { description: 'Checklist shown on the page (used for Commercial, Emergency and Garage).' },
               fields: [{ name: 'text', type: 'text', required: true }],
+            },
+            {
+              name: 'cityCard',
+              type: 'group',
+              label: 'Card on city pages',
+              admin: { description: 'Every city page shows the same service cards. Leave blank to keep this service off city pages.' },
+              fields: [
+                { name: 'title', type: 'text', admin: { description: 'Short label, e.g. "Rekey / Lock Change". Defaults to the page title.' } },
+                { name: 'text', type: 'text', admin: { description: 'One line. Write {city} where the city name should go.' } },
+              ],
+            },
+            {
+              name: 'disclaimer',
+              type: 'textarea',
+              admin: {
+                description:
+                  'Shown in a highlighted box under the intro. Used on the Garage page to say this is lock service only, not garage door repair.',
+              },
+            },
+            {
+              name: 'ctaLabel',
+              type: 'text',
+              admin: { description: 'Optional call-button wording for this page, e.g. "LOCKED OUT? CALL NOW".' },
+            },
+            {
+              name: 'related',
+              type: 'relationship',
+              relationTo: 'services',
+              hasMany: true,
+              label: 'Related services ("You may also need")',
+              admin: { description: 'Links shown at the bottom of the page.' },
             },
             {
               name: 'faqs',
@@ -92,8 +147,10 @@ export const Services: CollectionConfig = {
             {
               name: 'startingPrice',
               type: 'text',
-              required: true,
-              admin: { description: 'e.g. "$95" or "From $45 / lock" or "Custom quote"' },
+              admin: {
+                description:
+                  'Confirmed starting price only, e.g. "$95" or "From $45 / lock". Leave blank until pricing is confirmed — nothing is shown then.',
+              },
             },
             {
               name: 'priceNote',
@@ -103,7 +160,7 @@ export const Services: CollectionConfig = {
             {
               name: 'showInPricingTable',
               type: 'checkbox',
-              defaultValue: true,
+              defaultValue: false,
               label: 'Show this service in the pricing table',
             },
           ],

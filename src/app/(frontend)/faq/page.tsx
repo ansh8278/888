@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
-import { FaqExplorer, AUTHENTIC_FAQS } from '../../../components/FaqExplorer'
+import { FaqExplorer } from '../../../components/FaqExplorer'
 import { CtaBanner } from '../../../components/blocks'
 import { getAllFaqs, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, faqSchema, absolute } from '../../../lib/schema'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
@@ -11,7 +12,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
     title: copy.faq?.title ?? 'Frequently Asked Questions | 888 Lock & Key',
     description:
       copy.faq?.intro ??
-      'Common questions and answers regarding 888 Lock & Key services, pricing, response times, and policies.',
+      'Common questions about 888 Lock & Key locksmith services across San Jose and the Bay Area.',
     alternates: { canonical: absolute('/faq') },
   }
 }
@@ -19,13 +20,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const FaqPage = async () => {
   const [faqs, settings, copy] = await Promise.all([getAllFaqs(), getSiteSettings(), getPageCopy()])
 
-  const schemaFaqs = faqs.length > 0 ? faqs : AUTHENTIC_FAQS.map((f, i) => ({
-    id: i + 1,
-    question: f.question,
-    answer: f.answer,
-    updatedAt: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-  }))
+  const schemaFaqs = faqs
 
   return (
     <>
@@ -37,22 +32,21 @@ const FaqPage = async () => {
         title={copy.faq?.title ?? 'Frequently Asked Questions'}
         intro={
           copy.faq?.intro ??
-          'Find clear answers to common questions about our locksmith services, pricing, and 24/7 mobile dispatch.'
+          'Clear answers to common questions about our mobile locksmith services across San Jose and the Bay Area.'
         }
         crumbs={[{ label: 'Home', href: '/' }, { label: 'FAQ' }]}
       />
 
       <section className="sec sec-faq-clean">
         <div className="wrap">
-          <FaqExplorer initialFaqs={faqs} phone={settings.phone} phoneHref={settings.phoneHref} />
+          <FaqExplorer initialFaqs={faqs} phone={phoneOf(settings)} />
         </div>
       </section>
 
       <CtaBanner
-        phone={settings.phone}
-        phoneHref={settings.phoneHref}
+        phone={phoneOf(settings)}
         heading={copy.ctaHeading ?? 'Have a question not listed here?'}
-        subtitle={copy.ctaSubtitle ?? 'Call our 24/7 live dispatch team anytime for assistance.'}
+        subtitle={copy.ctaSubtitle ?? 'Mobile technicians dispatched across San Jose and the Bay Area.'}
       />
     </>
   )

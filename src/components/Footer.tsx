@@ -1,192 +1,112 @@
 import Link from 'next/link'
 import { Icon } from './Icon'
+import { CallButton } from './CallButton'
+import type { Phone } from '../lib/contact'
 
 type Column = {
   heading: string
   links?: { label: string; href: string; id?: string | null }[] | null
-  id?: string | null
 }
 
 type Props = {
   companyName: string
   tagline?: string | null
-  phone: string
-  phoneHref: string
+  phone: Phone | null
   email?: string | null
   licenseNumber?: string | null
   serviceAreaLine?: string | null
+  hours?: string | null
   note?: string | null
-  columns?: Column[] | null
+  columns: Column[]
 }
 
-const DEFAULT_SERVICES = [
-  { label: 'Car Lockout & Unlocking', href: '/services/car-lockout' },
-  { label: 'Residential Door Lockout', href: '/services/residential-lockout' },
-  { label: 'House Rekey & Lock Change', href: '/services/house-rekey' },
-  { label: 'Car Key & Fob Replacement', href: '/services/car-key-and-fob-replacement' },
-  { label: 'Smart Lock Installation', href: '/services/smart-lock-installation' },
-  { label: 'Commercial & Access Control', href: '/services/commercial-and-access-control' },
-]
+/**
+ * Footer per the client prototype: brand + link columns (Services, one per
+ * Bay Area region, Company — all editable under Navigation) + a contact pane.
+ * Nothing here is hard-coded business data: licence, hours, rating and phone
+ * all come from Site settings and are simply omitted when not yet supplied.
+ */
+export const Footer = ({ companyName, tagline, phone, email, licenseNumber, serviceAreaLine, hours, note, columns }: Props) => (
+  <footer className="site-footer">
+    <div className="wrap">
+      <div className="footer-main-grid">
+        <div className="footer-brand-pane">
+          <Link href="/" className="logo">
+            <div className="logo-icon-box footer-logo-box">
+              <Icon name="lock" strokeWidth={2.2} />
+            </div>
+            <div className="logo-text-block">
+              <span className="logo-title">{companyName}</span>
+              {tagline ? <span className="logo-sub">{tagline}</span> : null}
+            </div>
+          </Link>
 
-const DEFAULT_LOCATIONS = [
-  { label: 'San Jose, CA', href: '/locations/san-jose' },
-  { label: 'San Francisco, CA', href: '/locations/san-francisco' },
-  { label: 'Los Angeles, CA', href: '/locations/los-angeles' },
-  { label: 'Phoenix, AZ', href: '/locations/phoenix' },
-  { label: 'Scottsdale, AZ', href: '/locations/scottsdale' },
-  { label: 'New York City, NY', href: '/locations/new-york-city' },
-]
+          <p className="footer-desc">{note || serviceAreaLine || 'Mobile locksmith serving San Jose & the Bay Area.'}</p>
 
-const DEFAULT_COMPANY = [
-  { label: 'About Us', href: '/about' },
-  { label: 'Pricing Guide', href: '/pricing' },
-  { label: 'Customer Reviews', href: '/reviews' },
-  { label: 'FAQ', href: '/faq' },
-  { label: 'Request Service', href: '/book' },
-  { label: 'Contact Us', href: '/contact' },
-]
-
-export const Footer = ({
-  companyName,
-  tagline,
-  phone,
-  phoneHref,
-  email,
-  licenseNumber,
-  serviceAreaLine,
-  note,
-  columns,
-}: Props) => {
-  // Extract custom columns from CMS if available, otherwise use defaults
-  const servicesCol = columns?.find((c) => /service/i.test(c.heading))?.links?.length
-    ? columns.find((c) => /service/i.test(c.heading))!.links!
-    : DEFAULT_SERVICES
-
-  const locationsCol = columns?.find((c) => /location|city|area/i.test(c.heading))?.links?.length
-    ? columns.find((c) => /location|city|area/i.test(c.heading))!.links!
-    : DEFAULT_LOCATIONS
-
-  const companyCol = columns?.find((c) => /company|about/i.test(c.heading))?.links?.length
-    ? columns.find((c) => /company|about/i.test(c.heading))!.links!
-    : DEFAULT_COMPANY
-
-  return (
-    <footer className="site-footer">
-      <div className="wrap">
-        <div className="footer-main-grid">
-          {/* Brand Info */}
-          <div className="footer-brand-pane">
-            <Link href="/" className="logo">
-              <div className="logo-icon-box footer-logo-box">
-                <Icon name="lock" strokeWidth={2.2} />
-              </div>
-              <div className="logo-text-block">
-                <span className="logo-title">{companyName}</span>
-                {tagline ? <span className="logo-sub">{tagline}</span> : null}
-              </div>
-            </Link>
-
-            <p className="footer-desc">
-              {note ||
-                'Licensed, bonded, and insured 24/7 mobile locksmith service. On-site vehicle unlocking, residential rekeying, and commercial access control with upfront pricing.'}
-            </p>
-
+          {licenseNumber ? (
             <div className="footer-trust-row">
               <div className="trust-pill">
-                <span className="star-icon">★</span>
-                <span><strong>4.9/5</strong> Rating (1,250+ Reviews)</span>
-              </div>
-              {licenseNumber ? (
-                <div className="trust-pill">
-                  <span>🛡️ {licenseNumber}</span>
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          {/* Services Column */}
-          <div className="footer-nav-col">
-            <h4 className="footer-heading">Services</h4>
-            <ul className="footer-links">
-              {servicesCol.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Locations Column */}
-          <div className="footer-nav-col">
-            <h4 className="footer-heading">Locations</h4>
-            <ul className="footer-links">
-              {locationsCol.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company & Support Column */}
-          <div className="footer-nav-col">
-            <h4 className="footer-heading">Company</h4>
-            <ul className="footer-links">
-              {companyCol.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/privacy">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link href="/terms">Terms of Service</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Direct Dispatch Column */}
-          <div className="footer-nav-col footer-contact-pane">
-            <h4 className="footer-heading">24/7 Dispatch</h4>
-            <div className="dispatch-box">
-              <p className="dispatch-text">
-                Mobile locksmith units on call 24 hours a day, 7 days a week including holidays.
-              </p>
-              <a href={`tel:${phoneHref}`} className="dispatch-phone-btn">
-                <div className="dispatch-phone-icon">
-                  <Icon name="phone" />
-                </div>
-                <div className="dispatch-phone-info">
-                  <span className="dispatch-phone-label">24/7 DISPATCH LINE</span>
-                  <span className="dispatch-phone-val">{phone}</span>
-                </div>
-              </a>
-              {email ? (
-                <a href={`mailto:${email}`} className="dispatch-email">
-                  {email}
-                </a>
-              ) : null}
-              <div className="dispatch-guarantee">
-                ✓ Upfront Pricing &amp; No Hidden Fees
+                <span>🛡️ {licenseNumber}</span>
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
 
-        {/* Bottom copyright line */}
-        <div className="footer-sub-bottom">
-          <div className="sub-bottom-left">
-            <span>© {new Date().getFullYear()} {companyName}. All rights reserved.</span>
-            {serviceAreaLine ? <span className="sub-sep">·</span> : null}
-            {serviceAreaLine ? <span>{serviceAreaLine}</span> : null}
+        {columns.map((col) => (
+          <div className="footer-nav-col" key={col.heading}>
+            <h4 className="footer-heading">{col.heading}</h4>
+            <ul className="footer-links">
+              {(col.links ?? []).map((link) => (
+                <li key={link.id ?? link.href}>
+                  <Link href={link.href}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="sub-bottom-right">
-            <span>Licensed, Bonded &amp; Insured Locksmith Service</span>
+        ))}
+
+        <div className="footer-nav-col footer-contact-pane">
+          <h4 className="footer-heading">Dispatch</h4>
+          <div className="dispatch-box">
+            <p className="dispatch-text">Mobile technicians dispatched across San Jose &amp; the Bay Area.</p>
+            <CallButton phone={phone} className="btn-hero-primary dispatch-call" label="Call Now —" />
+            {hours ? <p className="dispatch-text">{hours}</p> : null}
+            {email ? (
+              <a href={`mailto:${email}`} className="dispatch-email">
+                {email}
+              </a>
+            ) : null}
+            <div className="dispatch-guarantee">✓ Upfront pricing, confirmed before work begins</div>
           </div>
         </div>
       </div>
-    </footer>
-  )
-}
+
+      <div className="footer-sub-bottom">
+        <div className="sub-bottom-left">
+          <span>
+            © {new Date().getFullYear()} {companyName}
+          </span>
+          {licenseNumber ? (
+            <>
+              <span className="sub-sep">·</span>
+              <span>{licenseNumber}</span>
+            </>
+          ) : null}
+          {serviceAreaLine ? (
+            <>
+              <span className="sub-sep">·</span>
+              <span>{serviceAreaLine}</span>
+            </>
+          ) : null}
+        </div>
+        <div className="sub-bottom-right">
+          <Link href="/privacy">Privacy Policy</Link>
+          <span className="sub-sep">·</span>
+          <Link href="/terms">Terms of Service</Link>
+        </div>
+      </div>
+    </div>
+  </footer>
+)
+
 export default Footer

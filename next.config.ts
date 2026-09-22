@@ -24,6 +24,21 @@ const nextConfig: NextConfig = {
    * would silently break the admin. These four are the high-value ones that
    * carry no such risk.
    */
+  /**
+   * Old URLs → the client's new structure. The five out-of-scope cities were
+   * never launched publicly, so only renamed services and the old listing
+   * page get redirects (see implementation_plan.md, decision D3).
+   */
+  async redirects() {
+    return [
+      { source: '/locations', destination: '/bay-area-locksmith', permanent: true },
+      { source: '/locations/san-jose', destination: '/locations/san-jose-locksmith', permanent: true },
+      { source: '/services/residential-lockout', destination: '/services/house-lockout', permanent: true },
+      { source: '/services/house-rekey', destination: '/services/rekey-locks', permanent: true },
+      { source: '/services/car-key-and-fob-replacement', destination: '/services/car-key-replacement', permanent: true },
+      { source: '/services/commercial-and-access-control', destination: '/services/commercial-locksmith', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {

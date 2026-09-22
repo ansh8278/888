@@ -26,7 +26,7 @@ export const Navigation: GlobalConfig = {
       name: 'footerColumns',
       type: 'array',
       label: 'Footer columns',
-      maxRows: 4,
+      maxRows: 8,
       fields: [
         { name: 'heading', type: 'text', required: true },
         {

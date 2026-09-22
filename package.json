@@ -12,7 +12,7 @@
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",
     "seed": "payload run src/seed/index.ts",
-    "test": "npx tsx src/lib/test-template.ts && npx tsx src/lib/test-media-url.ts && npx tsx src/lib/test-rate-limit.ts && npx tsx src/lib/test-enquiry-schema.ts && npx tsx src/lib/test-base-path.ts && payload run src/lib/test-email.ts",
+    "test": "npx tsx src/lib/test-template.ts && npx tsx src/lib/test-media-url.ts && npx tsx src/lib/test-rate-limit.ts && npx tsx src/lib/test-enquiry-schema.ts && npx tsx src/lib/test-base-path.ts && npx tsx src/lib/test-contact.ts && payload run src/lib/test-email.ts",
     "email:check": "payload run src/lib/send-test-email.ts",
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",

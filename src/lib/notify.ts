@@ -1,3 +1,4 @@
+import { phoneOf, type Phone } from './contact'
 import type { CollectionAfterChangeHook } from 'payload'
 import { notifyRecipients } from './email'
 
@@ -83,7 +84,7 @@ const dispatcherEmail = (doc: Doc, adminLink: string) => {
  * and the phone number — because someone locked out should not sit waiting on
  * a callback when calling is faster.
  */
-const customerEmail = (doc: Doc, company: string, phone: string, phoneHref: string, arrival?: string) => {
+const customerEmail = (doc: Doc, company: string, phone: Phone | null, arrival?: string) => {
   const firstName = String(doc.name ?? '').trim().split(/\s+/)[0] || 'there'
   return {
     subject: `We've got your request — ${company}`,
@@ -109,11 +110,15 @@ const customerEmail = (doc: Doc, company: string, phone: string, phoneHref: stri
           </table>
         </div>
 
-        <p style="margin:0 0 14px;color:#334155;font-size:15px;line-height:1.6">
+        ${
+          phone
+            ? `<p style="margin:0 0 14px;color:#334155;font-size:15px;line-height:1.6">
           <strong>Locked out right now?</strong> Calling is faster than waiting for us
           to ring back${arrival ? `, and our average arrival is ${esc(arrival.toLowerCase())}` : ''}.
         </p>
-        <a href="tel:${esc(phoneHref)}" style="display:inline-block;background:#ea580c;color:#fff;text-decoration:none;padding:14px 30px;border-radius:100px;font-weight:700">Call ${esc(phone)}</a>
+        <a href="tel:${esc(phone.href)}" style="display:inline-block;background:#ea580c;color:#fff;text-decoration:none;padding:14px 30px;border-radius:100px;font-weight:700">Call ${esc(phone.display)}</a>`
+            : ''
+        }
 
         <p style="margin:24px 0 0;color:#94a3b8;font-size:13px;line-height:1.6">
           You are getting this because you submitted a request on our website.
@@ -130,7 +135,7 @@ const customerEmail = (doc: Doc, company: string, phone: string, phoneHref: stri
       doc.cityLabel ? `Area:    ${doc.cityLabel}` : '',
       doc.when ? `When:    ${doc.when}` : '',
       '',
-      `Locked out right now? Calling is faster: ${phone}`,
+      phone ? `Locked out right now? Calling is faster: ${phone.display}` : undefined,
     ]
       .filter((l) => l !== undefined)
       .join('\n'),
@@ -185,8 +190,7 @@ export const notifyOnNewEnquiry: CollectionAfterChangeHook = async ({
         ...customerEmail(
           doc,
           settings.companyName ?? '888 Lock & Key',
-          settings.phone,
-          settings.phoneHref,
+          phoneOf(settings),
           settings.averageArrival ?? undefined,
         ),
       })

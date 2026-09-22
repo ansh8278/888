@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
 import { EnquiryForm } from './EnquiryForm'
-import { Icon } from '../../../components/Icon'
+import { ContactCard } from '../../../components/ContactCard'
+import { phoneOf } from '../../../lib/contact'
 import { getServices, getLocations, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 
@@ -48,26 +49,7 @@ const BookPage = async () => {
           </div>
 
           <aside className="form-aside">
-            <div className="price-card">
-              <div className="price-card-label">{copy.bookSideTitle ?? 'Faster than a form'}</div>
-              <div className="price-card-value small">{settings.phone}</div>
-              {copy.bookSideText ? <p className="price-card-note">{copy.bookSideText}</p> : null}
-              <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary price-card-cta" data-call-cta>
-                <Icon name="phone" />
-                Call now
-              </a>
-              <ul className="check-list tight">
-                <li>
-                  <Icon name="check" /> Average arrival {settings.averageArrival}
-                </li>
-                <li>
-                  <Icon name="check" /> Price agreed before we set off
-                </li>
-                <li>
-                  <Icon name="check" /> Licensed &amp; insured technicians
-                </li>
-              </ul>
-            </div>
+            <ContactCard settings={settings} phone={phoneOf(settings)} title={copy.bookSideTitle} note={copy.bookSideText} />
           </aside>
         </div>
       </section>

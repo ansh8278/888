@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Icon } from '../../../components/Icon'
 import { getSiteSettings, getLocations, getPageCopy } from '../../../lib/data'
 import { fillTemplate } from '../../../lib/template'
+import { CallButton } from '../../../components/CallButton'
+import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
@@ -38,10 +40,7 @@ const ThankYouPage = async () => {
               <strong>{copy.thankYouUrgentTitle ?? 'Locked out right now?'}</strong>
               {copy.thankYouUrgentText ? <p>{copy.thankYouUrgentText}</p> : null}
             </div>
-            <a href={`tel:${settings.phoneHref}`} className="btn-hero-primary" data-call-cta>
-              <Icon name="phone" />
-              Call {settings.phone}
-            </a>
+            <CallButton phone={phoneOf(settings)} className="btn-hero-primary" primary />
           </div>
 
           <h2 className="thanks__next-title">What happens next</h2>
