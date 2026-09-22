@@ -86,7 +86,11 @@ Then open `https://<project>.vercel.app/admin` and log in with
 - **Own domain:** Vercel → Settings → Domains → add it, follow the DNS
   instructions, then change `NEXT_PUBLIC_SITE_URL` and redeploy.
 - **Backups:** Supabase → Database → Backups (daily on the free tier);
-  Blob files are kept by Vercel.
+  Blob files are kept by Vercel. `npm run backup` is for SQLite installs only.
+- **Analytics / Search Console:** paste the IDs into Admin → Site settings →
+  Tracking. Nothing is added to the pages until they are filled in.
+- **Error monitoring:** Vercel → project → Logs (and Observability) is enabled
+  by default; no code needed.
 - **Changing fields later:** after editing a collection, run
   `DATABASE_URI=<supabase uri> npm run migrate:create -- <name>` locally and
   commit the new file in `src/migrations-pg/`; the next deploy applies it.

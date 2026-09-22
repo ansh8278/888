@@ -6,6 +6,7 @@ import { StickyCall } from '../../components/StickyCall'
 import { getNavigation, getSiteSettings } from '../../lib/data'
 import { mediaUrl } from '../../components/blocks'
 import { ProgressBar } from '../../components/ProgressBar'
+import { Analytics } from '../../components/Analytics'
 import { phoneOf } from '../../lib/contact'
 import '../../styles/site.css'
 
@@ -40,6 +41,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
       siteName: name,
       images: mediaUrl(settings.defaultSeoImage) ?? undefined,
     },
+    // Same image and text when a link is shared on X/Twitter.
+    twitter: { card: 'summary_large_image' },
+    // Proves ownership to Google Search Console; omitted until the code is entered.
+    verification: settings.googleSiteVerification
+      ? { google: settings.googleSiteVerification }
+      : undefined,
   }
 }
 
@@ -84,6 +91,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
         {/* Always-reachable Call / Request bar on phones. */}
         <StickyCall phone={phone} />
+
+        <Analytics id={settings.googleAnalyticsId} />
       </body>
     </html>
   )

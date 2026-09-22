@@ -1271,6 +1271,14 @@ export interface SiteSetting {
    * Shown when a page is shared on social media.
    */
   defaultSeoImage?: (number | null) | Media;
+  /**
+   * Looks like "G-XXXXXXXXXX". From Google Analytics → Admin → Data streams.
+   */
+  googleAnalyticsId?: string | null;
+  /**
+   * The content value from the HTML tag Search Console gives you, e.g. "abc123…". Only the code, not the whole tag.
+   */
+  googleSiteVerification?: string | null;
   social?:
     | {
         platform: 'google' | 'facebook' | 'instagram' | 'yelp' | 'x';
@@ -1516,6 +1524,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   logo?: T;
   defaultHeroImage?: T;
   defaultSeoImage?: T;
+  googleAnalyticsId?: T;
+  googleSiteVerification?: T;
   social?:
     | T
     | {

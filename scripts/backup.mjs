@@ -13,6 +13,11 @@
  * saves you from the common cases (a bad edit, a wrong delete, a broken
  * migration) but not from losing the disk. Sync `backups/` off-box for that.
  */
+/**
+ * NOTE: this backs up a SQLite database file (local / cPanel installs).
+ * On Vercel the data lives in Supabase Postgres, which takes its own daily
+ * backups — see Supabase → Database → Backups, and DEPLOY-VERCEL.md.
+ */
 import { createClient } from '@libsql/client'
 import { cp, mkdir, readdir, rm, stat } from 'node:fs/promises'
 import { existsSync } from 'node:fs'

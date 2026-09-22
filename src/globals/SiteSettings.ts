@@ -123,6 +123,28 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Tracking',
+          description:
+            'Paste the IDs Google gives you. Leave blank and nothing is added to the site — no tracking code runs.',
+          fields: [
+            {
+              name: 'googleAnalyticsId',
+              type: 'text',
+              label: 'Google Analytics measurement ID',
+              admin: { description: 'Looks like "G-XXXXXXXXXX". From Google Analytics → Admin → Data streams.' },
+            },
+            {
+              name: 'googleSiteVerification',
+              type: 'text',
+              label: 'Google Search Console verification code',
+              admin: {
+                description:
+                  'The content value from the HTML tag Search Console gives you, e.g. "abc123…". Only the code, not the whole tag.',
+              },
+            },
+          ],
+        },
+        {
           label: 'Social',
           fields: [
             {
