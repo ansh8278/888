@@ -3,39 +3,30 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Hero } from '../../components/Hero'
 import { FaqList } from '../../components/FaqList'
-import {
-  SectionHead,
-  ServiceCard,
-  LocationCard,
-  ReviewMarquee,
-  CallCard,
-  PricingTable,
-  mediaUrl,
-  mediaAlt,
-} from '../../components/blocks'
-import { Icon } from '../../components/Icon'
-import {
-  getHomePage,
-  getSiteSettings,
-  getServices,
-  getLocations,
-  getReviews,
-  getHomeFaqs,
-  getPageCopy,
-} from '../../lib/data'
-import { localBusinessSchema, faqSchema, JsonLd, absolute } from '../../lib/schema'
+import { RegionGrid } from '../../components/RegionGrid'
+import { SectionHead, ServiceCard, ReviewMarquee, CallCard, PricingTable, CtaBanner } from '../../components/blocks'
 import { CallButton } from '../../components/CallButton'
+import { Icon } from '../../components/Icon'
+import { getHomePage, getSiteSettings, getServices, getLocations, getReviews, getHomeFaqs, getPageCopy } from '../../lib/data'
 import { phoneOf } from '../../lib/contact'
+import { localBusinessSchema, faqSchema, JsonLd, absolute } from '../../lib/schema'
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const [home, settings] = await Promise.all([getHomePage(), getSiteSettings()])
   return {
-    title: home.seo?.title || `${settings.companyName} — 24/7 Mobile Locksmith`,
+    title: {
+      absolute: home.seo?.title || `Mobile Locksmith Serving San Jose & the Entire Bay Area | ${settings.companyName}`,
+    },
     description: home.seo?.description || home.lede,
     alternates: { canonical: absolute('/') },
   }
 }
 
+/**
+ * Home page, section for section as in the client's index.html:
+ * hero → where we dispatch (4 regions) → emergency band → service categories
+ * → about → FAQ. Reviews and pricing appear only once real data exists.
+ */
 const HomePage = async () => {
   const [home, settings, services, locations, reviews, faqs, copy] = await Promise.all([
     getHomePage(),
@@ -46,10 +37,10 @@ const HomePage = async () => {
     getHomeFaqs(),
     getPageCopy(),
   ])
+  const phone = phoneOf(settings)
 
-  const featuredServices = services.filter((s) => s.featured)
-  const featuredLocations = locations.filter((l) => l.featured)
-  const pricingServices = services.filter((s) => s.showInPricingTable)
+  const categories = services.filter((s) => s.kind === 'category' && s.featured)
+  const pricingServices = services.filter((s) => s.showInPricingTable && s.startingPrice)
 
   return (
     <>
@@ -58,81 +49,54 @@ const HomePage = async () => {
 
       <Hero home={home} settings={settings} />
 
-      {/* Cities */}
-      <section className="sec sec-tight" id="locations-cards">
+      {/* Where we dispatch */}
+      <section className="sec" id="locations">
         <div className="wrap">
           <SectionHead
             eyebrow={home.locationsEyebrow}
-            heading={home.locationsHeading ?? 'Find a locksmith near you'}
-            link={{ href: '/locations', label: 'View All Locations' }}
+            heading={home.locationsHeading ?? 'Mobile Locksmith Coverage Across the Bay Area'}
+            link={{ href: '/bay-area-locksmith', label: 'View all service areas' }}
           />
-          <div className="city-grid">
-            {featuredLocations.map((location) => (
-              <LocationCard key={location.id} location={location} />
-            ))}
-          </div>
+          <RegionGrid locations={locations} limit={4} />
+          <p className="region-more">
+            <Link href="/bay-area-locksmith" className="btn btn-secondary">
+              View all {locations.filter((l) => !l.parent).length} service areas <Icon name="arrow" />
+            </Link>
+          </p>
         </div>
       </section>
+
+      <CtaBanner
+        phone={phone}
+        heading="Locked out right now?"
+        subtitle="Mobile technicians dispatched across the Bay Area. Call for immediate assistance."
+      />
 
       {/* Services */}
       <section className="sec sec-sand" id="services">
         <div className="wrap">
           <SectionHead
-            heading={home.servicesHeading ?? 'Our Locksmith Services'}
-            subtitle={home.servicesEyebrow}
+            eyebrow={home.servicesEyebrow}
+            heading={home.servicesHeading ?? 'Locksmith Services Throughout the Bay Area'}
             link={{ href: '/services', label: 'All Services' }}
           />
-          <div className="services-grid-6">
-            {featuredServices.map((service) => (
+          <div className="services-grid-4">
+            {categories.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Trust bar */}
-      <section className="trust-bar">
-        <div className="wrap trust-bar-inner">
-          <div className="trust-bar-item">
-            <Icon name="clock" />
-            <div>
-              <div className="tb-v">{settings.hours ?? '24/7'}</div>
-              <div className="tb-l">Live Dispatch</div>
-            </div>
-          </div>
-          <div className="trust-bar-item">
-            <Icon name="shield" />
-            <div>
-              <div className="tb-v">Licensed &amp; Insured</div>
-              <div className="tb-l">{settings.licenseNumber}</div>
-            </div>
-          </div>
-          <div className="trust-bar-item">
-            <Icon name="star" />
-            <div>
-              <div className="tb-v">{settings.rating}</div>
-              <div className="tb-l">{settings.reviewCount}+ Google Reviews</div>
-            </div>
-          </div>
-          <div className="trust-bar-item">
-            <Icon name="people" />
-            <div>
-              <div className="tb-v">Trusted by Thousands</div>
-              <div className="tb-l">Homes, cars, businesses</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
+      {/* About */}
       <section className="sec sec-about" id="about">
         <div className="wrap">
           <div className="about-home-grid">
             <div className="about-home-text">
-              <div className="eyebrow eyebrow-dash">ABOUT 888 LOCK &amp; KEY</div>
-              <h2>Reliable Mobile Locksmith Services You Can Trust</h2>
+              <div className="eyebrow eyebrow-dash">About {settings.companyName}</div>
+              <h2>A mobile locksmith that comes to you</h2>
               <p className="about-home-lead">
-                888 Lock &amp; Key provides professional 24/7 mobile locksmith solutions across California, Arizona, and New York. We operate physical retail shops and a fleet of mobile workshop vans, delivering upfront pricing and quality workmanship for cars, homes, and businesses.
+                {settings.companyName} is a licensed, bonded and insured mobile locksmith serving San Jose and the entire Bay Area — South Bay, the Peninsula, the East Bay and the Tri-Valley. Automotive, residential, commercial and emergency work, with the price confirmed before anything begins.
               </p>
 
               <div className="about-home-features">
@@ -141,44 +105,42 @@ const HomePage = async () => {
                     <Icon name="shield" />
                   </div>
                   <div>
-                    <strong>Upfront, Transparent Pricing</strong>
-                    <p>Clear estimates confirmed before work begins—no unexpected charges or doorstep surprises.</p>
+                    <strong>Upfront pricing</strong>
+                    <p>The price is confirmed with you before work begins — no doorstep surprises.</p>
                   </div>
                 </div>
-
                 <div className="about-feature-item">
                   <div className="feature-icon">
                     <Icon name="key" />
                   </div>
                   <div>
-                    <strong>Non-Destructive Entry Priority</strong>
-                    <p>Skilled lock-picking and bypass techniques to preserve your existing door hardware whenever possible.</p>
+                    <strong>Non-destructive entry first</strong>
+                    <p>Lockouts are opened without damage to your door, lock or vehicle wherever possible.</p>
                   </div>
                 </div>
-
                 <div className="about-feature-item">
                   <div className="feature-icon">
                     <Icon name="people" />
                   </div>
                   <div>
-                    <strong>Licensed &amp; Background-Checked</strong>
-                    <p>Qualified, insured locksmith technicians equipped with modern key cutting and diagnostic tools.</p>
+                    <strong>Background-checked technicians</strong>
+                    <p>Licensed and insured, dispatched from our Santa Clara hub across the Bay Area.</p>
                   </div>
                 </div>
               </div>
 
               <div className="about-home-actions">
                 <Link href="/about" className="btn btn-primary">
-                  Learn More About Us <Icon name="arrow" />
+                  More about us <Icon name="arrow" />
                 </Link>
-                <CallButton phone={phoneOf(settings)} className="btn btn-secondary" />
+                <CallButton phone={phone} className="btn btn-secondary" />
               </div>
             </div>
 
             <div className="about-home-image-wrap">
               <Image
                 src="/images/888-team.webp"
-                alt="888 Lock & Key technician and mobile service van"
+                alt={`${settings.companyName} technician and mobile service van`}
                 width={700}
                 height={500}
                 className="about-home-photo"
@@ -189,121 +151,63 @@ const HomePage = async () => {
         </div>
       </section>
 
-      {/* Reviews */}
-      <section className="sec" id="reviews">
-        <div className="wrap">
-          <SectionHead
-            heading={home.reviewsHeading ?? 'What Our Customers Say'}
-            subtitle={home.reviewsSubtitle}
-            link={{ href: '/reviews', label: 'View All Reviews' }}
-          />
-          <div className="reviews-row">
-            <ReviewMarquee reviews={reviews} />
-            <CallCard
-              phone={phoneOf(settings)}
-              title={copy.callCardTitle}
-              subtitle={copy.callCardSubtitle}
-              note={copy.callCardNote}
+      {/* Reviews — only once real, verified reviews have been entered */}
+      {reviews.length > 0 ? (
+        <section className="sec" id="reviews">
+          <div className="wrap">
+            <SectionHead
+              heading={home.reviewsHeading ?? 'What Our Customers Say'}
+              subtitle={home.reviewsSubtitle}
+              link={{ href: '/reviews', label: 'View All Reviews' }}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* Shops */}
-      <section className="sec sec-sand" id="shops">
-        <div className="wrap">
-          <SectionHead
-            eyebrow={home.shopsEyebrow}
-            heading={home.shopsHeading ?? 'Walk in, or we drive to you.'}
-            subtitle={home.shopsSubtitle}
-          />
-          <div className="loc-grid">
-            {featuredLocations.slice(0, 3).map((location) => {
-              const url = mediaUrl(location.image)
-              return (
-                <div className="loc-card" key={location.id}>
-                  <div className="loc-map-header">
-                    {url ? (
-                      <Image
-                        src={url}
-                        alt={mediaAlt(location.image, location.city)}
-                        width={600}
-                        height={300}
-                        sizes="(max-width: 900px) 100vw, 33vw"
-                      />
-                    ) : null}
-                    {location.badge ? <span className="loc-badge">{location.badge}</span> : null}
-                  </div>
-                  <div className="loc-body">
-                    <h3>{location.shopName ?? location.city}</h3>
-                    <div className="loc-body-sub">{location.shopSubtitle}</div>
-                    <div className="loc-info-list">
-                      {location.addressLine ? (
-                        <div>
-                          <Icon name="pin" />
-                          <span>
-                            {location.addressLine}
-                            <br />
-                            {location.city}, {location.stateAbbr} {location.postcode}
-                          </span>
-                        </div>
-                      ) : null}
-                    </div>
-                    {location.hours ? (
-                      <div className="loc-open-status">
-                        <span className="livedot" /> {location.hours}
-                      </div>
-                    ) : null}
-                    <Link href={`/locations/${location.slug}`} className="loc-card-link">
-                      {location.city} locksmith services <Icon name="arrow" />
-                    </Link>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="sec" id="pricing">
-        <div className="wrap">
-          <SectionHead
-            eyebrow={home.pricingEyebrow}
-            heading={home.pricingHeading ?? 'Starting prices, published up front.'}
-            subtitle={home.pricingSubtitle}
-            link={{ href: '/pricing', label: 'Full Pricing' }}
-          />
-          <PricingTable services={pricingServices} />
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="sec sec-sand" id="faq">
-        <div className="wrap">
-          <div className="sec-head-center">
-            <div>
-              {home.faqEyebrow ? <div className="eyebrow eyebrow-dash">{home.faqEyebrow}</div> : null}
-              <h2>{home.faqHeading ?? 'Frequently Asked Questions'}</h2>
-              <p className="sec-sub-center">
-                Clear, straightforward answers about our mobile dispatch, pricing, and services.
-              </p>
+            <div className="reviews-row">
+              <ReviewMarquee reviews={reviews} />
+              <CallCard phone={phone} title={copy.callCardTitle} subtitle={copy.callCardSubtitle} note={copy.callCardNote} />
             </div>
           </div>
-          <div className="faq-wrap-center">
-            <FaqList faqs={faqs} />
-            <div className="faq-bottom-bar">
-              <span>Have more questions about our services?</span>
-              <div className="faq-bottom-links">
-                <Link href="/faq" className="btn btn-secondary btn-sm">
-                  View All FAQs <Icon name="arrow" />
-                </Link>
-                <CallButton phone={phoneOf(settings)} className="btn btn-primary btn-sm" />
+        </section>
+      ) : null}
+
+      {/* Pricing — only once confirmed starting prices exist */}
+      {pricingServices.length > 0 ? (
+        <section className="sec sec-sand" id="pricing">
+          <div className="wrap">
+            <SectionHead
+              eyebrow={home.pricingEyebrow}
+              heading={home.pricingHeading ?? 'Starting prices, published up front.'}
+              subtitle={home.pricingSubtitle}
+              link={{ href: '/pricing', label: 'Full Pricing' }}
+            />
+            <PricingTable services={pricingServices} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* FAQ */}
+      {faqs.length > 0 ? (
+        <section className="sec" id="faq">
+          <div className="wrap">
+            <div className="sec-head-center">
+              <div>
+                {home.faqEyebrow ? <div className="eyebrow eyebrow-dash">{home.faqEyebrow}</div> : null}
+                <h2>{home.faqHeading ?? 'Frequently Asked Questions'}</h2>
+              </div>
+            </div>
+            <div className="faq-wrap-center">
+              <FaqList faqs={faqs} />
+              <div className="faq-bottom-bar">
+                <span>Have more questions?</span>
+                <div className="faq-bottom-links">
+                  <Link href="/faq" className="btn btn-secondary btn-sm">
+                    View All FAQs <Icon name="arrow" />
+                  </Link>
+                  <CallButton phone={phone} className="btn btn-primary btn-sm" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </>
   )
 }

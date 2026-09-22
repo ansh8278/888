@@ -35,7 +35,7 @@ export const Hero = ({ home, settings }: Props) => {
           {home.eyebrow ? <div className="hero-eyebrow">{home.eyebrow}</div> : null}
 
           <h1>
-            <span className="line">{home.headingLine1}</span>
+            <span className="line">{home.headingLine1}</span>{' '}
             <span className="line orange-txt">{home.headingLine2}</span>
           </h1>
 

@@ -41,7 +41,13 @@ type Category = { slug: string; title: string; meta: string; h1: string; intro: 
 type SubService = { slug: string; parent: string; title: string; meta: string; h1: string; cta: string; content: string; related: string[] }
 type Garage = Category & { disclaimer: string }
 type CityContent = { cities: City[] }
-type ServiceContent = { categories: Category[]; services: SubService[]; garage: Garage; hub: { title: string; meta: string; h1: string; intro: string } }
+type ServiceContent = {
+  categories: Category[]
+  services: SubService[]
+  garage: Garage
+  hub: { title: string; meta: string; h1: string; intro: string }
+  city_index: { slug: string }[]
+}
 
 const cities = readJson<CityContent>('city-pages-content.json').cities
 const content = readJson<ServiceContent>('services-content.json')
@@ -188,8 +194,12 @@ const seed = async () => {
   }
 
   // ---------- locations ----------
+  // Display order = the client's hub listing (city_index); districts come last.
+  const hubOrder = content.city_index.map((c) => c.slug)
+  const orderOf = (c: City) => (c.parent_slug ? 100 + cities.indexOf(c) : hubOrder.indexOf(c.slug) + 1)
+
   const locationIds: Record<string, number> = {}
-  for (const [i, c] of cities.entries()) {
+  for (const c of cities) {
     const region = SUBREGION[c.subregion]
     if (!region) throw new Error(`Unknown subregion "${c.subregion}" for ${c.slug}`)
     // The README flags a string here as "needs manual review"; never publish it as a pill.
@@ -206,7 +216,7 @@ const seed = async () => {
         stateAbbr: 'CA',
         subregion: region,
         badge: c.subregion,
-        order: i + 1,
+        order: orderOf(c),
         // Sub-areas are reached through San Jose, not from the home page/footer.
         featured: !c.parent_slug,
         image: c.slug === 'san-jose-locksmith' ? sanJoseImageId : undefined,

@@ -160,3 +160,25 @@ export const getComboPairs = cache(async () => {
     servicesForLocation(location, services).map((service) => ({ location, service })),
   )
 })
+
+/** The four Bay Area regions, in the order the client lists them. */
+export const REGIONS = [
+  { key: 'south-bay', label: 'South Bay / Silicon Valley', short: 'South Bay' },
+  { key: 'peninsula', label: 'Peninsula', short: 'Peninsula' },
+  { key: 'east-bay', label: 'East Bay', short: 'East Bay' },
+  { key: 'tri-valley', label: 'Tri-Valley', short: 'Tri-Valley' },
+] as const
+
+export type RegionKey = (typeof REGIONS)[number]['key']
+
+/** Cities only — the San Jose districts (which have a parent) are reached via San Jose. */
+export const cityLocations = (all: Location[]): Location[] => all.filter((l) => !l.parent)
+
+/** Cities grouped by region, empty regions dropped. Used by the home page and the Bay Area hub. */
+export const locationsByRegion = (all: Location[]) =>
+  REGIONS.map((r) => ({ ...r, cities: cityLocations(all).filter((l) => l.subregion === r.key) })).filter(
+    (r) => r.cities.length > 0,
+  )
+
+export const regionLabel = (key: string | null | undefined): string =>
+  REGIONS.find((r) => r.key === key)?.label ?? 'Bay Area'

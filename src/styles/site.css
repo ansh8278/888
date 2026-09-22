@@ -3152,3 +3152,34 @@ html, body { max-width: 100%; overflow-x: hidden; }
   }
 }
 
+
+/* ============================================================
+   BAY AREA REGION GRID (home page + Bay Area hub)
+   ============================================================ */
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.region-card {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+}
+.region-card h3 { font-size: 1.05rem; margin: 0 0 6px; }
+.region-blurb { font-size: 0.9rem; color: var(--muted); margin: 0 0 14px; line-height: 1.5; }
+.region-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.region-links a {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 9px 12px; border-radius: 10px; background: var(--bg-sand);
+  color: var(--txt); font-weight: 600; font-size: 0.92rem; text-decoration: none;
+}
+.region-links a svg { width: 16px; height: 16px; color: var(--orange); flex-shrink: 0; }
+.region-links a:hover { background: var(--orange-light); color: var(--orange-hover); }
+.region-more { margin-top: 20px; text-align: center; }
+@media (max-width: 1000px) { .region-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .region-grid { grid-template-columns: 1fr; } }
+.services-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 1000px) { .services-grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .services-grid-4 { grid-template-columns: 1fr; } }

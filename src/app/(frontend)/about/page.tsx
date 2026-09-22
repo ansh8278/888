@@ -2,28 +2,32 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { PageHero } from '../../../components/Hero'
-import { CtaBanner } from '../../../components/blocks'
-import { getSiteSettings, getLocations, getPageCopy } from '../../../lib/data'
+import { CtaBanner, Prose } from '../../../components/blocks'
+import { DispatchHubs } from '../../../components/ContactCard'
+import { getSiteSettings, getLocations, getPageCopy, getPage } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, localBusinessSchema, absolute } from '../../../lib/schema'
 import { Icon } from '../../../components/Icon'
 import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const settings = await getSiteSettings()
+  const [settings, page] = await Promise.all([getSiteSettings(), getPage('about')])
   return {
-    title: `About Us | ${settings.companyName ?? '888 Lock & Key'}`,
+    title: page?.seo?.title || `About Us | ${settings.companyName ?? '888 Lock & Key'}`,
     description:
-      '888 Lock & Key is a licensed locksmith company providing 24/7 mobile service and physical walk-in shops across California, Arizona, and New York.',
+      page?.seo?.description ||
+      page?.intro ||
+      `${settings.companyName} is a licensed mobile locksmith serving San Jose and the entire Bay Area.`,
     alternates: { canonical: absolute('/about') },
   }
 }
 
+/**
+ * About page. The wording comes from the "About Us" page in the admin
+ * (Pages → About Us); this file only supplies the layout around it.
+ */
 const AboutPage = async () => {
-  const [settings, locations, copy] = await Promise.all([
-    getSiteSettings(),
-    getLocations(),
-    getPageCopy(),
-  ])
+  const [settings, locations, copy, page] = await Promise.all([getSiteSettings(), getLocations(), getPageCopy(), getPage('about')])
+  const name = settings.companyName ?? '888 Lock & Key'
 
   return (
     <>
@@ -36,48 +40,30 @@ const AboutPage = async () => {
       <JsonLd data={localBusinessSchema(settings, locations)} />
 
       <PageHero
-        eyebrow="ABOUT OUR COMPANY"
-        title="About 888 Lock & Key"
-        intro="A licensed locksmith company with real shops, real technicians, and prices we publish before you call."
+        eyebrow="About our company"
+        title={page?.title ?? `About ${name}`}
+        intro={page?.intro ?? `A licensed mobile locksmith serving San Jose and the entire Bay Area.`}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
       />
 
-      {/* Main Story & Team Photo */}
+      {/* Story (from the admin) & team photo */}
       <section className="sec">
         <div className="wrap">
           <div className="about-main-split">
             <div className="about-text-content">
-              <h2>Who We Are</h2>
-              <p>
-                888 Lock &amp; Key is a licensed locksmith company operating across California, Arizona, and New York. We operate physical walk-in shops and a fleet of mobile service vans, so every technician who arrives is our own employee—background-checked, qualified, and badged.
-              </p>
-
-              <h2>How We Price</h2>
-              <p>
-                You get a clear, firm price on the phone before a van moves. If a job turns out to require additional parts or labor beyond what was quoted, we stop and explain the cost before continuing. There are no call-out surprises and no mystery service fees at the door.
-              </p>
-
-              <h2>What We Will Not Do</h2>
-              <ul className="about-rules-list">
-                <li>
-                  <Icon name="check" />
-                  <span><strong>We will not open a lock without proof of ownership.</strong> For your protection, our technician will verify your ID and property documentation before unlocking.</span>
-                </li>
-                <li>
-                  <Icon name="check" />
-                  <span><strong>We will not drill a lock that can be picked.</strong> We prioritize non-destructive entry to protect your doors and existing hardware.</span>
-                </li>
-                <li>
-                  <Icon name="check" />
-                  <span><strong>We will not quote one price on the phone and another on your doorstep.</strong> What we quote is what you pay.</span>
-                </li>
-              </ul>
+              {page?.body ? (
+                <Prose data={page.body} />
+              ) : (
+                <p>
+                  {name} is a California BSIS-licensed, bonded and insured mobile locksmith company dispatching technicians across San Jose and the Bay Area.
+                </p>
+              )}
             </div>
 
             <div className="about-team-image-box">
               <Image
                 src="/images/888-team.webp"
-                alt="888 Lock & Key technician and mobile service van"
+                alt={`${name} technician and mobile service van`}
                 width={700}
                 height={500}
                 className="about-team-photo"
@@ -85,8 +71,8 @@ const AboutPage = async () => {
                 unoptimized
               />
               <div className="about-photo-caption">
-                <strong>888 Lock &amp; Key Mobile Fleet</strong>
-                <span>Serving cars, homes, and businesses 24 hours a day</span>
+                <strong>{name} mobile fleet</strong>
+                <span>{settings.serviceAreaLine ?? 'Serving San Jose & the Entire Bay Area'}</span>
               </div>
             </div>
           </div>
@@ -101,7 +87,7 @@ const AboutPage = async () => {
               <div className="eyebrow eyebrow-dash">OUR STANDARDS</div>
               <h2>Built on Honesty and Quality Service</h2>
               <p className="sec-sub-center">
-                Three simple standards that guide every emergency lockout, rekey, and installation we perform.
+                Three standards that guide every lockout, rekey and installation we perform.
               </p>
             </div>
           </div>
@@ -111,7 +97,7 @@ const AboutPage = async () => {
               <div className="pillar-icon"><Icon name="shield" /></div>
               <h3>Upfront Pricing</h3>
               <p>
-                We quote clear prices before dispatching a van. No hidden call-out fees or unexpected doorstep surcharges.
+                The price is confirmed with you before any work begins — no doorstep surprises.
               </p>
             </div>
 
@@ -119,7 +105,7 @@ const AboutPage = async () => {
               <div className="pillar-icon"><Icon name="key" /></div>
               <h3>Non-Destructive Entry</h3>
               <p>
-                We use specialized lock-picking and bypass equipment to open vehicles and properties without damaging your locks.
+                Vehicles and properties are opened without damage to your locks or doors wherever possible.
               </p>
             </div>
 
@@ -127,47 +113,30 @@ const AboutPage = async () => {
               <div className="pillar-icon"><Icon name="people" /></div>
               <h3>Qualified Technicians</h3>
               <p>
-                Every locksmith is directly employed, background-checked, and equipped with precision key cutting tools.
+                Background-checked, licensed and insured technicians, dispatched across the Bay Area.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Locations */}
+      <DispatchHubs settings={settings} heading="Where we dispatch from" />
+
       <section className="sec">
         <div className="wrap">
           <div className="sec-head-center">
             <div>
-              <div className="eyebrow eyebrow-dash">LOCATIONS</div>
-              <h2>Our Service Hubs</h2>
+              <div className="eyebrow eyebrow-dash">Service area</div>
+              <h2>Serving {locations.filter((l) => !l.parent).length} Bay Area cities</h2>
               <p className="sec-sub-center">
-                Walk into one of our retail locations, or have a mobile service van come directly to your location.
+                South Bay, the Peninsula, the East Bay and the Tri-Valley — see every city we cover.
+              </p>
+              <p>
+                <Link href="/bay-area-locksmith" className="btn btn-secondary">
+                  View all service areas <Icon name="arrow" />
+                </Link>
               </p>
             </div>
-          </div>
-
-          <div className="about-hubs-grid">
-            {locations.map((loc) => (
-              <div key={loc.id} className="about-hub-card">
-                <h3>{loc.shopName ?? loc.city}</h3>
-                <div className="hub-city">{loc.city}, {loc.stateAbbr}</div>
-                {loc.addressLine ? (
-                  <div className="hub-addr">
-                    <Icon name="pin" /> {loc.addressLine}
-                  </div>
-                ) : null}
-                {loc.hours ? (
-                  <div className="hub-hours">
-                    <span className="livedot" /> {loc.hours}
-                  </div>
-                ) : null}
-                <Link href={`/locations/${loc.slug}`} className="hub-link">
-                  <span>{loc.city} locksmith details</span>
-                  <Icon name="arrow" width={16} height={16} />
-                </Link>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -175,7 +144,7 @@ const AboutPage = async () => {
       <CtaBanner
         phone={phoneOf(settings)}
         heading={copy.ctaHeading ?? 'Need a locksmith near you?'}
-        subtitle={copy.ctaSubtitle ?? 'Call our 24/7 live dispatch team for immediate assistance.'}
+        subtitle={copy.ctaSubtitle ?? 'Mobile technicians dispatched across San Jose and the Bay Area.'}
       />
     </>
   )

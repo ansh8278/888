@@ -80,10 +80,10 @@ export const ServiceCard = ({ service }: { service: Service }) => (
       <h3 className="svc-title">{service.title}</h3>
       <p className="svc-desc">{service.shortDescription}</p>
     </div>
-    {/* The editor controls the whole price string ("$95", "From $45 / lock",
-        "Custom quote"), so the card must not prepend wording of its own. */}
+    {/* The editor controls the whole price string ("$95", "From $45 / lock");
+        until pricing is confirmed there is none, and the card says so with nothing. */}
     <span className="svc-action">
-      {service.startingPrice} <span aria-hidden="true">&rarr;</span>
+      {service.startingPrice || 'Learn more'} <span aria-hidden="true">&rarr;</span>
     </span>
   </Link>
 )

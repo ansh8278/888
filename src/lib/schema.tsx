@@ -30,51 +30,63 @@ const ratingBlock = (settings: SiteSetting) => {
   }
 }
 
+/**
+ * The business as Google should understand it: a mobile Service Area
+ * Business. One real address (the dispatch hub), the cities it serves, and
+ * only the facts the client has actually supplied — no opening hours or
+ * rating unless entered in Site settings.
+ */
+const hubAddress = (settings: SiteSetting) => {
+  const hub = settings.dispatchHubs?.[0]
+  if (!hub) return undefined
+  return {
+    '@type': 'PostalAddress',
+    streetAddress: hub.addressLine,
+    addressLocality: hub.city,
+    addressRegion: hub.stateAbbr,
+    postalCode: hub.postcode ?? undefined,
+    addressCountry: 'US',
+  }
+}
+
+const areaServed = (locations: Location[]) =>
+  locations
+    .filter((l) => !l.parent)
+    .map((l) => ({
+      '@type': 'City',
+      name: l.city,
+      address: { '@type': 'PostalAddress', addressRegion: l.stateAbbr, addressCountry: 'US' },
+    }))
+
 export const localBusinessSchema = (settings: SiteSetting, locations: Location[]) => ({
   '@context': 'https://schema.org',
   '@type': 'Locksmith',
   name: settings.companyName,
-  telephone: settings.phone,
+  telephone: settings.phone || undefined,
   email: settings.email ?? undefined,
   url: SITE_URL,
-  priceRange: '$$',
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    opens: '00:00',
-    closes: '23:59',
-  },
+  address: hubAddress(settings),
+  areaServed: areaServed(locations),
   aggregateRating: ratingBlock(settings),
-  areaServed: locations.map((l) => ({
-    '@type': 'City',
-    name: l.city,
-    address: { '@type': 'PostalAddress', addressRegion: l.stateAbbr, addressCountry: 'US' },
-  })),
 })
 
-/** A single shop, used on location pages so each city can rank on its own. */
+/**
+ * A city page: the same business, described as serving that city. Never a
+ * per-city PostalAddress — there is no shop there (see plan §Phase 2).
+ */
 export const locationSchema = (settings: SiteSetting, location: Location) => ({
   '@context': 'https://schema.org',
   '@type': 'Locksmith',
-  name: location.shopName ?? `${settings.companyName} — ${location.city}`,
-  telephone: location.phone || settings.phone,
+  name: `${settings.companyName} — ${location.city} Locksmith`,
+  telephone: location.phone || settings.phone || undefined,
   url: `${SITE_URL}/locations/${location.slug}`,
-  priceRange: '$$',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: location.addressLine ?? undefined,
-    addressLocality: location.city,
-    addressRegion: location.stateAbbr,
-    postalCode: location.postcode ?? undefined,
-    addressCountry: 'US',
+  address: hubAddress(settings),
+  areaServed: {
+    '@type': 'City',
+    name: location.city,
+    address: { '@type': 'PostalAddress', addressRegion: location.stateAbbr, addressCountry: 'US' },
   },
   aggregateRating: ratingBlock(settings),
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    opens: '00:00',
-    closes: '23:59',
-  },
 })
 
 export const serviceSchema = (settings: SiteSetting, service: Service, city?: string) => ({
@@ -86,15 +98,18 @@ export const serviceSchema = (settings: SiteSetting, service: Service, city?: st
   provider: {
     '@type': 'Locksmith',
     name: settings.companyName,
-    telephone: settings.phone,
+    telephone: settings.phone || undefined,
+    address: hubAddress(settings),
   },
-  areaServed: city ? { '@type': 'City', name: city } : undefined,
-  offers: {
-    '@type': 'Offer',
-    price: (service.startingPrice ?? '').replace(/[^\d.]/g, '') || undefined,
-    priceCurrency: 'USD',
-    availability: 'https://schema.org/InStock',
-  },
+  areaServed: city ? { '@type': 'City', name: city } : { '@type': 'Place', name: 'San Jose & the San Francisco Bay Area' },
+  // Only when the client has confirmed a starting price.
+  offers: service.startingPrice
+    ? {
+        '@type': 'Offer',
+        price: service.startingPrice.replace(/[^\d.]/g, '') || undefined,
+        priceCurrency: 'USD',
+      }
+    : undefined,
 })
 
 export const faqSchema = (faqs: Faq[]) =>

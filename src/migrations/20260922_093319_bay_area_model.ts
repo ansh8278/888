@@ -344,13 +344,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`site_settings_logo_idx\` ON \`site_settings\` (\`logo_id\`);`)
   await db.run(sql`CREATE INDEX \`site_settings_default_hero_image_idx\` ON \`site_settings\` (\`default_hero_image_id\`);`)
   await db.run(sql`CREATE INDEX \`site_settings_default_seo_image_idx\` ON \`site_settings\` (\`default_seo_image_id\`);`)
-  await db.run(sql`ALTER TABLE \`services_rels\` ADD \`services_id\` integer REFERENCES services(id);`)
+  await db.run(sql`ALTER TABLE \`services_rels\` ADD \`services_id\` integer REFERENCES services(id) ON UPDATE no action ON DELETE cascade;`)
   await db.run(sql`CREATE INDEX \`services_rels_services_id_idx\` ON \`services_rels\` (\`services_id\`);`)
-  await db.run(sql`ALTER TABLE \`_services_v_rels\` ADD \`services_id\` integer REFERENCES services(id);`)
+  await db.run(sql`ALTER TABLE \`_services_v_rels\` ADD \`services_id\` integer REFERENCES services(id) ON UPDATE no action ON DELETE cascade;`)
   await db.run(sql`CREATE INDEX \`_services_v_rels_services_id_idx\` ON \`_services_v_rels\` (\`services_id\`);`)
-  await db.run(sql`ALTER TABLE \`locations_rels\` ADD \`locations_id\` integer REFERENCES locations(id);`)
+  await db.run(sql`ALTER TABLE \`locations_rels\` ADD \`locations_id\` integer REFERENCES locations(id) ON UPDATE no action ON DELETE cascade;`)
   await db.run(sql`CREATE INDEX \`locations_rels_locations_id_idx\` ON \`locations_rels\` (\`locations_id\`);`)
-  await db.run(sql`ALTER TABLE \`_locations_v_rels\` ADD \`locations_id\` integer REFERENCES locations(id);`)
+  await db.run(sql`ALTER TABLE \`_locations_v_rels\` ADD \`locations_id\` integer REFERENCES locations(id) ON UPDATE no action ON DELETE cascade;`)
   await db.run(sql`CREATE INDEX \`_locations_v_rels_locations_id_idx\` ON \`_locations_v_rels\` (\`locations_id\`);`)
 }
 
