@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { PageHero } from '../../../components/Hero'
-import { ServiceCard, CtaBanner } from '../../../components/blocks'
+import { ServiceCard, CtaBanner, SectionHead } from '../../../components/blocks'
 import { getServices, getSiteSettings, getPageCopy } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, absolute } from '../../../lib/schema'
 import { phoneOf } from '../../../lib/contact'
@@ -8,7 +8,7 @@ import { phoneOf } from '../../../lib/contact'
 export const generateMetadata = async (): Promise<Metadata> => {
   const copy = await getPageCopy()
   return {
-    title: copy.services?.title ?? 'Locksmith Services',
+    title: { absolute: `${copy.services?.title ?? 'Locksmith Services'} | San Jose & Bay Area | ${(await getSiteSettings()).companyName}` },
     description: copy.services?.intro ?? undefined,
     alternates: { canonical: absolute('/services') },
   }
@@ -34,13 +34,30 @@ const ServicesIndex = async () => {
 
       <section className="sec">
         <div className="wrap">
-          <div className="services-grid-6">
-            {services.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
+          <div className="services-grid-4">
+            {services
+              .filter((s) => s.kind === 'category')
+              .map((service) => (
+                <ServiceCard key={service.id} service={service} />
+              ))}
           </div>
         </div>
       </section>
+
+      {services.some((s) => s.kind === 'standalone') ? (
+        <section className="sec sec-sand">
+          <div className="wrap">
+            <SectionHead eyebrow="Also" heading="Specialist services" />
+            <div className="services-grid-4">
+              {services
+                .filter((s) => s.kind === 'standalone')
+                .map((service) => (
+                  <ServiceCard key={service.id} service={service} />
+                ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <CtaBanner phone={phoneOf(settings)} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
     </>

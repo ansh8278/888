@@ -4,7 +4,7 @@
 
 Overall Status: IN PROGRESS
 Last Updated: 2026-09-22
-Current Phase: Phase 6 — Service pages (Phases 0–5 complete)
+Current Phase: Phase 7 — SEO / internal linking (Phases 0–6 complete)
 
 Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-2026-09-22`
 
@@ -20,7 +20,7 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | Phase 3 - Core Website | DONE | 100% | Header/footer/sticky bar/global copy; About + FAQ from CMS only; SAB structured data |
 | Phase 4 - Homepage | DONE | 100% | Client section order; reviews/pricing hidden until real data |
 | Phase 5 - Location Pages | DONE | 100% | Hub + 20 cities + 4 districts, client template, SAB schema |
-| Phase 5 - Service Pages | NOT STARTED | 0% | 4 categories + 9 services + garage |
+| Phase 6 - Service Pages | DONE | 100% | 4 categories + 9 services + garage (disclaimer kept); three renderings on one route |
 | Phase 6 - SEO/Internal Linking | NOT STARTED | 0% | |
 | Phase 7 - Business/Compliance | BLOCKED | 0% | Needs real phone, BSIS licence, hours, domain, reviews |
 | Phase 8 - Responsive/Conversion | NOT STARTED | 0% | |
@@ -56,10 +56,10 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T041 | Location page template per client (breadcrumb, pills, 8 cards, FAQ, Also Serving) | 5 | DONE | P0 | locations/[slug]/page.tsx | |
 | T042 | Sub-area pages (parent breadcrumb, sibling links) | 5 | DONE | P0 | same | |
 | T043 | Service-area schema (no city PostalAddress) | 5 | DONE | P0 | src/lib/schema.tsx | |
-| T050 | `/services` index (categories + garage) | 6 | NOT STARTED | P1 | services/page.tsx | |
-| T051 | Service page: category / service / standalone renderings | 6 | NOT STARTED | P0 | services/[slug]/page.tsx | Garage disclaimer must stay |
-| T052 | Areas We Serve + Related Services blocks | 6 | NOT STARTED | P1 | components | |
-| T053 | Disable combo pages by default; exclude from sitemap | 6 | IN PROGRESS | P1 | seed, sitemap.ts | D4 |
+| T050 | `/services` index (categories + garage) | 6 | DONE | P1 | services/page.tsx | |
+| T051 | Service page: category / service / standalone renderings | 6 | DONE | P0 | services/[slug]/page.tsx | Garage disclaimer must stay |
+| T052 | Areas We Serve + Related Services blocks | 6 | DONE | P1 | components | |
+| T053 | Disable combo pages by default; exclude from sitemap | 6 | DONE | P1 | seed, sitemap.ts | D4 |
 | T060 | Metadata from JSON; breadcrumb JSON-LD; sitemap/robots | 7 | NOT STARTED | P0 | pages, sitemap.ts | |
 | T061 | Link crawl script (no 404s, no orphans) | 7 | NOT STARTED | P1 | scripts/ | |
 | T070 | Admin "Missing before launch" panel | 8 | NOT STARTED | P1 | components/admin/Dashboard.tsx | |
@@ -117,6 +117,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Change Log
+
+- 2026-09-22 — Phase 6: `/services/[slug]` rebuilt: category pages list their services as cards (Automotive, Residential) or an included-list (Commercial, Emergency); Garage keeps its lock-only disclaimer box; individual services sit under their category in the breadcrumb (Home / Services / Category / Service); every service page has the emergency band, "Areas We Serve" (first 8 hub cities + link to all) and "You May Also Need" from `related`; `/services` shows the 4 categories + Garage. Combo pages remain disabled and out of the sitemap.
 
 - 2026-09-22 — Phase 5: `/bay-area-locksmith` hub (4 regions, 20 cities, category links); `/locations/[slug]` rebuilt to the client template (breadcrumb Home / Bay Area / [San Jose /] City, H1 "Mobile Locksmith in X, CA", intro + CTAs, neighborhood pills, 8 service cards with {city} text, emergency band, city FAQs — arrival question only with a verified figure — and "Also Serving" from `nearby`); old `/locations` listing removed (redirects to hub); PageHero gained an actions slot; seed also resets page-copy wording for existing databases.
 
