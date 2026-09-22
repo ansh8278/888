@@ -40,8 +40,8 @@ const ReviewsPage = async () => {
           ) : (
             // Honest empty state until verified reviews are entered in the admin (D6).
             <div className="empty-state">
-              <h2>Reviews are on their way</h2>
-              <p>We only publish verified customer reviews. Check back soon, or ask us for references when you call.</p>
+              <h2>{copy.reviewsEmptyHeading ?? 'Reviews are on their way'}</h2>
+              <p>{copy.reviewsEmptyText}</p>
             </div>
           )}
         </div>

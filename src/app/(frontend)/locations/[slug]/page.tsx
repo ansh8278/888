@@ -6,7 +6,8 @@ import { FaqList } from '../../../../components/FaqList'
 import { CtaBanner, SectionHead } from '../../../../components/blocks'
 import { HeroActions } from '../../../../components/CallButton'
 import { ServiceCardGrid, LinkPills, asDocs } from '../../../../components/ServiceBlocks'
-import { getLocation, getLocations, getServices, getSiteSettings, servicesForLocation, regionLabel } from '../../../../lib/data'
+import { getLocation, getLocations, getServices, getSiteSettings, getPageCopy, servicesForLocation, regionLabel } from '../../../../lib/data'
+import { fillTemplate } from '../../../../lib/template'
 import { phoneOf } from '../../../../lib/contact'
 import { JsonLd, locationSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
 import type { Faq, Location } from '../../../../payload-types'
@@ -20,22 +21,21 @@ const parentOf = (location: Location): Location | null =>
   location.parent && typeof location.parent === 'object' ? location.parent : null
 
 /**
- * The FAQ block from the client's city template. The arrival-time question
- * only appears once a verified figure has been entered in Site settings —
- * the client's brief is explicit that an untracked estimate must not be
- * published.
+ * The questions shown on every city page. They live in Page text (City pages)
+ * so staff can edit them; {city} and {arrival} are filled in here, and any
+ * question needing {arrival} is dropped until that verified figure exists.
  */
-const cityFaqs = (city: string, arrival?: string | null): Faq[] => {
+const cityFaqs = (items: { question: string; answer: string }[], vars: Record<string, string | undefined>): Faq[] => {
   const now = new Date().toISOString()
-  const faqs = [
-    arrival
-      ? { question: `How fast can a technician reach me in ${city}?`, answer: `Our tracked average arrival time for ${city} dispatch is ${arrival}.` }
-      : null,
-    { question: `Do you cover all of ${city}?`, answer: `Yes — our mobile technicians are dispatched throughout ${city} and the surrounding area.` },
-    { question: 'Can you unlock my car without damaging it?', answer: 'Yes. We use non-destructive entry tools designed for modern vehicles, including luxury and imported models.' },
-    { question: 'What ID do you need to unlock my home or car?', answer: 'A photo ID matching the address, or for vehicles, a registration, title, or insurance card.' },
-  ]
-  return faqs.filter(Boolean).map((f, i) => ({ id: i + 1, ...f!, updatedAt: now, createdAt: now }))
+  return items
+    .filter((f) => vars.arrival || !`${f.question}${f.answer}`.includes('{arrival}'))
+    .map((f, i) => ({
+      id: i + 1,
+      question: fillTemplate(f.question, vars),
+      answer: fillTemplate(f.answer, vars),
+      updatedAt: now,
+      createdAt: now,
+    }))
 }
 
 export const generateMetadata = async (props: { params: Promise<{ slug: string }> }): Promise<Metadata> => {
@@ -57,14 +57,16 @@ export const generateMetadata = async (props: { params: Promise<{ slug: string }
  */
 const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
   const { slug } = await props.params
-  const [location, settings, allServices] = await Promise.all([getLocation(slug), getSiteSettings(), getServices()])
+  const [location, settings, allServices, copy] = await Promise.all([getLocation(slug), getSiteSettings(), getServices(), getPageCopy()])
   if (!location) notFound()
 
   const phone = phoneOf(settings, location.phone)
   const parent = parentOf(location)
   const services = servicesForLocation(location, allServices).filter((s) => s.cityCard?.text || s.cityCard?.title)
   const nearby = asDocs<Location>(location.nearby)
-  const faqs = cityFaqs(location.city, settings.averageArrival)
+  const vars = { city: location.city, state: location.state, arrival: settings.averageArrival ?? undefined }
+  const faqs = cityFaqs(copy.cityFaqs ?? [], vars)
+  const label = (value: string | null | undefined, fallback: string) => fillTemplate(value || fallback, vars)
 
   const crumbs = [
     { label: 'Home', href: '/' },
@@ -91,7 +93,10 @@ const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
       {(location.neighbourhoods ?? []).length > 0 ? (
         <section className="sec">
           <div className="wrap">
-            <SectionHead eyebrow="Neighborhoods We Serve" heading={`All of ${location.city}`} />
+            <SectionHead
+              eyebrow={label(copy.cityNeighborhoodsEyebrow, 'Neighborhoods We Serve')}
+              heading={label(copy.cityNeighborhoodsHeading, 'All of {city}')}
+            />
             <ul className="pill-list">
               {(location.neighbourhoods ?? []).map((n) => (
                 <li key={n.id ?? n.name}>{n.name}</li>
@@ -103,28 +108,33 @@ const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
 
       <section className="sec sec-sand">
         <div className="wrap">
-          <SectionHead eyebrow={`Services in ${location.city}`} heading="Locksmith Services Available Here" />
+          <SectionHead
+            eyebrow={label(copy.cityServicesEyebrow, 'Services in {city}')}
+            heading={label(copy.cityServicesHeading, 'Locksmith Services Available Here')}
+          />
           <ServiceCardGrid services={services} city={location.city} />
         </div>
       </section>
 
       <CtaBanner
         phone={phone}
-        heading={`Locked out in ${location.city} right now?`}
-        subtitle={parent ? 'Mobile technicians dispatched across the area.' : 'Mobile technicians dispatched across the city.'}
+        heading={label(copy.cityCtaHeading, 'Locked out in {city} right now?')}
+        subtitle={label(copy.cityCtaSubtitle, 'Mobile technicians dispatched across the city.')}
       />
 
-      <section className="sec">
-        <div className="wrap narrow">
-          <SectionHead eyebrow="Before You Call" heading={`${location.city} Locksmith FAQs`} />
-          <FaqList faqs={faqs} />
-        </div>
-      </section>
+      {faqs.length > 0 ? (
+        <section className="sec">
+          <div className="wrap narrow">
+            <SectionHead eyebrow={label(copy.cityFaqEyebrow, 'Before You Call')} heading={label(copy.cityFaqHeading, '{city} Locksmith FAQs')} />
+            <FaqList faqs={faqs} />
+          </div>
+        </section>
+      ) : null}
 
       {nearby.length > 0 ? (
         <section className="sec sec-sand">
           <div className="wrap">
-            <SectionHead eyebrow="Nearby Areas" heading="Also Serving" />
+            <SectionHead eyebrow={label(copy.cityNearbyEyebrow, 'Nearby Areas')} heading={label(copy.cityNearbyHeading, 'Also Serving')} />
             <LinkPills items={nearby.map((n) => ({ href: `/locations/${n.slug}`, label: n.city }))} />
           </div>
         </section>

@@ -46,10 +46,8 @@ const PricingPage = async () => {
           ) : (
             // Honest empty state until the client confirms starting prices (D6).
             <div className="empty-state">
-              <h2>Pricing is confirmed on the phone</h2>
-              <p>
-                Every job is quoted before a technician is sent, and the price is confirmed with you before any work begins. Call or send a request and a dispatcher will give you the price for your job.
-              </p>
+              <h2>{copy.pricingEmptyHeading ?? 'Pricing is confirmed on the phone'}</h2>
+              <p>{copy.pricingEmptyText}</p>
             </div>
           )}
         </div>

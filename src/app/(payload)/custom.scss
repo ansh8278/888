@@ -740,14 +740,21 @@ h1.doc-header__title,
 }
 #nav-global-page-copy::before      { content: '✏️'; }
 
-/* "Missing before launch" panel on the dashboard */
+/* "Missing before launch" panel on the dashboard.
+   Colours are set explicitly for both admin themes — inheriting the theme's
+   text colour on a fixed cream background left it unreadable in dark mode. */
 .dash__missing {
   margin: 8px 0 28px;
   padding: 18px 22px;
   border-radius: 14px;
   background: #fff7ed;
-  border: 1px solid rgba(234, 88, 12, 0.35);
+  border: 1px solid rgba(234, 88, 12, 0.45);
+  color: #7c2d12;
 }
 .dash__missing .dash__title { margin-top: 0; color: #9a3412; }
+.dash__missing p,
+.dash__missing li,
+.dash__missing strong { color: #7c2d12; }
+.dash__missing a { color: #c2410c; text-decoration: underline; }
 .dash__missing p { margin: 0 0 10px; }
 .dash__missing ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }

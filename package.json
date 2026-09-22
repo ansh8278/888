@@ -21,7 +21,8 @@
     "package:cpanel": "node scripts/package-for-cpanel.mjs",
     "crawl": "node scripts/crawl.mjs",
     "seo:check": "node scripts/seo-check.mjs",
-    "qa:responsive": "node scripts/responsive-check.mjs"
+    "qa:responsive": "node scripts/responsive-check.mjs",
+    "copy:defaults": "payload run src/scripts/fill-copy-defaults.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

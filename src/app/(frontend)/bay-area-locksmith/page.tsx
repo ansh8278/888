@@ -51,17 +51,23 @@ const BayAreaPage = async () => {
 
       <section className="sec">
         <div className="wrap">
-          <SectionHead eyebrow="Find Your Area" heading="Bay Area Service Regions" />
+          <SectionHead
+            eyebrow={copy.hubRegionsEyebrow ?? 'Find Your Area'}
+            heading={copy.hubRegionsHeading ?? 'Bay Area Service Regions'}
+          />
           <RegionGrid locations={locations} showBlurb={false} />
         </div>
       </section>
 
-      <CtaBanner phone={phone} heading="Need a locksmith right now?" subtitle="Mobile technicians dispatched across San Jose & the Bay Area." />
+      <CtaBanner phone={phone} heading={copy.hubCtaHeading ?? 'Need a locksmith right now?'} subtitle={copy.serviceCtaSubtitle} />
 
       {categories.length > 0 ? (
         <section className="sec sec-sand">
           <div className="wrap">
-            <SectionHead eyebrow="Related Services" heading="You May Also Need" />
+            <SectionHead
+              eyebrow={copy.serviceRelatedEyebrow ?? 'Related Services'}
+              heading={copy.serviceRelatedHeading ?? 'You May Also Need'}
+            />
             <LinkPills items={categories.map((c) => ({ href: `/services/${c.slug}`, label: c.title }))} />
           </div>
         </section>

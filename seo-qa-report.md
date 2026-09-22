@@ -1,6 +1,6 @@
 # SEO QA report
 
-Generated 2026-09-22T15:29:48.558Z against http://localhost:3460. 49 URLs from the sitemap.
+Generated 2026-09-22T16:03:13.579Z against http://localhost:3460. 49 URLs from the sitemap.
 
 ## Problems
 

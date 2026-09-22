@@ -7,7 +7,7 @@ import { Prose, CtaBanner, SectionHead } from '../../../../components/blocks'
 import { HeroActions } from '../../../../components/CallButton'
 import { Icon } from '../../../../components/Icon'
 import { ServiceCardGrid, AreasWeServe, LinkPills, asDocs } from '../../../../components/ServiceBlocks'
-import { getService, getServices, getLocations, getSiteSettings } from '../../../../lib/data'
+import { getService, getServices, getLocations, getSiteSettings, getPageCopy } from '../../../../lib/data'
 import { phoneOf } from '../../../../lib/contact'
 import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
 import type { Faq, Service } from '../../../../payload-types'
@@ -42,7 +42,13 @@ export const generateMetadata = async (props: { params: Promise<{ slug: string }
  */
 const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
   const { slug } = await props.params
-  const [service, allServices, locations, settings] = await Promise.all([getService(slug), getServices(), getLocations(), getSiteSettings()])
+  const [service, allServices, locations, settings, copy] = await Promise.all([
+    getService(slug),
+    getServices(),
+    getLocations(),
+    getSiteSettings(),
+    getPageCopy(),
+  ])
   if (!service) notFound()
 
   const phone = phoneOf(settings)
@@ -86,7 +92,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
       {subservices.length > 0 ? (
         <section className="sec">
           <div className="wrap">
-            <SectionHead eyebrow={service.title} heading="What's included" />
+            <SectionHead eyebrow={service.title} heading={copy.serviceIncludedHeading ?? "What's included"} />
             <ServiceCardGrid services={subservices} />
           </div>
         </section>
@@ -95,7 +101,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
       {(service.bullets ?? []).length > 0 ? (
         <section className="sec">
           <div className="wrap">
-            <SectionHead eyebrow={service.title} heading="What's included" />
+            <SectionHead eyebrow={service.title} heading={copy.serviceIncludedHeading ?? "What's included"} />
             <ul className="check-grid">
               {(service.bullets ?? []).map((b) => (
                 <li key={b.id ?? b.text}>
@@ -119,13 +125,16 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
       <CtaBanner
         phone={phone}
         heading={`Need ${shortName} right now?`}
-        subtitle="Mobile technicians dispatched across San Jose & the Bay Area."
+        subtitle={copy.serviceCtaSubtitle}
         label={service.ctaLabel}
       />
 
       <section className="sec">
         <div className="wrap">
-          <SectionHead eyebrow="Where We Cover This Service" heading="Areas We Serve" />
+          <SectionHead
+            eyebrow={copy.serviceAreasEyebrow ?? 'Where We Cover This Service'}
+            heading={copy.serviceAreasHeading ?? 'Areas We Serve'}
+          />
           <AreasWeServe locations={locations} />
         </div>
       </section>
@@ -133,7 +142,7 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
       {faqs.length > 0 ? (
         <section className="sec sec-sand">
           <div className="wrap narrow">
-            <SectionHead eyebrow="Before You Call" heading={`Questions about ${shortName}`} />
+            <SectionHead eyebrow={copy.cityFaqEyebrow ?? 'Before You Call'} heading={`Questions about ${shortName}`} />
             <FaqList faqs={faqs} />
           </div>
         </section>
@@ -142,7 +151,10 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
       {related.length > 0 ? (
         <section className="sec">
           <div className="wrap">
-            <SectionHead eyebrow="Related Services" heading="You May Also Need" />
+            <SectionHead
+              eyebrow={copy.serviceRelatedEyebrow ?? 'Related Services'}
+              heading={copy.serviceRelatedHeading ?? 'You May Also Need'}
+            />
             <LinkPills items={related.map((r) => ({ href: `/services/${r.slug}`, label: r.title }))} />
           </div>
         </section>

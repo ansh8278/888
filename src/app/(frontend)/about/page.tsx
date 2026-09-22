@@ -6,7 +6,8 @@ import { CtaBanner, Prose } from '../../../components/blocks'
 import { DispatchHubs } from '../../../components/ContactCard'
 import { getSiteSettings, getLocations, getPageCopy, getPage } from '../../../lib/data'
 import { JsonLd, breadcrumbSchema, localBusinessSchema, absolute } from '../../../lib/schema'
-import { Icon } from '../../../components/Icon'
+import { Icon, type IconName } from '../../../components/Icon'
+import { fillTemplate } from '../../../lib/template'
 import { phoneOf } from '../../../lib/contact'
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -28,6 +29,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const AboutPage = async () => {
   const [settings, locations, copy, page] = await Promise.all([getSiteSettings(), getLocations(), getPageCopy(), getPage('about')])
   const name = settings.companyName ?? '888 Lock & Key'
+  const cities = locations.filter((l) => !l.parent).length
 
   return (
     <>
@@ -79,58 +81,41 @@ const AboutPage = async () => {
         </div>
       </section>
 
-      {/* 3 Core Commitments */}
-      <section className="sec sec-sand">
-        <div className="wrap">
-          <div className="sec-head-center">
-            <div>
-              <div className="eyebrow eyebrow-dash">OUR STANDARDS</div>
-              <h2>Built on Honesty and Quality Service</h2>
-              <p className="sec-sub-center">
-                Three standards that guide every lockout, rekey and installation we perform.
-              </p>
+      {(copy.aboutPillars ?? []).length > 0 ? (
+        <section className="sec sec-sand">
+          <div className="wrap">
+            <div className="sec-head-center">
+              <div>
+                {copy.aboutStandardsEyebrow ? <div className="eyebrow eyebrow-dash">{copy.aboutStandardsEyebrow}</div> : null}
+                <h2>{copy.aboutStandardsHeading ?? 'Built on honesty and quality service'}</h2>
+                {copy.aboutStandardsIntro ? <p className="sec-sub-center">{copy.aboutStandardsIntro}</p> : null}
+              </div>
+            </div>
+
+            <div className="about-pillars-three">
+              {(copy.aboutPillars ?? []).map((pillar) => (
+                <div className="about-pillar-simple" key={pillar.id ?? pillar.title}>
+                  <div className="pillar-icon">
+                    <Icon name={pillar.icon as IconName} />
+                  </div>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.text}</p>
+                </div>
+              ))}
             </div>
           </div>
+        </section>
+      ) : null}
 
-          <div className="about-pillars-three">
-            <div className="about-pillar-simple">
-              <div className="pillar-icon"><Icon name="shield" /></div>
-              <h3>Upfront Pricing</h3>
-              <p>
-                The price is confirmed with you before any work begins — no doorstep surprises.
-              </p>
-            </div>
-
-            <div className="about-pillar-simple">
-              <div className="pillar-icon"><Icon name="key" /></div>
-              <h3>Non-Destructive Entry</h3>
-              <p>
-                Vehicles and properties are opened without damage to your locks or doors wherever possible.
-              </p>
-            </div>
-
-            <div className="about-pillar-simple">
-              <div className="pillar-icon"><Icon name="people" /></div>
-              <h3>Qualified Technicians</h3>
-              <p>
-                Background-checked, licensed and insured technicians, dispatched across the Bay Area.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <DispatchHubs settings={settings} heading="Where we dispatch from" />
+      <DispatchHubs settings={settings} heading={copy.aboutHubsHeading} />
 
       <section className="sec">
         <div className="wrap">
           <div className="sec-head-center">
             <div>
               <div className="eyebrow eyebrow-dash">Service area</div>
-              <h2>Serving {locations.filter((l) => !l.parent).length} Bay Area cities</h2>
-              <p className="sec-sub-center">
-                South Bay, the Peninsula, the East Bay and the Tri-Valley — see every city we cover.
-              </p>
+              <h2>{fillTemplate(copy.aboutAreasHeading || 'Serving {count} Bay Area cities', { count: String(cities) })}</h2>
+              {copy.aboutAreasText ? <p className="sec-sub-center">{copy.aboutAreasText}</p> : null}
               <p>
                 <Link href="/bay-area-locksmith" className="btn btn-secondary">
                   View all service areas <Icon name="arrow" />

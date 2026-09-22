@@ -6,7 +6,7 @@ import { FaqList } from '../../components/FaqList'
 import { RegionGrid } from '../../components/RegionGrid'
 import { SectionHead, ServiceCard, ReviewMarquee, CallCard, PricingTable, CtaBanner } from '../../components/blocks'
 import { CallButton } from '../../components/CallButton'
-import { Icon } from '../../components/Icon'
+import { Icon, type IconName } from '../../components/Icon'
 import { getHomePage, getSiteSettings, getServices, getLocations, getReviews, getHomeFaqs, getPageCopy } from '../../lib/data'
 import { phoneOf } from '../../lib/contact'
 import { localBusinessSchema, faqSchema, JsonLd, absolute } from '../../lib/schema'
@@ -66,11 +66,7 @@ const HomePage = async () => {
         </div>
       </section>
 
-      <CtaBanner
-        phone={phone}
-        heading="Locked out right now?"
-        subtitle="Mobile technicians dispatched across the Bay Area. Call for immediate assistance."
-      />
+      <CtaBanner phone={phone} heading={copy.ctaHeading} subtitle={copy.ctaSubtitle} />
 
       {/* Services */}
       <section className="sec sec-sand" id="services">
@@ -93,45 +89,27 @@ const HomePage = async () => {
         <div className="wrap">
           <div className="about-home-grid">
             <div className="about-home-text">
-              <div className="eyebrow eyebrow-dash">About {settings.companyName}</div>
-              <h2>A mobile locksmith that comes to you</h2>
-              <p className="about-home-lead">
-                {settings.companyName} is a licensed, bonded and insured mobile locksmith serving San Jose and the entire Bay Area — South Bay, the Peninsula, the East Bay and the Tri-Valley. Automotive, residential, commercial and emergency work, with the price confirmed before anything begins.
-              </p>
+              {home.aboutEyebrow ? <div className="eyebrow eyebrow-dash">{home.aboutEyebrow}</div> : null}
+              <h2>{home.aboutHeading ?? 'A mobile locksmith that comes to you'}</h2>
+              {home.aboutLead ? <p className="about-home-lead">{home.aboutLead}</p> : null}
 
               <div className="about-home-features">
-                <div className="about-feature-item">
-                  <div className="feature-icon">
-                    <Icon name="shield" />
+                {(home.aboutFeatures ?? []).map((f) => (
+                  <div className="about-feature-item" key={f.id ?? f.title}>
+                    <div className="feature-icon">
+                      <Icon name={f.icon as IconName} />
+                    </div>
+                    <div>
+                      <strong>{f.title}</strong>
+                      <p>{f.text}</p>
+                    </div>
                   </div>
-                  <div>
-                    <strong>Upfront pricing</strong>
-                    <p>The price is confirmed with you before work begins — no doorstep surprises.</p>
-                  </div>
-                </div>
-                <div className="about-feature-item">
-                  <div className="feature-icon">
-                    <Icon name="key" />
-                  </div>
-                  <div>
-                    <strong>Non-destructive entry first</strong>
-                    <p>Lockouts are opened without damage to your door, lock or vehicle wherever possible.</p>
-                  </div>
-                </div>
-                <div className="about-feature-item">
-                  <div className="feature-icon">
-                    <Icon name="people" />
-                  </div>
-                  <div>
-                    <strong>Background-checked technicians</strong>
-                    <p>Licensed and insured, dispatched from our Santa Clara hub across the Bay Area.</p>
-                  </div>
-                </div>
+                ))}
               </div>
 
               <div className="about-home-actions">
                 <Link href="/about" className="btn btn-primary">
-                  More about us <Icon name="arrow" />
+                  {home.aboutCtaLabel ?? 'More about us'} <Icon name="arrow" />
                 </Link>
                 <CallButton phone={phone} className="btn btn-secondary" />
               </div>
@@ -196,7 +174,7 @@ const HomePage = async () => {
             <div className="faq-wrap-center">
               <FaqList faqs={faqs} />
               <div className="faq-bottom-bar">
-                <span>Have more questions?</span>
+                <span>{home.faqBarText ?? 'Have more questions?'}</span>
                 <div className="faq-bottom-links">
                   <Link href="/faq" className="btn btn-secondary btn-sm">
                     View All FAQs <Icon name="arrow" />

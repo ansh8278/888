@@ -1001,6 +1001,19 @@ export interface HomePage {
   shopsEyebrow?: string | null;
   shopsHeading?: string | null;
   shopsSubtitle?: string | null;
+  aboutEyebrow?: string | null;
+  aboutHeading?: string | null;
+  aboutLead?: string | null;
+  aboutFeatures?:
+    | {
+        icon: 'shield' | 'key' | 'people' | 'clock' | 'star';
+        title: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  aboutCtaLabel?: string | null;
+  faqBarText?: string | null;
   pricingEyebrow?: string | null;
   pricingHeading?: string | null;
   pricingSubtitle?: string | null;
@@ -1028,7 +1041,7 @@ export interface HomePage {
   createdAt?: string | null;
 }
 /**
- * Headings and intros for the Services, Locations, Pricing, Reviews, FAQ, Book, Contact and Thank-you pages.
+ * Every heading and intro that is not part of a service or city page itself — index pages, the repeated section labels on city and service pages, and the standard city FAQs.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "page-copy".
@@ -1140,6 +1153,53 @@ export interface PageCopy {
         id?: string | null;
       }[]
     | null;
+  aboutStandardsEyebrow?: string | null;
+  aboutStandardsHeading?: string | null;
+  aboutStandardsIntro?: string | null;
+  aboutPillars?:
+    | {
+        icon: 'shield' | 'key' | 'people' | 'clock' | 'star';
+        title: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  aboutAreasHeading?: string | null;
+  aboutAreasText?: string | null;
+  aboutHubsHeading?: string | null;
+  cityNeighborhoodsEyebrow?: string | null;
+  cityNeighborhoodsHeading?: string | null;
+  cityServicesEyebrow?: string | null;
+  cityServicesHeading?: string | null;
+  cityCtaHeading?: string | null;
+  cityCtaSubtitle?: string | null;
+  cityFaqEyebrow?: string | null;
+  cityFaqHeading?: string | null;
+  /**
+   * Shown on all city pages. Use {city} for the city name and {arrival} for the average arrival time — a question using {arrival} is hidden until that figure is filled in under Site settings.
+   */
+  cityFaqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  cityNearbyEyebrow?: string | null;
+  cityNearbyHeading?: string | null;
+  serviceIncludedHeading?: string | null;
+  serviceCtaSubtitle?: string | null;
+  serviceAreasEyebrow?: string | null;
+  serviceAreasHeading?: string | null;
+  serviceRelatedEyebrow?: string | null;
+  serviceRelatedHeading?: string | null;
+  hubRegionsEyebrow?: string | null;
+  hubRegionsHeading?: string | null;
+  hubCtaHeading?: string | null;
+  pricingEmptyHeading?: string | null;
+  pricingEmptyText?: string | null;
+  reviewsEmptyHeading?: string | null;
+  reviewsEmptyText?: string | null;
   /**
    * The dark banner at the foot of most pages. Service and city pages override it with their own.
    */
@@ -1366,6 +1426,19 @@ export interface HomePageSelect<T extends boolean = true> {
   shopsEyebrow?: T;
   shopsHeading?: T;
   shopsSubtitle?: T;
+  aboutEyebrow?: T;
+  aboutHeading?: T;
+  aboutLead?: T;
+  aboutFeatures?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  aboutCtaLabel?: T;
+  faqBarText?: T;
   pricingEyebrow?: T;
   pricingHeading?: T;
   pricingSubtitle?: T;
@@ -1458,6 +1531,50 @@ export interface PageCopySelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  aboutStandardsEyebrow?: T;
+  aboutStandardsHeading?: T;
+  aboutStandardsIntro?: T;
+  aboutPillars?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  aboutAreasHeading?: T;
+  aboutAreasText?: T;
+  aboutHubsHeading?: T;
+  cityNeighborhoodsEyebrow?: T;
+  cityNeighborhoodsHeading?: T;
+  cityServicesEyebrow?: T;
+  cityServicesHeading?: T;
+  cityCtaHeading?: T;
+  cityCtaSubtitle?: T;
+  cityFaqEyebrow?: T;
+  cityFaqHeading?: T;
+  cityFaqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  cityNearbyEyebrow?: T;
+  cityNearbyHeading?: T;
+  serviceIncludedHeading?: T;
+  serviceCtaSubtitle?: T;
+  serviceAreasEyebrow?: T;
+  serviceAreasHeading?: T;
+  serviceRelatedEyebrow?: T;
+  serviceRelatedHeading?: T;
+  hubRegionsEyebrow?: T;
+  hubRegionsHeading?: T;
+  hubCtaHeading?: T;
+  pricingEmptyHeading?: T;
+  pricingEmptyText?: T;
+  reviewsEmptyHeading?: T;
+  reviewsEmptyText?: T;
   ctaHeading?: T;
   ctaSubtitle?: T;
   serviceCitySubtitle?: T;

@@ -25,7 +25,8 @@ export const PageCopy: GlobalConfig = {
   label: 'Page text',
   admin: {
     group: 'Pages',
-    description: 'Headings and intros for the Services, Locations, Pricing, Reviews, FAQ, Book, Contact and Thank-you pages.',
+    description:
+      'Every heading and intro that is not part of a service or city page itself — index pages, the repeated section labels on city and service pages, and the standard city FAQs.',
   },
   access: { read: anyone, update: staff },
   fields: [
@@ -129,6 +130,126 @@ export const PageCopy: GlobalConfig = {
                 { title: 'A technician is dispatched', text: 'From the nearest of our locations, arriving in about {arrival} on average.' },
               ],
               admin: { description: 'Use {arrival} to insert the average arrival time from Site settings.' },
+            },
+          ],
+        },
+        {
+          label: 'About page',
+          fields: [
+            { name: 'aboutStandardsEyebrow', type: 'text', label: 'Standards — small line', defaultValue: 'Our standards' },
+            { name: 'aboutStandardsHeading', type: 'text', label: 'Standards — heading', defaultValue: 'Built on honesty and quality service' },
+            {
+              name: 'aboutStandardsIntro',
+              type: 'text',
+              label: 'Standards — line under the heading',
+              defaultValue: 'Three standards that guide every lockout, rekey and installation we perform.',
+            },
+            {
+              name: 'aboutPillars',
+              type: 'array',
+              label: 'Standards — the three cards',
+              maxRows: 4,
+              fields: [
+                {
+                  name: 'icon',
+                  type: 'select',
+                  required: true,
+                  defaultValue: 'shield',
+                  options: [
+                    { label: 'Shield', value: 'shield' },
+                    { label: 'Key', value: 'key' },
+                    { label: 'People', value: 'people' },
+                    { label: 'Clock', value: 'clock' },
+                    { label: 'Star', value: 'star' },
+                  ],
+                },
+                { name: 'title', type: 'text', required: true },
+                { name: 'text', type: 'textarea', required: true },
+              ],
+              defaultValue: [
+                { icon: 'shield', title: 'Upfront pricing', text: 'The price is confirmed with you before any work begins — no doorstep surprises.' },
+                { icon: 'key', title: 'Non-destructive entry', text: 'Vehicles and properties are opened without damage to your locks or doors wherever possible.' },
+                { icon: 'people', title: 'Qualified technicians', text: 'Background-checked, licensed and insured technicians, dispatched across the Bay Area.' },
+              ],
+            },
+            { name: 'aboutAreasHeading', type: 'text', label: 'Service-area block — heading', defaultValue: 'Serving {count} Bay Area cities' },
+            {
+              name: 'aboutAreasText',
+              type: 'text',
+              label: 'Service-area block — line',
+              defaultValue: 'South Bay, the Peninsula, the East Bay and the Tri-Valley — see every city we cover.',
+            },
+            { name: 'aboutHubsHeading', type: 'text', label: 'Dispatch hub block — heading', defaultValue: 'Where we dispatch from' },
+          ],
+        },
+        {
+          label: 'City pages',
+          description:
+            'The section labels repeated on all 24 city and district pages, and the questions shown at the bottom of each. Write {city} where the city name should appear.',
+          fields: [
+            { name: 'cityNeighborhoodsEyebrow', type: 'text', label: 'Neighborhoods — small line', defaultValue: 'Neighborhoods We Serve' },
+            { name: 'cityNeighborhoodsHeading', type: 'text', label: 'Neighborhoods — heading', defaultValue: 'All of {city}' },
+            { name: 'cityServicesEyebrow', type: 'text', label: 'Services — small line', defaultValue: 'Services in {city}' },
+            { name: 'cityServicesHeading', type: 'text', label: 'Services — heading', defaultValue: 'Locksmith Services Available Here' },
+            { name: 'cityCtaHeading', type: 'text', label: 'Banner heading', defaultValue: 'Locked out in {city} right now?' },
+            { name: 'cityCtaSubtitle', type: 'text', label: 'Banner text', defaultValue: 'Mobile technicians dispatched across the city.' },
+            { name: 'cityFaqEyebrow', type: 'text', label: 'FAQs — small line', defaultValue: 'Before You Call' },
+            { name: 'cityFaqHeading', type: 'text', label: 'FAQs — heading', defaultValue: '{city} Locksmith FAQs' },
+            {
+              name: 'cityFaqs',
+              type: 'array',
+              label: 'Questions on every city page',
+              admin: {
+                description:
+                  'Shown on all city pages. Use {city} for the city name and {arrival} for the average arrival time — a question using {arrival} is hidden until that figure is filled in under Site settings.',
+              },
+              fields: [
+                { name: 'question', type: 'text', required: true },
+                { name: 'answer', type: 'textarea', required: true },
+              ],
+              defaultValue: [
+                { question: 'How fast can a technician reach me in {city}?', answer: 'Our tracked average arrival time for {city} dispatch is {arrival}.' },
+                { question: 'Do you cover all of {city}?', answer: 'Yes — our mobile technicians are dispatched throughout {city} and the surrounding area.' },
+                { question: 'Can you unlock my car without damaging it?', answer: 'Yes. We use non-destructive entry tools designed for modern vehicles, including luxury and imported models.' },
+                { question: 'What ID do you need to unlock my home or car?', answer: 'A photo ID matching the address, or for vehicles, a registration, title, or insurance card.' },
+              ],
+            },
+            { name: 'cityNearbyEyebrow', type: 'text', label: 'Nearby areas — small line', defaultValue: 'Nearby Areas' },
+            { name: 'cityNearbyHeading', type: 'text', label: 'Nearby areas — heading', defaultValue: 'Also Serving' },
+          ],
+        },
+        {
+          label: 'Service pages',
+          description: 'The section labels repeated on all 14 service pages, and on the Bay Area page.',
+          fields: [
+            { name: 'serviceIncludedHeading', type: 'text', label: "What's included — heading", defaultValue: "What's included" },
+            { name: 'serviceCtaSubtitle', type: 'text', label: 'Banner text', defaultValue: 'Mobile technicians dispatched across San Jose & the Bay Area.' },
+            { name: 'serviceAreasEyebrow', type: 'text', label: 'Areas — small line', defaultValue: 'Where We Cover This Service' },
+            { name: 'serviceAreasHeading', type: 'text', label: 'Areas — heading', defaultValue: 'Areas We Serve' },
+            { name: 'serviceRelatedEyebrow', type: 'text', label: 'Related — small line', defaultValue: 'Related Services' },
+            { name: 'serviceRelatedHeading', type: 'text', label: 'Related — heading', defaultValue: 'You May Also Need' },
+            { name: 'hubRegionsEyebrow', type: 'text', label: 'Bay Area page — small line', defaultValue: 'Find Your Area' },
+            { name: 'hubRegionsHeading', type: 'text', label: 'Bay Area page — heading', defaultValue: 'Bay Area Service Regions' },
+            { name: 'hubCtaHeading', type: 'text', label: 'Bay Area page — banner heading', defaultValue: 'Need a locksmith right now?' },
+          ],
+        },
+        {
+          label: 'Empty states',
+          description:
+            'Shown while there is nothing real to display. The pricing table appears automatically once prices are entered, and the reviews grid once reviews are added.',
+          fields: [
+            { name: 'pricingEmptyHeading', type: 'text', defaultValue: 'Pricing is confirmed on the phone' },
+            {
+              name: 'pricingEmptyText',
+              type: 'textarea',
+              defaultValue:
+                'Every job is quoted before a technician is sent, and the price is confirmed with you before any work begins. Call or send a request and a dispatcher will give you the price for your job.',
+            },
+            { name: 'reviewsEmptyHeading', type: 'text', defaultValue: 'Reviews are on their way' },
+            {
+              name: 'reviewsEmptyText',
+              type: 'textarea',
+              defaultValue: 'We only publish verified customer reviews. Check back soon, or ask us for references when you call.',
             },
           ],
         },
