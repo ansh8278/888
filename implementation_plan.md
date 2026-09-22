@@ -111,7 +111,7 @@ Package contains **no** reviews, ratings, hours, "24/7" claims, storefront addre
 
 ---
 
-## Phase 2 — Technical architecture & content model
+## Phase 2 — Technical architecture & content model (DONE)
 
 Principle: extend the existing Payload collections; no new framework, no static-HTML port.
 
@@ -157,37 +157,37 @@ Principle: extend the existing Payload collections; no new framework, no static-
 
 ---
 
-## Phase 3 — Global structure
+## Phase 3 — Global structure (DONE)
 Header nav + footer columns from client; StickyCall two-button bar; layout metadata without "24/7"; licence line only when set; `CallButton` everywhere; skip-link/ProgressBar preserved.
 
-## Phase 4 — Homepage
+## Phase 4 — Homepage (DONE)
 Client sections in order: Hero (H1 "Serving All of San Jose & the Entire Bay Area", lede, 3 trust items, Call + Request) → "Where We Dispatch" 4 regions (4 cities each + "View all 20") → emergency band → 4 service categories → FAQ (CMS) → final CTA. Reviews/pricing/about sections hidden until data exists. `home-page` global fields updated/added so all copy stays editable.
 
-## Phase 5 — Bay Area hub & location pages
+## Phase 5 — Bay Area hub & location pages (DONE)
 Hub page; 24 location pages from seed; breadcrumbs; nearby links; sub-area parent linking; service-area schema.
 
-## Phase 6 — Service architecture
+## Phase 6 — Service architecture (DONE)
 14 services (4 categories, 9 sub-services, garage with disclaimer); `/services` index; three renderings; Areas We Serve; related links; redirects from old slugs.
 
-## Phase 7 — Internal linking & SEO
+## Phase 7 — Internal linking & SEO (DONE)
 Per-page metadata from JSON; breadcrumb JSON-LD; Locksmith schema as SAB; sitemap/robots; link check across every route (script: crawl local build, assert no 404 and every page reachable); alt text on remaining images.
 
-## Phase 8 — Business data & compliance
+## Phase 8 — Business data & compliance (MECHANISM DONE — VALUES PENDING CLIENT)
 `site-settings` empty for phone/licence/hours/rating/count; dispatch hub seeded; admin dashboard "Missing before launch" panel; tracker "Client Information Pending" table. **BSIS licence = P0 launch blocker.**
 
-## Phase 9 — Mobile-first conversion
+## Phase 9 — Mobile-first conversion (DONE)
 Sticky bar, click-to-call, CTAs, drawer nav, overflow check at 360/390/768/1024/1440 via headless Chrome (existing CDP test approach).
 
-## Phase 10 — Content & visual QA
+## Phase 10 — Content & visual QA (DONE)
 Every page: correct city/service, no placeholders, no fake data, no CA/AZ/NY, no "24/7", no broken images.
 
-## Phase 11 — Technical QA
+## Phase 11 — Technical QA (DONE)
 `tsc`, `npm test`, `next build`, route crawl, console check.
 
-## Phase 12 — SEO QA
+## Phase 12 — SEO QA (DONE)
 Unique titles/descriptions, single H1, canonicals, sitemap inclusion, schema validity, no accidental noindex → `seo-qa-report.md`.
 
-## Phase 13 — Client review / staging
+## Phase 13 — Client review / staging (NEXT)
 Vercel preview with pending-info list, known issues, questions, blockers.
 
 ## Phase 14–15 — Production prep & post-deploy QA
@@ -211,3 +211,20 @@ Only after client approval and real business data.
 3. Starting prices per service (pricing table is hidden until then).
 4. Whether service × city pages are wanted later (D4).
 5. Real phone, BSIS licence, hours, domain, review rating/count, any additional dispatch hubs.
+
+---
+
+## Status 2026-09-22
+
+Phases 0–12 complete apart from client-supplied values. Verification commands (run against a built copy of the site):
+
+```
+npm test                       # unit checks incl. the no-fake-phone rule
+npx tsc --noEmit -p .          # types
+npm run build                  # production build
+npm run crawl -- http://localhost:3000        # links, orphans, forbidden text
+npm run seo:check -- http://localhost:3000    # writes seo-qa-report.md
+npm run qa:responsive -- http://localhost:3000 # headless Chrome, 5 widths
+```
+
+Staging: `vercel --prod` from the owner's machine, then `SEED_RESET=1 npm run seed` with the Vercel env pulled (DEPLOY-VERCEL.md §4). Production is blocked until the P0 client inputs in tracker.md are entered in Site settings.

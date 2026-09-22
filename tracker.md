@@ -2,9 +2,9 @@
 
 ## Project Status
 
-Overall Status: IN PROGRESS
+Overall Status: READY FOR CLIENT REVIEW (staging deploy pending) — NOT production-ready (P0 client inputs missing)
 Last Updated: 2026-09-22
-Current Phase: Phase 8 — Business data & compliance (Phases 0–7 complete)
+Current Phase: Phase 10 — Client review / staging (Phases 0–9 complete; Phase 7 compliance blocked on client data)
 
 Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-2026-09-22`
 
@@ -22,10 +22,10 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | Phase 5 - Location Pages | DONE | 100% | Hub + 20 cities + 4 districts, client template, SAB schema |
 | Phase 6 - Service Pages | DONE | 100% | 4 categories + 9 services + garage (disclaimer kept); three renderings on one route |
 | Phase 7 - SEO/Internal Linking | DONE | 100% | 49 pages: no 404s, no orphans, all in sitemap; 0 SEO problems (`npm run crawl`, `npm run seo:check`) |
-| Phase 7 - Business/Compliance | BLOCKED | 0% | Needs real phone, BSIS licence, hours, domain, reviews |
-| Phase 8 - Responsive/Conversion | NOT STARTED | 0% | |
-| Phase 9 - QA | NOT STARTED | 0% | |
-| Phase 10 - Client Review | NOT STARTED | 0% | |
+| Phase 7 - Business/Compliance | BLOCKED | 60% | Mechanism done (Site settings + dashboard checklist); values needed from client: phone, BSIS licence, hours, domain, rating/count, hub ZIP |
+| Phase 8 - Responsive/Conversion | DONE | 100% | 45 renders at 360/390/768/1024/1440: no overflow, sticky bar < 860px, menu opens on tap, no console errors (`npm run qa:responsive`) |
+| Phase 9 - QA | DONE | 100% | Content (forbidden-text scan on all 49 pages), technical (tsc, 7 test suites, build, crawl), SEO (`seo-qa-report.md`, 0 problems) |
+| Phase 10 - Client Review | IN PROGRESS | 50% | Code ready; staging deploy needs the owner's Vercel login (`vercel --prod`, then `SEED_RESET=1 npm run seed` against Supabase) |
 | Phase 11 - Production | BLOCKED | 0% | P0 blockers below |
 
 ---
@@ -62,13 +62,13 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 | T053 | Disable combo pages by default; exclude from sitemap | 6 | DONE | P1 | seed, sitemap.ts | D4 |
 | T060 | Metadata from JSON; breadcrumb JSON-LD; sitemap/robots | 7 | DONE | P0 | pages, sitemap.ts | |
 | T061 | Link crawl script (no 404s, no orphans) | 7 | DONE | P1 | scripts/ | |
-| T070 | Admin "Missing before launch" panel | 8 | NOT STARTED | P1 | components/admin/Dashboard.tsx | |
+| T070 | Admin "Missing before launch" panel | 8 | DONE | P1 | components/admin/Dashboard.tsx | |
 | T071 | Enter real phone / licence / hours / domain / rating / count | 8 | NEEDS CLIENT INPUT | P0 | site-settings | |
-| T080 | Responsive + conversion test at 5 widths | 9 | NOT STARTED | P0 | headless Chrome | |
-| T090 | Content/visual QA every page | 10 | NOT STARTED | P0 | — | |
-| T091 | Technical QA (build, tests, routes, console) | 11 | NOT STARTED | P0 | — | |
-| T092 | SEO QA report | 12 | NOT STARTED | P0 | seo-qa-report.md | |
-| T100 | Staging deploy + client review list | 13 | NOT STARTED | P1 | Vercel | |
+| T080 | Responsive + conversion test at 5 widths | 9 | DONE | P0 | headless Chrome | |
+| T090 | Content/visual QA every page | 10 | DONE | P0 | — | |
+| T091 | Technical QA (build, tests, routes, console) | 11 | DONE | P0 | — | |
+| T092 | SEO QA report | 12 | DONE | P0 | seo-qa-report.md | |
+| T100 | Staging deploy + client review list | 13 | IN PROGRESS | P1 | Vercel | |
 | T110 | Production configuration | 14 | BLOCKED | P0 | — | After approval + real data |
 
 ---
@@ -90,6 +90,9 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Known Issues
+
+- KI-11 Local test seeds ran with the real `BLOB_READ_WRITE_TOKEN` from `.env`, so a few test copies of `hero*.png` / `san-jose*.jpg` sit in the Vercel Blob store. Harmless; delete from Vercel → Storage → Blob when convenient. (Test runs now unset the token.)
+- KI-12 All photos are AI placeholders (hero, team). The "24/7 MOBILE SERVICE" decal painted on the van was patched out; real photos should come from the client before launch (P1).
 
 - KI-6 FaqExplorer previously merged a hard-coded FAQ list with unverified claims (arrival time, fees, warranty, payment methods) into every FAQ page — removed; FAQs now come only from the admin. Those questions can be re-added by the client once the answers are confirmed.
 - KI-7 Location/service page templates still contain old "24/7" title fallbacks and the shop-card layout — replaced in Phases 5–6 (T041, T051). Homepage/About/Contact/Book/FAQ are clean.
@@ -118,6 +121,8 @@ Plan: `implementation_plan.md` · Checkpoint: git tag `checkpoint-pre-bayarea-20
 ---
 
 ## Change Log
+
+- 2026-09-22 — Phases 8–9: admin dashboard shows a "Missing before launch" checklist (phone, BSIS licence, hours, rating/count, hub ZIP) and no longer mentions shops/combo pages; `scripts/responsive-check.mjs` (headless Chrome, 5 widths, real tap on the menu, console errors, admin render); sticky bar now shows below 860px like the client prototype; FAQ buttons wrap on narrow phones; Hero shows one button when there is no phone; pricing and reviews pages have honest empty states; the "24/7" decal was painted out of the placeholder images; seed uploads stay local when the Blob token is unset. Verified with a phone/licence/hours entered via the API: every call button becomes a tel: link with the client's CTA wording, licence and hours appear, structured data carries the phone.
 
 - 2026-09-22 — Phase 7: `scripts/crawl.mjs` (broken links, orphans, forbidden text) and `scripts/seo-check.mjs` (unique title/description, single H1, canonical, JSON-LD validity, img alt → `seo-qa-report.md`) added; both clean on the seeded build. Contact page description, `/services` title and hub title/description tightened.
 

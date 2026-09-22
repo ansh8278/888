@@ -69,6 +69,14 @@ set -a; . ./.env.vercel; set +a
 npm run seed
 ```
 
+If the database still holds the old content (California/Arizona/New York
+cities, old services), replace it in one go — this deletes services,
+locations, pages, FAQs, reviews and media, but never users or enquiries:
+
+```
+SEED_RESET=1 npm run seed
+```
+
 Then open `https://<project>.vercel.app/admin` and log in with
 `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`. Delete `.env.vercel` afterwards.
 
