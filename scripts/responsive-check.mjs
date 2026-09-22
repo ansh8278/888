@@ -49,8 +49,14 @@ for (const width of WIDTHS) {
       const bar = document.querySelector('.stickybar'); const barShown = bar && getComputedStyle(bar).display !== 'none'
       const burger = document.querySelector('.burger'); const burgerShown = burger && getComputedStyle(burger).display !== 'none'
       const h1 = document.querySelector('h1')?.textContent?.trim() || ''
+      // Footer must stay a grid of readable columns, and its call button must not
+      // become a tall blob (a pill squeezed into a narrow column).
+      const foot = document.querySelector('.site-footer')
+      const call = document.querySelector('.dispatch-call')
+      const cb = call && call.getBoundingClientRect()
+      const footer = foot ? { tall: cb ? cb.height > 80 : false, narrow: cb ? cb.width < 150 : false, cols: document.querySelectorAll('.footer-nav-col').length } : null
       const smallText = [...document.querySelectorAll('p, li, a, span')].filter(el => el.textContent.trim().length > 20 && parseFloat(getComputedStyle(el).fontSize) < 12 && getComputedStyle(el).display !== 'none').length
-      return { wide, barShown: !!barShown, burgerShown: !!burgerShown, h1, smallText, scrollW: document.documentElement.scrollWidth, w }
+      return { wide, footer, barShown: !!barShown, burgerShown: !!burgerShown, h1, smallText, scrollW: document.documentElement.scrollWidth, w }
     })()`)
     const errors = events.filter((e) => (e.method === 'Runtime.exceptionThrown') || (e.method === 'Log.entryAdded' && e.params.entry.level === 'error' && !/favicon/.test(e.params.entry.text))).map((e) => e.params.exceptionDetails?.text || e.params.entry?.text)
     const tag = `${width}${path.replace(/\//g, '_') || '_home'}`
@@ -60,6 +66,8 @@ for (const width of WIDTHS) {
     if (width >= 800 && r.barShown) findings.push(`${tag}: sticky bar visible on desktop`)
     if (width < 800 && !r.burgerShown) findings.push(`${tag}: menu button not visible on phone`)
     if (!r.h1) findings.push(`${tag}: no h1`)
+    if (r.footer?.tall) findings.push(`${tag}: footer call button is a blob (too tall)`)
+    if (r.footer?.narrow) findings.push(`${tag}: footer call button squeezed (< 150px wide)`)
     if (errors.length) findings.push(`${tag}: console ${errors[0]}`)
     const shot = await send('Page.captureScreenshot', { format: 'jpeg', quality: 60, captureBeyondViewport: false })
     writeFileSync(`${OUT}/${tag}.jpg`, Buffer.from(shot.result.data, 'base64'))

@@ -2,7 +2,8 @@ import type { MetadataRoute } from 'next'
 import { getServices, getLocations, getPages, getComboPairs } from '../../lib/data'
 import { SITE_URL } from '../../lib/schema'
 
-export const dynamic = 'force-dynamic'
+// Regenerated on demand by the same revalidation hook as the pages.
+export const revalidate = 3600
 
 /** Every generated page, including the service-in-city combinations. */
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {

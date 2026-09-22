@@ -82,9 +82,9 @@ export const Header = ({ companyName, tagline, phone, items }: Props) => {
 
           <div className="nav-actions">
             {phone ? (
-              <a href={`tel:${phone.href}`} className="nav-phone-pill">
+              <a href={`tel:${phone.href}`} className="nav-phone-pill" aria-label={`Call ${phone.display}`}>
                 <Icon name="phone" />
-                {phone.display}
+                <span className="nav-phone-num">{phone.display}</span>
               </a>
             ) : null}
             <Link href="/book" className="btn-request-nav">

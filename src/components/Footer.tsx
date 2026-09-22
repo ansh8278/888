@@ -52,18 +52,20 @@ export const Footer = ({ companyName, tagline, phone, email, licenseNumber, serv
           ) : null}
         </div>
 
-        {columns.map((col) => (
-          <div className="footer-nav-col" key={col.heading}>
-            <h4 className="footer-heading">{col.heading}</h4>
-            <ul className="footer-links">
-              {(col.links ?? []).map((link) => (
-                <li key={link.id ?? link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <div className="footer-cols">
+          {columns.map((col) => (
+            <div className="footer-nav-col" key={col.heading}>
+              <h4 className="footer-heading">{col.heading}</h4>
+              <ul className="footer-links">
+                {(col.links ?? []).map((link) => (
+                  <li key={link.id ?? link.href}>
+                    <Link href={link.href}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
 
         <div className="footer-nav-col footer-contact-pane">
           <h4 className="footer-heading">Dispatch</h4>

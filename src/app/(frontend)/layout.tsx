@@ -9,10 +9,16 @@ import { ProgressBar } from '../../components/ProgressBar'
 import { phoneOf } from '../../lib/contact'
 import '../../styles/site.css'
 
-// Dynamic rendering and 0-second revalidation ensure all edits in Payload CMS
-// reflect instantly on the live site.
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+/**
+ * Pages are cached and served from the CDN rather than re-queried on every
+ * visit — the difference between ~2s and ~0.1s to first byte.
+ *
+ * Edits still appear immediately: every collection and global runs
+ * `revalidateSite` on save (see payload.config.ts), which purges this layout
+ * and everything under it. The hourly window is only a safety net for changes
+ * made outside the admin (e.g. straight into the database).
+ */
+export const revalidate = 3600
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 const sora = Sora({ subsets: ['latin'], weight: ['600', '700', '800'], variable: '--font-sora', display: 'swap' })

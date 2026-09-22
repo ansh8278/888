@@ -1,6 +1,6 @@
 # SEO QA report
 
-Generated 2026-09-22T11:05:38.525Z against https://888-eosin.vercel.app. 49 URLs from the sitemap.
+Generated 2026-09-22T12:39:09.022Z against http://localhost:3460. 49 URLs from the sitemap.
 
 ## Problems
 
