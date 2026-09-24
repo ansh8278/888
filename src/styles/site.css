@@ -2570,7 +2570,11 @@ html, body { max-width: 100%; overflow-x: hidden; }
 @media (max-width: 1100px) {
   .nav-inner > nav.desk { display: none; }
   .burger { display: block; }
-  .nav-inner { gap: 12px; justify-content: space-between; }
+  /* With the centre nav gone the grid has two items, so the track list has to
+     shrink too — otherwise the buttons sit in the middle column and leave a
+     gap on the right. */
+  .nav-inner { grid-template-columns: auto 1fr; gap: 12px; }
+  .nav-actions { justify-self: end; }
 }
 @media (max-width: 620px) {
   .btn-request-nav { display: none; }
