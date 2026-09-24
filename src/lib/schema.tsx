@@ -102,14 +102,9 @@ export const serviceSchema = (settings: SiteSetting, service: Service, city?: st
     address: hubAddress(settings),
   },
   areaServed: city ? { '@type': 'City', name: city } : { '@type': 'Place', name: 'San Jose & the San Francisco Bay Area' },
-  // Only when the client has confirmed a starting price.
-  offers: service.startingPrice
-    ? {
-        '@type': 'Offer',
-        price: service.startingPrice.replace(/[^\d.]/g, '') || undefined,
-        priceCurrency: 'USD',
-      }
-    : undefined,
+  // Deliberately no Offer/price: prices on the site are indicative starting
+  // points, and a number sent here can be shown as a firm price in Google
+  // results. Add it back only once the business publishes fixed prices.
 })
 
 export const faqSchema = (faqs: Faq[]) =>

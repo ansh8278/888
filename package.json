@@ -22,7 +22,8 @@
     "crawl": "node scripts/crawl.mjs",
     "seo:check": "node scripts/seo-check.mjs",
     "qa:responsive": "node scripts/responsive-check.mjs",
-    "copy:defaults": "payload run src/scripts/fill-copy-defaults.ts"
+    "copy:defaults": "payload run src/scripts/fill-copy-defaults.ts",
+    "prices:example": "payload run src/scripts/placeholder-prices.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

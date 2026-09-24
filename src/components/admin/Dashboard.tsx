@@ -112,6 +112,18 @@ export const Dashboard = async () => {
       [(st.dispatchHubs ?? []).some((h) => h.postcode), 'ZIP code of the Santa Clara dispatch hub', 'Completes the business address for Google.'],
     ]
     missing = checks.filter(([v]) => !v).map(([, label, why]) => ({ label, why }))
+
+    // Example prices are a stand-in for the layout; they must not go live.
+    const examples = await payload.count({
+      collection: 'services',
+      where: { priceNote: { contains: 'Example price' } },
+    })
+    if (examples.totalDocs > 0) {
+      missing.unshift({
+        label: `Real prices for ${examples.totalDocs} services`,
+        why: 'The pricing table currently shows EXAMPLE prices. Replace them under Services, or clear them, before the site goes live.',
+      })
+    }
   } catch {
     missing = []
   }

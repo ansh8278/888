@@ -45,7 +45,10 @@ for (const width of WIDTHS) {
     await wait(600)
     const r = await evalJs(`(() => {
       const w = document.documentElement.clientWidth
-      const wide = [...document.querySelectorAll('body *')].filter(el => { const b = el.getBoundingClientRect(); return b.width > 0 && b.right > w + 1 }).map(el => el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '')).slice(0, 5)
+      // A wide table or marquee inside its own scrolling box is fine — only
+      // report elements that actually push the page sideways.
+      const clipped = (el) => { for (let p = el.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === 'auto' || o === 'scroll' || o === 'hidden') return true } return false }
+      const wide = [...document.querySelectorAll('body *')].filter(el => { const b = el.getBoundingClientRect(); return b.width > 0 && b.right > w + 1 && !clipped(el) }).map(el => el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '')).slice(0, 5)
       const bar = document.querySelector('.stickybar'); const barShown = bar && getComputedStyle(bar).display !== 'none'
       const burger = document.querySelector('.burger'); const burgerShown = burger && getComputedStyle(burger).display !== 'none'
       const h1 = document.querySelector('h1')?.textContent?.trim() || ''
@@ -62,6 +65,7 @@ for (const width of WIDTHS) {
     const tag = `${width}${path.replace(/\//g, '_') || '_home'}`
     if (!r) { findings.push(`${tag}: page did not render`); continue }
     if (r.wide.length) findings.push(`${tag}: overflow ${r.wide.join(', ')}`)
+    if (r.scrollW > r.w + 1) findings.push(`${tag}: page scrolls sideways (${r.scrollW}px in a ${r.w}px window)`)
     if (width < 800 && !r.barShown) findings.push(`${tag}: sticky bar not visible on phone`)
     if (width >= 800 && r.barShown) findings.push(`${tag}: sticky bar visible on desktop`)
     if (width < 800 && !r.burgerShown) findings.push(`${tag}: menu button not visible on phone`)
