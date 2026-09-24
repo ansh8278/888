@@ -18,7 +18,7 @@ import { randomBytes } from 'crypto'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import config from '@payload-config'
 
-import { FAQS, CITY_CARDS, CATEGORY_CARDS, SERVICE_ICONS } from './data'
+import { FAQS, CITY_CARDS, CATEGORY_CARDS, SERVICE_ICONS, SERVICE_FAQ_MATCH } from './data'
 import { doc, para, heading } from '../lib/rich-text'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -111,10 +111,17 @@ const seed = async () => {
 
   // ---------- faqs ----------
   const faqIds: number[] = []
+  const faqIdByQuestion: { id: number; question: string }[] = []
   for (const [i, faq] of FAQS.entries()) {
     const created = await payload.create({ collection: 'faqs', data: { ...faq, order: i + 1 } })
     faqIds.push(created.id as number)
+    faqIdByQuestion.push({ id: created.id as number, question: faq.question })
   }
+  /** FAQs whose question mentions one of the service's key phrases. */
+  const faqsFor = (slug: string): number[] =>
+    (SERVICE_FAQ_MATCH[slug] ?? [])
+      .map((needle) => faqIdByQuestion.find((f) => f.question.toLowerCase().includes(needle.toLowerCase()))?.id)
+      .filter((id): id is number => Boolean(id))
 
   // ---------- services ----------
   // Two passes: create every service first, then wire up category/related
@@ -136,7 +143,7 @@ const seed = async () => {
         featured: true,
         showInPricingTable: false,
         cityCard: CITY_CARDS[slug],
-        faqs: faqIds.slice(1, 3),
+        faqs: faqsFor(slug),
         ...data,
       },
     })

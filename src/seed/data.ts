@@ -99,6 +99,28 @@ export const CATEGORY_CARDS: Record<string, string> = {
   'emergency-locksmith': 'Urgent lockouts, lost or broken keys, lock changes after lost/stolen keys.',
 }
 
+/**
+ * Which FAQs belong on which service page. Assigning them arbitrarily put
+ * "can you unlock my car without damaging it?" on the lock rekey page.
+ * Keyed by service slug; values are matched against the question text.
+ */
+export const SERVICE_FAQ_MATCH: Record<string, string[]> = {
+  'automotive-locksmith': ['unlock my car', 'come to me'],
+  'residential-locksmith': ['rekey a lock', 'ID do you need'],
+  'commercial-locksmith': ['price before you start', 'licensed and insured'],
+  'emergency-locksmith': ['come to me', 'ID do you need'],
+  'garage-locksmith': ['rekey a lock', 'price before you start'],
+  'car-lockout': ['unlock my car', 'ID do you need'],
+  'car-key-replacement': ['unlock my car', 'come to me'],
+  'key-fob-programming': ['come to me', 'price before you start'],
+  'transponder-key-programming': ['come to me', 'price before you start'],
+  'ignition-repair': ['come to me', 'price before you start'],
+  'house-lockout': ['ID do you need', 'come to me'],
+  'rekey-locks': ['rekey a lock', 'price before you start'],
+  'lock-change': ['rekey a lock', 'price before you start'],
+  'smart-lock-installation': ['come to me', 'price before you start'],
+}
+
 export const SERVICE_ICONS: Record<string, string> = {
   'automotive-locksmith': 'car',
   'residential-locksmith': 'home',

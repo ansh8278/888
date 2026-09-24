@@ -6,7 +6,7 @@ import { FaqList } from '../../../../components/FaqList'
 import { Prose, CtaBanner, SectionHead } from '../../../../components/blocks'
 import { HeroActions } from '../../../../components/CallButton'
 import { Icon } from '../../../../components/Icon'
-import { ServiceCardGrid, AreasWeServe, LinkPills, asDocs } from '../../../../components/ServiceBlocks'
+import { ServiceCardGrid, AreasWeServe, asDocs } from '../../../../components/ServiceBlocks'
 import { getService, getServices, getLocations, getSiteSettings, getPageCopy } from '../../../../lib/data'
 import { phoneOf } from '../../../../lib/contact'
 import { JsonLd, serviceSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
@@ -55,6 +55,15 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
   const category = categoryOf(service)
   const subservices = service.kind === 'category' ? allServices.filter((s) => categoryOf(s)?.id === service.id) : []
   const related = asDocs<Service>(service.related)
+  // Sibling services under the same category — real links that give an
+  // individual service page somewhere to go besides the call button.
+  // …minus anything already shown under "You may also need", so the two
+  // sections never repeat the same cards.
+  const siblings = category
+    ? allServices.filter(
+        (x) => categoryOf(x)?.id === category.id && x.id !== service.id && !related.some((r) => r.id === x.id),
+      )
+    : []
   const faqs = asDocs<Faq>(service.faqs)
 
   const crumbs = [
@@ -122,13 +131,6 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
         </section>
       ) : null}
 
-      <CtaBanner
-        phone={phone}
-        heading={`Need ${shortName} right now?`}
-        subtitle={copy.serviceCtaSubtitle}
-        label={service.ctaLabel}
-      />
-
       <section className="sec">
         <div className="wrap">
           <SectionHead
@@ -148,17 +150,33 @@ const ServicePage = async (props: { params: Promise<{ slug: string }> }) => {
         </section>
       ) : null}
 
-      {related.length > 0 ? (
+      {siblings.length > 0 ? (
         <section className="sec">
+          <div className="wrap">
+            <SectionHead eyebrow={category!.title} heading={`More ${category!.title.replace(/ Services?$/i, '').toLowerCase()} services`} />
+            <ServiceCardGrid services={siblings} />
+          </div>
+        </section>
+      ) : null}
+
+      {related.length > 0 ? (
+        <section className="sec sec-sand">
           <div className="wrap">
             <SectionHead
               eyebrow={copy.serviceRelatedEyebrow ?? 'Related Services'}
               heading={copy.serviceRelatedHeading ?? 'You May Also Need'}
             />
-            <LinkPills items={related.map((r) => ({ href: `/services/${r.slug}`, label: r.title }))} />
+            <ServiceCardGrid services={related} />
           </div>
         </section>
       ) : null}
+
+      <CtaBanner
+        phone={phone}
+        heading={`Need ${shortName} right now?`}
+        subtitle={copy.serviceCtaSubtitle}
+        label={service.ctaLabel}
+      />
     </>
   )
 }

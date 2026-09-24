@@ -1588,7 +1588,9 @@ body.menu-open .mobilenav { display: flex; }
 /* Page hero (every page except home) --------------------------- */
 .page-hero {
   position: relative;
-  padding: clamp(30px, 4vw, 56px) 0 clamp(26px, 3.4vw, 44px);
+  /* Enough height that the heading, intro and buttons do not crowd the
+     photo behind them. */
+  padding: clamp(34px, 4.4vw, 62px) 0 clamp(32px, 4vw, 54px);
   background: var(--bg-sand);
   border-bottom: 1px solid var(--line-sand);
   overflow: hidden;
@@ -1600,7 +1602,7 @@ body.menu-open .mobilenav { display: flex; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(15,23,42,.93) 0%, rgba(15,23,42,.8) 45%, rgba(15,23,42,.45) 75%, rgba(15,23,42,.3) 100%);
+  background: linear-gradient(100deg, rgba(15,23,42,.95) 0%, rgba(15,23,42,.9) 42%, rgba(15,23,42,.6) 68%, rgba(15,23,42,.32) 100%);
 }
 .page-hero-inner { position: relative; z-index: 2; }
 .page-hero h1 {
@@ -1622,7 +1624,22 @@ body.menu-open .mobilenav { display: flex; }
   font-size: clamp(0.98rem, 1.2vw, 1.1rem);
   line-height: 1.6;
   color: var(--muted);
-  max-width: 62ch;
+  /* Narrower over a photo so the text never runs across the subject. */
+  max-width: 54ch;
+}
+.page-hero.has-image .page-hero-intro { max-width: 46ch; }
+/* Over a photo the translucent white pill looked like a hole in the image;
+   on dark heroes it becomes a proper outlined button. */
+.page-hero.has-image .btn-hero-secondary {
+  background: rgba(15, 23, 42, 0.45);
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #fff;
+  backdrop-filter: blur(2px);
+}
+.page-hero.has-image .btn-hero-secondary:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #0f172a;
 }
 
 /* Breadcrumbs -------------------------------------------------- */
@@ -1753,13 +1770,17 @@ body.menu-open .mobilenav { display: flex; }
 /* Link grids (services in city, cities, etc.) ------------------ */
 .city-link-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* auto-fit, not auto-fill: five cards then fill the row instead of leaving
+     an orphan and a gap on wide screens. */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 12px;
+  align-items: stretch;
 }
 .city-link {
   display: flex;
   align-items: center;
   gap: 14px;
+  height: 100%;
   padding: 16px 18px;
   border-radius: var(--radius-sm);
   background: #fff;
