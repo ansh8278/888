@@ -118,6 +118,13 @@ export const Dashboard = async () => {
       collection: 'services',
       where: { priceNote: { contains: 'Example price' } },
     })
+    const exampleReviews = await payload.count({ collection: 'reviews', where: { source: { equals: 'example' } } })
+    if (exampleReviews.totalDocs > 0) {
+      missing.unshift({
+        label: `Real reviews (${exampleReviews.totalDocs} examples showing)`,
+        why: 'The site is showing EXAMPLE reviews, clearly labelled as such. Replace them with verified customer reviews, or delete them, before launch.',
+      })
+    }
     if (examples.totalDocs > 0) {
       missing.unshift({
         label: `Real prices for ${examples.totalDocs} services`,

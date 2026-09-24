@@ -3289,3 +3289,18 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .empty-state { max-width: 640px; padding: 28px 30px; border-radius: var(--radius); background: var(--bg-sand); border: 1px solid var(--line-sand); }
 .empty-state h2 { margin: 0 0 8px; font-size: 1.3rem; }
 .empty-state p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+/* Example (placeholder) review — must be unmistakable at a glance. */
+.rev-card-example { border-color: rgba(234, 88, 12, 0.45); background: #fff7ed; }
+.rev-example-badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(234, 88, 12, 0.14);
+  color: #9a3412;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

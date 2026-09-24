@@ -120,8 +120,11 @@ export const faqSchema = (faqs: Faq[]) =>
         })),
       }
 
-export const reviewSchema = (settings: SiteSetting, reviews: Review[]) =>
-  reviews.length === 0
+export const reviewSchema = (settings: SiteSetting, allReviews: Review[]) => {
+  // Placeholder reviews are for layout only: they are never described to
+  // Google, which would show them as real customer feedback.
+  const reviews = allReviews.filter((r) => r.source !== 'example')
+  return reviews.length === 0
     ? null
     : {
         '@context': 'https://schema.org',
@@ -135,6 +138,7 @@ export const reviewSchema = (settings: SiteSetting, reviews: Review[]) =>
           reviewBody: r.quote,
         })),
       }
+}
 
 export const breadcrumbSchema = (crumbs: { label: string; href: string }[]) => ({
   '@context': 'https://schema.org',

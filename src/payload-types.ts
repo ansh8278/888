@@ -501,7 +501,7 @@ export interface Review {
    * Stars, 1 to 5.
    */
   rating: number;
-  source?: ('google' | 'yelp' | 'direct') | null;
+  source?: ('google' | 'yelp' | 'direct' | 'example') | null;
   /**
    * Optional. Shows this review on that city page.
    */

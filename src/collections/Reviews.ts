@@ -42,6 +42,7 @@ export const Reviews: CollectionConfig = {
             { label: 'Google', value: 'google' },
             { label: 'Yelp', value: 'yelp' },
             { label: 'Direct', value: 'direct' },
+            { label: 'EXAMPLE — not a real review', value: 'example' },
           ],
         },
       ],

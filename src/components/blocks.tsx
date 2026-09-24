@@ -118,8 +118,10 @@ export const LocationCard = ({ location }: { location: Location }) => {
 }
 
 export const ReviewCard = ({ review }: { review: Review }) => (
-  <article className="rev-card-standard">
+  <article className={`rev-card-standard${review.source === 'example' ? ' rev-card-example' : ''}`}>
     <div>
+      {/* A placeholder review must never be mistaken for a customer's words. */}
+      {review.source === 'example' ? <span className="rev-example-badge">Example — not a real review</span> : null}
       <div className="rev-stars-row" aria-label={`${review.rating} out of 5 stars`}>
         {'★'.repeat(review.rating ?? 5)}
       </div>
