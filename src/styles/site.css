@@ -612,18 +612,22 @@ body.menu-open .mobilenav { display: flex; }
 
 .hero-card {
   background: #ffffff;
-  border-radius: 22px;
+  border-radius: 18px;
   box-shadow: 0 18px 44px -12px rgba(15, 23, 42, 0.22);
-  padding: clamp(18px, 1.9vw, 26px) clamp(24px, 2.4vw, 34px);
+  padding: clamp(14px, 1.3vw, 18px) clamp(18px, 1.7vw, 24px);
 }
 .hero-cat-list {
   display: grid;
-  gap: clamp(11px, 1.2vw, 16px);
+  gap: clamp(6px, 0.7vw, 9px);
+  /* A <ul> keeps the browser's 1em margin, which showed up as ~15px of dead
+     space above and below the list inside the card. */
+  margin: 0;
+  padding: 0;
 }
 .hero-cat-list li {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 11px;
   list-style: none;
   font-family: var(--font-sora), sans-serif;
   font-weight: 700;
@@ -631,8 +635,8 @@ body.menu-open .mobilenav { display: flex; }
   color: #0f172a;
 }
 .hero-cat-list svg {
-  width: 24px;
-  height: 24px;
+  width: 21px;
+  height: 21px;
   color: #0f172a;
   flex-shrink: 0;
 }
@@ -3027,6 +3031,9 @@ html, body { max-width: 100%; overflow-x: hidden; }
   display: flex;
   flex-direction: column;
   gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .faq-clean-item {
   background: #ffffff;
