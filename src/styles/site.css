@@ -3282,11 +3282,14 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .check-grid li svg { width: 18px; height: 18px; color: var(--green); flex-shrink: 0; margin-top: 3px; }
 @media (max-width: 640px) { .check-grid { grid-template-columns: 1fr; } }
 
-/* Sticky Call / Request bar: phones and tablets, as in the client prototype (< 860px). */
+/* Sticky Call / Request bar: phones and tablets, as in the client prototype (< 860px).
+   It slides away while a real call button is on screen — see StickyCall.tsx. */
 @media (max-width: 859px) {
   body { padding-bottom: 64px; }
   .stickybar { display: flex; }
 }
+.stickybar { transition: transform 0.25s var(--ease), opacity 0.2s ease; }
+.stickybar--hidden { transform: translateY(105%); opacity: 0; pointer-events: none; }
 /* FAQ footer buttons wrap on narrow phones instead of overflowing. */
 .faq-bottom-bar, .faq-bottom-links { flex-wrap: wrap; }
 @media (max-width: 480px) {
@@ -3364,3 +3367,5 @@ a.contact-way:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px
 .contact-way-body em { font-style: normal; font-weight: 800; font-size: 1.02rem; overflow-wrap: anywhere; }
 .contact-way-body em:has(+ small) { line-height: 1.35; }
 .contact-way-body small { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.price-card-phone { color: inherit; text-decoration: none; }
+.price-card-phone:hover { color: var(--orange); }

@@ -123,7 +123,8 @@ const ContactPage = async () => {
           </div>
 
           <aside className="form-aside">
-            <ContactCard settings={settings} phone={phone} />
+            {/* The call button lives in the "Call dispatch" card above. */}
+            <ContactCard settings={settings} phone={phone} showCallButton={false} />
           </aside>
         </div>
       </section>

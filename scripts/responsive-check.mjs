@@ -49,7 +49,9 @@ for (const width of WIDTHS) {
       // report elements that actually push the page sideways.
       const clipped = (el) => { for (let p = el.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === 'auto' || o === 'scroll' || o === 'hidden') return true } return false }
       const wide = [...document.querySelectorAll('body *')].filter(el => { const b = el.getBoundingClientRect(); return b.width > 0 && b.right > w + 1 && !clipped(el) }).map(el => el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '')).slice(0, 5)
-      const bar = document.querySelector('.stickybar'); const barShown = bar && getComputedStyle(bar).display !== 'none'
+      const bar = document.querySelector('.stickybar')
+      const barShown = bar && getComputedStyle(bar).display !== 'none' && !bar.className.includes('--hidden')
+      const callOnScreen = [...document.querySelectorAll('[data-call-cta]')].some((el) => { const b = el.getBoundingClientRect(); return b.top < window.innerHeight * 0.9 && b.bottom > window.innerHeight * 0.1 })
       const burger = document.querySelector('.burger'); const burgerShown = burger && getComputedStyle(burger).display !== 'none'
       const h1 = document.querySelector('h1')?.textContent?.trim() || ''
       // Footer must stay a grid of readable columns, and its call button must not
@@ -59,14 +61,17 @@ for (const width of WIDTHS) {
       const cb = call && call.getBoundingClientRect()
       const footer = foot ? { tall: cb ? cb.height > 80 : false, narrow: cb ? cb.width < 150 : false, cols: document.querySelectorAll('.footer-nav-col').length } : null
       const smallText = [...document.querySelectorAll('p, li, a, span')].filter(el => el.textContent.trim().length > 20 && parseFloat(getComputedStyle(el).fontSize) < 12 && getComputedStyle(el).display !== 'none').length
-      return { wide, footer, barShown: !!barShown, burgerShown: !!burgerShown, h1, smallText, scrollW: document.documentElement.scrollWidth, w }
+      return { wide, footer, callOnScreen, barShown: !!barShown, burgerShown: !!burgerShown, h1, smallText, scrollW: document.documentElement.scrollWidth, w }
     })()`)
     const errors = events.filter((e) => (e.method === 'Runtime.exceptionThrown') || (e.method === 'Log.entryAdded' && e.params.entry.level === 'error' && !/favicon/.test(e.params.entry.text))).map((e) => e.params.exceptionDetails?.text || e.params.entry?.text)
     const tag = `${width}${path.replace(/\//g, '_') || '_home'}`
     if (!r) { findings.push(`${tag}: page did not render`); continue }
     if (r.wide.length) findings.push(`${tag}: overflow ${r.wide.join(', ')}`)
     if (r.scrollW > r.w + 1) findings.push(`${tag}: page scrolls sideways (${r.scrollW}px in a ${r.w}px window)`)
-    if (width < 800 && !r.barShown) findings.push(`${tag}: sticky bar not visible on phone`)
+    // The bar steps aside while a call button is on screen, so at the top of a
+    // page it is expected to be hidden — only its absence *with no* call
+    // button in view is a fault.
+    if (width < 800 && !r.barShown && !r.callOnScreen) findings.push(`${tag}: sticky bar not visible on phone`)
     if (width >= 800 && r.barShown) findings.push(`${tag}: sticky bar visible on desktop`)
     if (width < 800 && !r.burgerShown) findings.push(`${tag}: menu button not visible on phone`)
     if (!r.h1) findings.push(`${tag}: no h1`)

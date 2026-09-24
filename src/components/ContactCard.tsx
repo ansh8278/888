@@ -7,12 +7,35 @@ import type { SiteSetting } from '../payload-types'
  * Shows only what Site settings actually contains — no hours, licence or
  * arrival claim appears until the client has supplied it.
  */
-export const ContactCard = ({ settings, phone, title, note }: { settings: SiteSetting; phone: Phone | null; title?: string | null; note?: string | null }) => (
+/**
+ * `showCallButton` is off where the page already puts a call button within a
+ * screen of this card — two identical buttons that close together read as a
+ * mistake. The number itself is still shown and still tappable.
+ */
+export const ContactCard = ({
+  settings,
+  phone,
+  title,
+  note,
+  showCallButton = true,
+}: {
+  settings: SiteSetting
+  phone: Phone | null
+  title?: string | null
+  note?: string | null
+  showCallButton?: boolean
+}) => (
   <div className="price-card">
     <div className="price-card-label">{title ?? 'Dispatch'}</div>
-    {phone ? <div className="price-card-value small">{phone.display}</div> : null}
+    {phone ? (
+      <a className="price-card-value small price-card-phone" href={`tel:${phone.href}`}>
+        {phone.display}
+      </a>
+    ) : null}
     {note ? <p className="price-card-note">{note}</p> : null}
-    <CallButton phone={phone} className="btn-hero-primary price-card-cta" label="Call now" hideNumber primary />
+    {showCallButton ? (
+      <CallButton phone={phone} className="btn-hero-primary price-card-cta" label="Call now" hideNumber primary />
+    ) : null}
     {settings.email ? (
       <a href={`mailto:${settings.email}`} className="btn-hero-secondary price-card-cta">
         {settings.email}

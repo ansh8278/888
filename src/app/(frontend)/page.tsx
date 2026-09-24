@@ -5,7 +5,6 @@ import { Hero } from '../../components/Hero'
 import { FaqList } from '../../components/FaqList'
 import { RegionGrid } from '../../components/RegionGrid'
 import { SectionHead, ServiceCard, ReviewMarquee, CallCard, PricingTable, CtaBanner } from '../../components/blocks'
-import { CallButton } from '../../components/CallButton'
 import { Icon, type IconName } from '../../components/Icon'
 import { getHomePage, getSiteSettings, getServices, getLocations, getReviews, getHomeFaqs, getPageCopy } from '../../lib/data'
 import { phoneOf } from '../../lib/contact'
@@ -111,7 +110,6 @@ const HomePage = async () => {
                 <Link href="/about" className="btn btn-primary">
                   {home.aboutCtaLabel ?? 'More about us'} <Icon name="arrow" />
                 </Link>
-                <CallButton phone={phone} className="btn btn-secondary" />
               </div>
             </div>
 
@@ -176,10 +174,9 @@ const HomePage = async () => {
               <div className="faq-bottom-bar">
                 <span>{home.faqBarText ?? 'Have more questions?'}</span>
                 <div className="faq-bottom-links">
-                  <Link href="/faq" className="btn btn-secondary btn-sm">
+                  <Link href="/faq" className="btn btn-primary btn-sm">
                     View All FAQs <Icon name="arrow" />
                   </Link>
-                  <CallButton phone={phone} className="btn btn-primary btn-sm" />
                 </div>
               </div>
             </div>
