@@ -19,6 +19,7 @@ export type IconName =
   | 'chevron'
   | 'search'
   | 'info'
+  | 'mail'
 
 const stroke = {
   fill: 'none',
@@ -132,6 +133,12 @@ const paths: Record<IconName, ReactElement> = {
     <g {...stroke} strokeWidth={2}>
       <circle cx="11" cy="11" r="7" />
       <path d="M21 21l-4.35-4.35" />
+    </g>
+  ),
+  mail: (
+    <g {...stroke} strokeWidth={2}>
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="m3.5 7.5 7.3 5.2a2 2 0 0 0 2.4 0l7.3-5.2" />
     </g>
   ),
   info: (

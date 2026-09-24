@@ -71,8 +71,15 @@ export const SectionHead = ({
   </div>
 )
 
-export const ServiceCard = ({ service }: { service: Service }) => (
-  <Link href={`/services/${service.slug}`} className="svc-card-item">
+export const ServiceCard = ({ service }: { service: Service }) => {
+  const photo = mediaUrl(service.heroImage)
+  return (
+  <Link href={`/services/${service.slug}`} className={`svc-card-item${photo ? ' svc-card-photo' : ''}`}>
+    {photo ? (
+      <div className="svc-card-media">
+        <Image src={photo} alt={mediaAlt(service.heroImage, service.title)} width={480} height={260} sizes="(max-width: 1000px) 50vw, 25vw" />
+      </div>
+    ) : null}
     <div>
       <div className="svc-ico-box">
         <Icon name={(service.icon ?? 'lock') as IconName} />
@@ -86,7 +93,8 @@ export const ServiceCard = ({ service }: { service: Service }) => (
       {service.startingPrice || 'Learn more'} <span aria-hidden="true">&rarr;</span>
     </span>
   </Link>
-)
+  )
+}
 
 export const LocationCard = ({ location }: { location: Location }) => {
   const url = mediaUrl(location.image)

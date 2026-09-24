@@ -343,7 +343,7 @@ const seed = async () => {
       eyebrow: 'Mobile Locksmith',
       headingLine1: 'Serving All of San Jose',
       headingLine2: '& the Entire Bay Area',
-      lede: 'Automotive, residential, commercial and emergency locksmith services — dispatched to you across South Bay, the Peninsula, the East Bay and the Tri-Valley.',
+      lede: 'Automotive, residential, commercial and emergency locksmith services, dispatched to you across South Bay, the Peninsula, the East Bay and the Tri-Valley.',
       heroImage: heroImageId,
       primaryCtaLabel: 'Call Now',
       secondaryCtaLabel: 'Request Service',

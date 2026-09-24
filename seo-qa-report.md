@@ -1,6 +1,6 @@
 # SEO QA report
 
-Generated 2026-09-24T11:29:20.023Z against http://localhost:3460. 49 URLs from the sitemap.
+Generated 2026-09-24T11:43:34.233Z against http://localhost:3460. 49 URLs from the sitemap.
 
 ## Problems
 
@@ -34,7 +34,7 @@ Length warnings only (Google may truncate). Titles/descriptions over the limit a
 | /pricing | Starting prices, published up front. \| 888 Lock & Key | Starting prices, published up front. | BreadcrumbList, FAQPage |  |
 | /reviews | What our customers say \| 888 Lock & Key | What our customers say | BreadcrumbList |  |
 | /faq | Frequently Asked Questions \| 888 Lock & Key | Frequently Asked Questions | BreadcrumbList, FAQPage |  |
-| /contact | Contact us \| 888 Lock & Key | Contact us | BreadcrumbList |  |
+| /contact | Contact us \| 888 Lock & Key | Contact us | BreadcrumbList, Locksmith |  |
 | /book | Request service or a free quote \| 888 Lock & Key | Request service or a free quote | BreadcrumbList |  |
 | /services/automotive-locksmith | Automotive Locksmith Services \| Car Lockout, Key Replacement & More \| 888 Lock & Key | Automotive Locksmith Services | Service, FAQPage, BreadcrumbList | warn: title 84 chars |
 | /services/residential-locksmith | Residential Locksmith Services \| House Lockout, Rekey, Lock Change \| 888 Lock & Key | Residential Locksmith Services | Service, FAQPage, BreadcrumbList | warn: title 83 chars |

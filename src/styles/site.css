@@ -3304,3 +3304,56 @@ html, body { max-width: 100%; overflow-x: hidden; }
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+/* Service card with a photo (home page + services index) */
+.svc-card-photo { padding: 0; overflow: hidden; }
+.svc-card-photo > div:not(.svc-card-media) { padding: 16px 16px 0; }
+.svc-card-photo .svc-action { padding: 0 16px 16px; }
+.svc-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-sand);
+  overflow: hidden;
+}
+.svc-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s var(--ease); }
+.svc-card-photo:hover .svc-card-media img { transform: scale(1.04); }
+.svc-card-photo .svc-ico-box { margin-top: -34px; position: relative; box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.35); background: #fff; }
+
+/* Contact page — the ways to reach dispatch */
+.contact-ways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.contact-way {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  text-decoration: none;
+  color: var(--txt);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+a.contact-way:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px rgba(15, 23, 42, 0.18); border-color: var(--orange-border); }
+.contact-way--primary { background: var(--orange-light); border-color: var(--orange-border); }
+.contact-way--static { cursor: default; }
+.contact-way-icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--orange-radial);
+  color: #fff;
+}
+.contact-way-icon svg { width: 19px; height: 19px; }
+.contact-way--static .contact-way-icon { background: var(--dark-card); }
+.contact-way-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.contact-way-body strong { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-2); }
+.contact-way-body em { font-style: normal; font-weight: 800; font-size: 1.02rem; overflow-wrap: anywhere; }
+.contact-way-body em:has(+ small) { line-height: 1.35; }
+.contact-way-body small { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }

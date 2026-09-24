@@ -25,7 +25,8 @@
     "copy:defaults": "payload run src/scripts/fill-copy-defaults.ts",
     "prices:example": "payload run src/scripts/placeholder-prices.ts",
     "faqs:relink": "payload run src/scripts/relink-service-faqs.ts",
-    "reviews:example": "payload run src/scripts/example-reviews.ts"
+    "reviews:example": "payload run src/scripts/example-reviews.ts",
+    "images:services": "payload run src/scripts/service-images.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",
