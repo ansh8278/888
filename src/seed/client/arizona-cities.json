@@ -1,0 +1,142 @@
+{
+  "_readme": "Arizona (Phoenix metro) cities confirmed by the client on 2026-09-30. Neighborhood lists were not supplied — the section stays empty until they are, rather than inventing local areas. Same shape as city-pages-content.json.",
+  "cities": [
+    {
+      "slug": "phoenix-locksmith",
+      "city": "Phoenix",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Phoenix, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Phoenix, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Phoenix, AZ",
+      "intro": "Phoenix is the hub of our Arizona coverage — our mobile technicians are dispatched across the city for car lockouts, house lockouts, rekeys and commercial work, so you are not waiting for a tow truck or a dealership appointment.",
+      "neighborhoods": [],
+      "nearby": [
+        "scottsdale-locksmith",
+        "glendale-locksmith",
+        "tempe-locksmith",
+        "peoria-locksmith"
+      ]
+    },
+    {
+      "slug": "scottsdale-locksmith",
+      "city": "Scottsdale",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Scottsdale, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Scottsdale, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Scottsdale, AZ",
+      "intro": "From a car lockout at a shopping centre to a rekey after a tenant moves out, our mobile locksmiths come to you anywhere in Scottsdale — automotive, residential and commercial work handled on site.",
+      "neighborhoods": [],
+      "nearby": [
+        "phoenix-locksmith",
+        "tempe-locksmith",
+        "mesa-locksmith"
+      ]
+    },
+    {
+      "slug": "tempe-locksmith",
+      "city": "Tempe",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Tempe, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Tempe, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Tempe, AZ",
+      "intro": "Locked out of your car or apartment in Tempe? Our mobile technicians are dispatched across the city and carry the tools to open, rekey or replace most locks on the first visit.",
+      "neighborhoods": [],
+      "nearby": [
+        "phoenix-locksmith",
+        "mesa-locksmith",
+        "chandler-locksmith",
+        "scottsdale-locksmith"
+      ]
+    },
+    {
+      "slug": "mesa-locksmith",
+      "city": "Mesa",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Mesa, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Mesa, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Mesa, AZ",
+      "intro": "Mesa is covered by the same mobile service as the rest of the Phoenix metro — car keys cut and programmed on site, homes rekeyed, and commercial hardware serviced without a trip to a shop.",
+      "neighborhoods": [],
+      "nearby": [
+        "tempe-locksmith",
+        "gilbert-locksmith",
+        "chandler-locksmith",
+        "scottsdale-locksmith"
+      ]
+    },
+    {
+      "slug": "chandler-locksmith",
+      "city": "Chandler",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Chandler, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Chandler, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Chandler, AZ",
+      "intro": "Our mobile locksmiths serve Chandler for lockouts, lost car keys, rekeys and lock changes, arriving with the equipment to finish most jobs on the spot.",
+      "neighborhoods": [],
+      "nearby": [
+        "gilbert-locksmith",
+        "tempe-locksmith",
+        "mesa-locksmith"
+      ]
+    },
+    {
+      "slug": "gilbert-locksmith",
+      "city": "Gilbert",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Gilbert, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Gilbert, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Gilbert, AZ",
+      "intro": "Whether you have locked the keys in the car or need the locks changed after moving in, our technicians cover Gilbert with a fully equipped mobile service.",
+      "neighborhoods": [],
+      "nearby": [
+        "chandler-locksmith",
+        "mesa-locksmith",
+        "tempe-locksmith"
+      ]
+    },
+    {
+      "slug": "glendale-locksmith",
+      "city": "Glendale",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Glendale, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Glendale, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Glendale, AZ",
+      "intro": "Glendale is part of our Phoenix metro coverage — automotive, residential, commercial and emergency locksmith work, dispatched to wherever you are.",
+      "neighborhoods": [],
+      "nearby": [
+        "peoria-locksmith",
+        "phoenix-locksmith"
+      ]
+    },
+    {
+      "slug": "peoria-locksmith",
+      "city": "Peoria",
+      "subregion": "Phoenix Metro Area",
+      "state": "Arizona",
+      "stateAbbr": "AZ",
+      "seo_title": "Locksmith Peoria, AZ | Mobile Automotive, Residential & Commercial | 888 Lock & Key",
+      "meta_description": "Licensed mobile locksmith serving Peoria, AZ — car lockouts, key replacement, house lockouts, rekey, commercial locksmith & emergency service. Call now.",
+      "h1": "Mobile Locksmith in Peoria, AZ",
+      "intro": "Our mobile locksmiths cover Peoria for car lockouts, key replacement, house lockouts and lock changes, with the price confirmed before any work begins.",
+      "neighborhoods": [],
+      "nearby": [
+        "glendale-locksmith",
+        "phoenix-locksmith"
+      ]
+    }
+  ]
+}

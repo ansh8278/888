@@ -161,24 +161,56 @@ export const getComboPairs = cache(async () => {
   )
 })
 
-/** The four Bay Area regions, in the order the client lists them. */
-export const REGIONS = [
-  { key: 'south-bay', label: 'South Bay / Silicon Valley', short: 'South Bay' },
-  { key: 'peninsula', label: 'Peninsula', short: 'Peninsula' },
-  { key: 'east-bay', label: 'East Bay', short: 'East Bay' },
-  { key: 'tri-valley', label: 'Tri-Valley', short: 'Tri-Valley' },
+/**
+ * The service areas the business covers. Each has its own hub page and its own
+ * regions; a city belongs to one through its state. Adding a third state is a
+ * new entry here plus its cities — no page needs to change.
+ */
+export const SERVICE_AREAS = [
+  {
+    key: 'bay-area',
+    stateAbbr: 'CA',
+    label: 'San Jose & the Bay Area',
+    short: 'Bay Area',
+    hub: '/bay-area-locksmith',
+    regions: [
+      { key: 'south-bay', label: 'South Bay / Silicon Valley', short: 'South Bay' },
+      { key: 'peninsula', label: 'Peninsula', short: 'Peninsula' },
+      { key: 'east-bay', label: 'East Bay', short: 'East Bay' },
+      { key: 'tri-valley', label: 'Tri-Valley', short: 'Tri-Valley' },
+    ],
+  },
+  {
+    key: 'arizona',
+    stateAbbr: 'AZ',
+    label: 'Arizona — Phoenix Metro Area',
+    short: 'Arizona',
+    hub: '/arizona-locksmith',
+    regions: [{ key: 'phoenix-metro', label: 'Phoenix Metro Area', short: 'Phoenix Metro' }],
+  },
 ] as const
 
-export type RegionKey = (typeof REGIONS)[number]['key']
+export type ServiceArea = (typeof SERVICE_AREAS)[number]
+export type Region = ServiceArea['regions'][number]
 
-/** Cities only — the San Jose districts (which have a parent) are reached via San Jose. */
+export const REGIONS: readonly Region[] = SERVICE_AREAS.flatMap((a) => a.regions as readonly Region[])
+
+/** Cities only — districts (which have a parent) are reached via their city. */
 export const cityLocations = (all: Location[]): Location[] => all.filter((l) => !l.parent)
 
-/** Cities grouped by region, empty regions dropped. Used by the home page and the Bay Area hub. */
-export const locationsByRegion = (all: Location[]) =>
-  REGIONS.map((r) => ({ ...r, cities: cityLocations(all).filter((l) => l.subregion === r.key) })).filter(
-    (r) => r.cities.length > 0,
-  )
+/** The service area a city belongs to, by state. Falls back to the first area. */
+export const areaOf = (location: Pick<Location, 'stateAbbr'> | null | undefined): ServiceArea =>
+  SERVICE_AREAS.find((a) => a.stateAbbr === location?.stateAbbr) ?? SERVICE_AREAS[0]
+
+/** Cities of one service area, grouped by region; empty regions dropped. */
+export const regionsOf = (area: ServiceArea, all: Location[]) =>
+  (area.regions as readonly Region[])
+    .map((r) => ({ ...r, cities: cityLocations(all).filter((l) => l.stateAbbr === area.stateAbbr && l.subregion === r.key) }))
+    .filter((r) => r.cities.length > 0)
+
+/** Every service area that actually has cities, with those cities grouped. */
+export const serviceAreasWithCities = (all: Location[]) =>
+  SERVICE_AREAS.map((area) => ({ area, regions: regionsOf(area, all) })).filter((a) => a.regions.length > 0)
 
 export const regionLabel = (key: string | null | undefined): string =>
-  REGIONS.find((r) => r.key === key)?.label ?? 'Bay Area'
+  REGIONS.find((r) => r.key === key)?.label ?? 'Service area'

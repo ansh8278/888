@@ -3369,3 +3369,29 @@ a.contact-way:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px
 .contact-way-body small { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 .price-card-phone { color: inherit; text-decoration: none; }
 .price-card-phone:hover { color: var(--orange); }
+
+/* One block per service area (Bay Area, Arizona…) on the home page */
+.area-block + .area-block { margin-top: clamp(26px, 3vw, 40px); }
+.area-block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.area-block-head h3 { font-size: clamp(1.05rem, 1.5vw, 1.25rem); margin: 0; }
+.area-block-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.9rem; color: var(--orange); text-decoration: none; }
+.area-block-link svg { width: 15px; height: 15px; }
+.area-block-link:hover { color: var(--orange-hover); }
+
+/* "Areas We Serve" split by service area */
+.areas-served { display: grid; gap: 16px; }
+.areas-served-row { display: grid; gap: 8px; }
+.areas-served-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}

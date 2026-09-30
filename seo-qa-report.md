@@ -1,6 +1,6 @@
 # SEO QA report
 
-Generated 2026-09-24T12:08:59.114Z against http://localhost:3460. 49 URLs from the sitemap.
+Generated 2026-09-30T04:50:34.442Z against http://localhost:3460. 58 URLs from the sitemap.
 
 ## Problems
 
@@ -11,6 +11,7 @@ None — every page has a unique title and description, one H1, a matching canon
 Length warnings only (Google may truncate). Titles/descriptions over the limit are the client-supplied ones, kept verbatim.
 
 - /bay-area-locksmith: warn: title 86 chars
+- /arizona-locksmith: warn: title 84 chars
 - /services/automotive-locksmith: warn: title 84 chars
 - /services/residential-locksmith: warn: title 83 chars
 - /services/commercial-locksmith: warn: title 85 chars
@@ -19,6 +20,14 @@ Length warnings only (Google may truncate). Titles/descriptions over the limit a
 - /services/key-fob-programming: warn: title 72 chars
 - /locations/san-jose-locksmith: warn: title 85 chars
 - /locations/mountain-view-locksmith: warn: title 71 chars
+- /locations/phoenix-locksmith: warn: title 84 chars
+- /locations/scottsdale-locksmith: warn: title 87 chars
+- /locations/tempe-locksmith: warn: title 82 chars
+- /locations/mesa-locksmith: warn: title 81 chars
+- /locations/chandler-locksmith: warn: title 85 chars
+- /locations/gilbert-locksmith: warn: title 84 chars
+- /locations/glendale-locksmith: warn: title 85 chars
+- /locations/peoria-locksmith: warn: title 83 chars
 - /locations/north-san-jose-locksmith: warn: title 72 chars; warn: description 166 chars
 - /locations/south-san-jose-locksmith: warn: title 72 chars
 - /locations/east-san-jose-locksmith: warn: title 71 chars
@@ -28,9 +37,10 @@ Length warnings only (Google may truncate). Titles/descriptions over the limit a
 
 | Path | Title | H1 | Schema | Flags |
 |---|---|---|---|---|
-| / | Mobile Locksmith Serving San Jose & the Bay Area \| 888 Lock & Key | Serving All of San Jose & the Entire Bay Area | Locksmith, FAQPage |  |
+| / | Mobile Locksmith Serving San Jose & the Bay Area \| 888 Lock & Key | Serving San Jose, the Bay Area & Arizona | Locksmith, FAQPage |  |
 | /services | Locksmith Services \| San Jose & Bay Area \| 888 Lock & Key | Locksmith Services Throughout the Bay Area | BreadcrumbList |  |
 | /bay-area-locksmith | Bay Area Locksmith \| Mobile Locksmith Serving San Jose & the Bay Area \| 888 Lock & Key | Mobile Locksmith Serving San Jose & the Entire Bay Area | Locksmith, BreadcrumbList | warn: title 86 chars |
+| /arizona-locksmith | Arizona Locksmith \| Mobile Locksmith Serving the Phoenix Metro Area \| 888 Lock & Key | Mobile Locksmith Serving the Phoenix Metro Area | Locksmith, BreadcrumbList | warn: title 84 chars |
 | /pricing | Starting prices, published up front. \| 888 Lock & Key | Starting prices, published up front. | BreadcrumbList, FAQPage |  |
 | /reviews | What our customers say \| 888 Lock & Key | What our customers say | BreadcrumbList |  |
 | /faq | Frequently Asked Questions \| 888 Lock & Key | Frequently Asked Questions | BreadcrumbList, FAQPage |  |
@@ -70,6 +80,14 @@ Length warnings only (Google may truncate). Titles/descriptions over the limit a
 | /locations/dublin-locksmith | Locksmith Dublin, CA \| Mobile Locksmith Service \| 888 Lock & Key | Mobile Locksmith in Dublin, CA | Locksmith, FAQPage, BreadcrumbList |  |
 | /locations/san-ramon-locksmith | Locksmith San Ramon, CA \| Mobile Locksmith Service \| 888 Lock & Key | Mobile Locksmith in San Ramon, CA | Locksmith, FAQPage, BreadcrumbList |  |
 | /locations/walnut-creek-locksmith | Locksmith Walnut Creek, CA \| Mobile Locksmith Service \| 888 Lock & Key | Mobile Locksmith in Walnut Creek, CA | Locksmith, FAQPage, BreadcrumbList |  |
+| /locations/phoenix-locksmith | Locksmith Phoenix, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Phoenix, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 84 chars |
+| /locations/scottsdale-locksmith | Locksmith Scottsdale, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Scottsdale, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 87 chars |
+| /locations/tempe-locksmith | Locksmith Tempe, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Tempe, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 82 chars |
+| /locations/mesa-locksmith | Locksmith Mesa, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Mesa, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 81 chars |
+| /locations/chandler-locksmith | Locksmith Chandler, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Chandler, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 85 chars |
+| /locations/gilbert-locksmith | Locksmith Gilbert, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Gilbert, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 84 chars |
+| /locations/glendale-locksmith | Locksmith Glendale, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Glendale, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 85 chars |
+| /locations/peoria-locksmith | Locksmith Peoria, AZ \| Mobile Automotive, Residential & Commercial \| 888 Lock & Key | Mobile Locksmith in Peoria, AZ | Locksmith, FAQPage, BreadcrumbList | warn: title 83 chars |
 | /locations/north-san-jose-locksmith | Locksmith North San Jose, CA \| Mobile Locksmith Service \| 888 Lock & Key | Mobile Locksmith in North San Jose, CA | Locksmith, FAQPage, BreadcrumbList | warn: title 72 chars; warn: description 166 chars |
 | /locations/south-san-jose-locksmith | Locksmith South San Jose, CA \| Mobile Locksmith Service \| 888 Lock & Key | Mobile Locksmith in South San Jose, CA | Locksmith, FAQPage, BreadcrumbList | warn: title 72 chars |
 | /locations/east-san-jose-locksmith | Locksmith East San Jose, CA \| Mobile Locksmith Service \| 888 Lock & Key | Mobile Locksmith in East San Jose, CA | Locksmith, FAQPage, BreadcrumbList | warn: title 71 chars |

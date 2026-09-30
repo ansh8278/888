@@ -33,6 +33,8 @@ const nextConfig: NextConfig = {
     return [
       { source: '/locations', destination: '/bay-area-locksmith', permanent: true },
       { source: '/locations/san-jose', destination: '/locations/san-jose-locksmith', permanent: true },
+      { source: '/locations/phoenix', destination: '/locations/phoenix-locksmith', permanent: true },
+      { source: '/locations/scottsdale', destination: '/locations/scottsdale-locksmith', permanent: true },
       { source: '/services/residential-lockout', destination: '/services/house-lockout', permanent: true },
       { source: '/services/house-rekey', destination: '/services/rekey-locks', permanent: true },
       { source: '/services/car-key-and-fob-replacement', destination: '/services/car-key-replacement', permanent: true },

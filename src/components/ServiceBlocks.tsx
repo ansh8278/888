@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Icon, type IconName } from './Icon'
 import { fillTemplate } from '../lib/template'
+import { serviceAreasWithCities } from '../lib/data'
 import type { Service, Location } from '../payload-types'
 
 /**
@@ -27,20 +28,30 @@ export const ServiceCardGrid = ({ services, city }: { services: Service[]; city?
   </div>
 )
 
-/** "Areas We Serve" on service pages: the first cities from the hub list + link to all. */
-export const AreasWeServe = ({ locations, limit = 8 }: { locations: Location[]; limit?: number }) => (
-  <div className="link-pills">
-    {locations
-      .filter((l) => !l.parent)
-      .slice(0, limit)
-      .map((l) => (
-        <Link key={l.id} href={`/locations/${l.slug}`}>
-          {l.city}
-        </Link>
-      ))}
-    <Link href="/bay-area-locksmith">
-      View all Bay Area service areas <Icon name="arrow" />
-    </Link>
+/**
+ * "Areas We Serve" on service pages: a few cities from each service area the
+ * business covers, each followed by a link to that area's full list.
+ */
+export const AreasWeServe = ({ locations, limit = 6 }: { locations: Location[]; limit?: number }) => (
+  <div className="areas-served">
+    {serviceAreasWithCities(locations).map(({ area, regions }) => (
+      <div className="areas-served-row" key={area.key}>
+        <span className="areas-served-label">{area.short}</span>
+        <div className="link-pills">
+          {regions
+            .flatMap((r) => r.cities)
+            .slice(0, limit)
+            .map((l) => (
+              <Link key={l.id} href={`/locations/${l.slug}`}>
+                {l.city}
+              </Link>
+            ))}
+          <Link href={area.hub}>
+            All {area.short} areas <Icon name="arrow" />
+          </Link>
+        </div>
+      </div>
+    ))}
   </div>
 )
 

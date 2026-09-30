@@ -1,16 +1,27 @@
 import Link from 'next/link'
 import { Icon } from './Icon'
-import { locationsByRegion } from '../lib/data'
+import { SERVICE_AREAS, regionsOf, serviceAreasWithCities, type ServiceArea } from '../lib/data'
 import type { Location } from '../payload-types'
 
 /**
- * The Bay Area coverage grid from the client prototype: one card per region
- * (South Bay, Peninsula, East Bay, Tri-Valley) listing its cities. The home
- * page shows the first few cities of each region; the hub shows them all.
+ * The coverage grid: one card per region, listing its cities. Used for a
+ * single service area (the hub pages) or for every area at once (the home
+ * page, where each area gets its own headed block).
  */
-export const RegionGrid = ({ locations, limit, showBlurb = true }: { locations: Location[]; limit?: number; showBlurb?: boolean }) => (
+export const RegionGrid = ({
+  locations,
+  area,
+  limit,
+  showBlurb = true,
+}: {
+  locations: Location[]
+  /** Restrict to one service area; omit to show the first one. */
+  area?: ServiceArea
+  limit?: number
+  showBlurb?: boolean
+}) => (
   <div className="region-grid">
-    {locationsByRegion(locations).map((region) => (
+    {regionsOf(area ?? SERVICE_AREAS[0], locations).map((region) => (
       <div className="region-card" key={region.key}>
         <h3>{region.label}</h3>
         {showBlurb ? <p className="region-blurb">{region.cities.map((c) => c.city).join(', ')}.</p> : null}
@@ -26,4 +37,21 @@ export const RegionGrid = ({ locations, limit, showBlurb = true }: { locations: 
       </div>
     ))}
   </div>
+)
+
+/** Every service area the business covers, each under its own heading. */
+export const ServiceAreaBlocks = ({ locations, limit }: { locations: Location[]; limit?: number }) => (
+  <>
+    {serviceAreasWithCities(locations).map(({ area }) => (
+      <div className="area-block" key={area.key}>
+        <div className="area-block-head">
+          <h3>{area.label}</h3>
+          <Link href={area.hub} className="area-block-link">
+            All {area.short} areas <Icon name="arrow" />
+          </Link>
+        </div>
+        <RegionGrid locations={locations} area={area} limit={limit} showBlurb={false} />
+      </div>
+    ))}
+  </>
 )

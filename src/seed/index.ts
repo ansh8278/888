@@ -329,7 +329,7 @@ const seed = async () => {
       rating: '',
       reviewCount: null,
       averageArrival: '',
-      serviceAreaLine: 'Serving San Jose & the Entire Bay Area',
+      serviceAreaLine: 'Serving San Jose, the Bay Area & Arizona',
       scriptLine: 'Your Security Our Priority',
       dispatchHubs: [{ name: 'Santa Clara dispatch hub', addressLine: '3315 Montgomery Dr', city: 'Santa Clara', stateAbbr: 'CA' }],
       defaultHeroImage: heroImageId,
@@ -341,9 +341,9 @@ const seed = async () => {
     slug: 'home-page',
     data: {
       eyebrow: 'Mobile Locksmith',
-      headingLine1: 'Serving All of San Jose',
-      headingLine2: '& the Entire Bay Area',
-      lede: 'Automotive, residential, commercial and emergency locksmith services, dispatched to you across South Bay, the Peninsula, the East Bay and the Tri-Valley.',
+      headingLine1: 'Serving San Jose, the Bay Area',
+      headingLine2: '& Arizona',
+      lede: 'Automotive, residential, commercial and emergency locksmith services, dispatched to you across the Bay Area and the Phoenix metro area.',
       heroImage: heroImageId,
       primaryCtaLabel: 'Call Now',
       secondaryCtaLabel: 'Request Service',
@@ -408,7 +408,7 @@ const seed = async () => {
           ],
         },
       ],
-      footerNote: 'Mobile locksmith serving San Jose & the San Francisco Bay Area.',
+      footerNote: 'Mobile locksmith serving San Jose, the San Francisco Bay Area and the Phoenix metro area.',
     },
   })
 

@@ -10,7 +10,9 @@
  * Exits 1 on any finding, so it can gate a deploy.
  */
 const base = (process.argv[2] || 'http://localhost:3000').replace(/\/$/, '')
-const FORBIDDEN = [/24\/7/i, /Arizona/, /New York/, /XXX\) XXX/, /REALPHONE/, /REAL LICENSE/, /LCO-000000/, /555-0888/, /tel:null/, /Insert real/i, /lorem ipsum/i, /Services Services/]
+// Arizona is a real service area since 2026-09-30 and is no longer forbidden.
+// New York, and the old invented data, still are.
+const FORBIDDEN = [/24\/7/i, /New York/, /Los Angeles/, /XXX\) XXX/, /REALPHONE/, /REAL LICENSE/, /LCO-000000/, /555-0888/, /tel:null/, /Insert real/i, /lorem ipsum/i, /Services Services/]
 
 const seen = new Map() // path -> status
 const linkedFrom = new Map() // path -> first referrer

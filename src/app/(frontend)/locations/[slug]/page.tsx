@@ -6,7 +6,7 @@ import { FaqList } from '../../../../components/FaqList'
 import { CtaBanner, SectionHead } from '../../../../components/blocks'
 import { HeroActions } from '../../../../components/CallButton'
 import { ServiceCardGrid, LinkPills, asDocs } from '../../../../components/ServiceBlocks'
-import { getLocation, getLocations, getServices, getSiteSettings, getPageCopy, servicesForLocation, regionLabel } from '../../../../lib/data'
+import { getLocation, getLocations, getServices, getSiteSettings, getPageCopy, servicesForLocation, regionLabel, areaOf } from '../../../../lib/data'
 import { fillTemplate } from '../../../../lib/template'
 import { phoneOf } from '../../../../lib/contact'
 import { JsonLd, locationSchema, faqSchema, breadcrumbSchema, absolute } from '../../../../lib/schema'
@@ -68,9 +68,10 @@ const LocationPage = async (props: { params: Promise<{ slug: string }> }) => {
   const faqs = cityFaqs(copy.cityFaqs ?? [], vars)
   const label = (value: string | null | undefined, fallback: string) => fillTemplate(value || fallback, vars)
 
+  const area = areaOf(location)
   const crumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Bay Area', href: '/bay-area-locksmith' },
+    { label: area.short, href: area.hub },
     ...(parent ? [{ label: parent.city, href: `/locations/${parent.slug}` }] : []),
     { label: parent ? location.city : `${location.city} Locksmith`, href: `/locations/${location.slug}` },
   ]

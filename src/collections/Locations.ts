@@ -43,12 +43,13 @@ export const Locations: CollectionConfig = {
               type: 'select',
               required: true,
               defaultValue: 'south-bay',
-              admin: { description: 'Which part of the Bay Area this city belongs to. Groups it on the Bay Area page.' },
+              admin: { description: 'Which part of the service area this city belongs to. Groups it on the area page.' },
               options: [
-                { label: 'South Bay / Silicon Valley', value: 'south-bay' },
-                { label: 'Peninsula', value: 'peninsula' },
-                { label: 'East Bay', value: 'east-bay' },
-                { label: 'Tri-Valley', value: 'tri-valley' },
+                { label: 'South Bay / Silicon Valley (CA)', value: 'south-bay' },
+                { label: 'Peninsula (CA)', value: 'peninsula' },
+                { label: 'East Bay (CA)', value: 'east-bay' },
+                { label: 'Tri-Valley (CA)', value: 'tri-valley' },
+                { label: 'Phoenix Metro Area (AZ)', value: 'phoenix-metro' },
               ],
             },
             {

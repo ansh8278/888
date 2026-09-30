@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Hero } from '../../components/Hero'
 import { FaqList } from '../../components/FaqList'
-import { RegionGrid } from '../../components/RegionGrid'
+import { ServiceAreaBlocks } from '../../components/RegionGrid'
 import { SectionHead, ServiceCard, ReviewMarquee, CallCard, PricingTable, CtaBanner } from '../../components/blocks'
 import { Icon, type IconName } from '../../components/Icon'
 import { getHomePage, getSiteSettings, getServices, getLocations, getReviews, getHomeFaqs, getPageCopy } from '../../lib/data'
@@ -54,14 +54,8 @@ const HomePage = async () => {
           <SectionHead
             eyebrow={home.locationsEyebrow}
             heading={home.locationsHeading ?? 'Mobile Locksmith Coverage Across the Bay Area'}
-            link={{ href: '/bay-area-locksmith', label: 'View all service areas' }}
           />
-          <RegionGrid locations={locations} limit={4} />
-          <p className="region-more">
-            <Link href="/bay-area-locksmith" className="btn btn-secondary">
-              View all {locations.filter((l) => !l.parent).length} service areas <Icon name="arrow" />
-            </Link>
-          </p>
+          <ServiceAreaBlocks locations={locations} limit={4} />
         </div>
       </section>
 

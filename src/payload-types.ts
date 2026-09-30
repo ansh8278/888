@@ -364,9 +364,9 @@ export interface Location {
    */
   stateAbbr: string;
   /**
-   * Which part of the Bay Area this city belongs to. Groups it on the Bay Area page.
+   * Which part of the service area this city belongs to. Groups it on the area page.
    */
-  subregion: 'south-bay' | 'peninsula' | 'east-bay' | 'tri-valley';
+  subregion: 'south-bay' | 'peninsula' | 'east-bay' | 'tri-valley' | 'phoenix-metro';
   /**
    * Only for districts inside a city (e.g. North San Jose → San Jose). Nested under the parent in breadcrumbs and left out of the Bay Area page.
    */

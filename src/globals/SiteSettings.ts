@@ -53,7 +53,7 @@ export const SiteSettings: GlobalConfig = {
             {
               name: 'serviceAreaLine',
               type: 'text',
-              defaultValue: 'Serving San Jose & the Entire Bay Area',
+              defaultValue: 'Serving San Jose, the Bay Area & Arizona',
               admin: { description: 'One line shown in the footer and header strip.' },
             },
             {
