@@ -3409,3 +3409,21 @@ a.contact-way:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px
 .area-crosslink a:hover {
   color: var(--brand);
 }
+
+/* Keeps a phone number whole when its button wraps on to two lines. */
+.nowrap {
+  white-space: nowrap;
+}
+
+/* On phones the hero call button is full width: centre it and trim the side
+   padding so "Call Now — (669) 366-5249" stays on one line. */
+@media (max-width: 560px) {
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    justify-content: center;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 1.02rem;
+  }
+}

@@ -31,7 +31,15 @@ export const CallButton = ({ phone, className = 'btn-hero-primary', label, hideN
   return (
     <a href={`tel:${phone.href}`} className={className} data-call-cta={primary ? '' : undefined}>
       {icon ? <Icon name="phone" /> : null}
-      {hideNumber ? text : `${text} ${phone.display}`}
+      {hideNumber ? (
+        text
+      ) : (
+        /* One flex item, or the label and the number spread to opposite ends
+           of the button when it is full width. */
+        <span>
+          {text} <span className="nowrap">{phone.display}</span>
+        </span>
+      )}
     </a>
   )
 }
