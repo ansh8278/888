@@ -109,6 +109,9 @@ fill in, Supabase daily backups, Vercel logs for errors.
 | Production domain | Pending | — (package assumes 888lockandkey.com) | Production |
 | Review count | Pending | — | Production (reviews section hidden until then) |
 | Review rating | Pending | — | Production |
+| Arizona neighbourhood lists | Pending | — | Arizona pages show no neighbourhood section until supplied |
+| Arizona dispatch address | Pending | — | Local ranking in Phoenix metro |
+| Arizona licence / registration | Pending | — | The CA BSIS licence does not cover Arizona |
 | Starting prices | Pending | — | Pricing page/table hidden until then |
 | Verified arrival time | Pending | — | City FAQ #1 hidden until then |
 
@@ -146,6 +149,10 @@ fill in, Supabase daily backups, Vercel logs for errors.
 ---
 
 ## Change Log
+
+- 2026-09-30 — **Arizona added as a second service area** (client request). Service areas are now data rather than code: `SERVICE_AREAS` in `src/lib/data.ts` holds each area's hub, regions and label, and a city joins one through its state — a third state is an entry plus its cities. Shipped: 8 Phoenix-metro city pages (Phoenix, Scottsdale, Tempe, Mesa, Chandler, Gilbert, Glendale, Peoria) cross-linked to their neighbours; `/arizona-locksmith` hub sharing one component with the Bay Area hub; home heading "Serving San Jose, the Bay Area & Arizona" and a separate Arizona block in the dispatch section; Arizona in the menu and footer; service pages list cities from both areas; sitemap 49 → **58 pages**; `/locations/phoenix` and `/locations/scottsdale` redirect to the new slugs. `npm run area:arizona` applies it to an existing site. Verified live: all 8 pages 200, no broken links, 0 SEO problems, 45 responsive renders clean, 7 test suites.
+
+  **Arizona still needs from the client:** neighbourhood lists per city (the section is hidden until then — none were invented), an Arizona dispatch address (only Santa Clara is confirmed, which weakens local ranking there), confirmation of whether the CA BSIS licence line should appear on Arizona pages or whether Arizona requires its own registration, whether North Phoenix should be its own page as their first message implied, and whether Arizona uses the same phone number.
 
 - 2026-09-22 — Admin slowness diagnosed and fixed: Vercel ran the functions in **iad1 (Washington DC)** while Supabase sits in **ap-south-1 (Mumbai)**, so every admin query made two intercontinental round trips (site-settings API 1.97s). `vercel.json` now pins functions to **bom1**, next to the database. Measured after: API calls 0.30–0.57s (was 0.85–1.97s), admin screens 0.2–0.5s, login page 0.8–1.0s first visit (0.9 MB of Payload admin code, cached afterwards). Public pages unaffected — still edge-cached at ~0.2s. If the client later wants the lowest latency for US visitors, move the database to a US region and switch `regions` to `sfo1` (steps in DEPLOY-VERCEL.md).
 
