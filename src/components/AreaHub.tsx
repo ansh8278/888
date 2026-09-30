@@ -37,7 +37,9 @@ export const AreaHub = async ({ area, title, intro, eyebrow }: { area: ServiceAr
         eyebrow={eyebrow ?? 'Coverage Area'}
         title={title}
         intro={intro}
-        image={settings.defaultHeroImage}
+        image={
+          area.heroImage ? { url: area.heroImage, alt: area.heroAlt } : settings.defaultHeroImage
+        }
         crumbs={[crumbs[0], { label: crumbs[1].label }]}
         actions={<HeroActions phone={phone} />}
       />

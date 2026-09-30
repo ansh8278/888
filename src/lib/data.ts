@@ -175,6 +175,9 @@ export const SERVICE_AREAS = [
     /** Reads naturally mid-sentence: "dispatched across {phrase}". */
     phrase: 'San Jose and the Bay Area',
     hub: '/bay-area-locksmith',
+    /** null falls back to the site-wide hero set in admin. */
+    heroImage: null,
+    heroAlt: null,
     regions: [
       { key: 'south-bay', label: 'South Bay / Silicon Valley', short: 'South Bay' },
       { key: 'peninsula', label: 'Peninsula', short: 'Peninsula' },
@@ -189,6 +192,8 @@ export const SERVICE_AREAS = [
     short: 'Arizona',
     phrase: 'the Phoenix metro area',
     hub: '/arizona-locksmith',
+    heroImage: '/images/arizona-hero.webp',
+    heroAlt: 'Phoenix skyline at sunset with saguaro cactus in the Sonoran Desert foreground',
     regions: [{ key: 'phoenix-metro', label: 'Phoenix Metro Area', short: 'Phoenix Metro' }],
   },
 ] as const
