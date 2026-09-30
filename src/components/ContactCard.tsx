@@ -25,7 +25,7 @@ export const ContactCard = ({
   note?: string | null
   showCallButton?: boolean
 }) => (
-  <div className="price-card">
+  <div className="price-card price-card--contact">
     <div className="price-card-label">{title ?? 'Dispatch'}</div>
     {phone ? (
       <a className="price-card-value small price-card-phone" href={`tel:${phone.href}`}>

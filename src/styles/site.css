@@ -3418,3 +3418,12 @@ a.contact-way:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px
     font-size: 1.02rem;
   }
 }
+
+/* The dispatch card on the Contact and Request pages. Its buttons are full
+   width, so a left-aligned label and number sat off to one side of them. */
+.price-card--contact {
+  text-align: center;
+}
+.price-card--contact .price-card-value {
+  margin-top: 8px;
+}
