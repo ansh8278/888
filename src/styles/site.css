@@ -2178,6 +2178,10 @@ a.dispatch-line:hover { color: #ffffff; }
 }
 @media (max-width: 720px) {
   .footer-main-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  /* The collapsed groups end in their own rule, so 40px of grid padding plus
+     24px above the small print left an empty band between two lines. */
+  .footer-main-grid { padding-bottom: 8px; }
+  .footer-sub-bottom { border-top: none; padding-top: 18px; }
   /* One tappable row per group, rather than a wall of links. */
   .footer-cols { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .footer-nav-col {
@@ -2564,7 +2568,15 @@ html, body { max-width: 100%; overflow-x: clip; }
     color: #fff;
     box-shadow: 0 6px 14px -4px rgba(234, 88, 12, 0.5);
   }
-  .nav-phone-pill svg { width: 18px; height: 18px; }
+  /* `.nav-phone-pill svg` sets the icon orange, which beats the white on the
+     button itself — orange on orange is invisible. */
+  .nav-phone-pill svg { width: 18px; height: 18px; color: #fff; }
+  /* Tapping leaves :hover stuck on a touch screen, which turned the filled
+     button pale again. */
+  .nav-phone-pill:hover {
+    background: var(--orange-radial);
+    border-color: transparent;
+  }
   .nav-inner { gap: 8px; }
   .logo-title { font-size: 1rem; }
 }
