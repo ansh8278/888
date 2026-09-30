@@ -393,10 +393,13 @@ const seed = async () => {
           heading: 'Services',
           links: [...content.categories, garage].map((s) => ({ label: s.h1.replace(' Services', ''), href: `/services/${s.slug}` })),
         },
-        { heading: 'South Bay', links: ['san-jose-locksmith', 'santa-clara-locksmith', 'sunnyvale-locksmith', 'cupertino-locksmith'].map(cityLink) },
-        { heading: 'Peninsula', links: ['mountain-view-locksmith', 'palo-alto-locksmith', 'redwood-city-locksmith', 'san-mateo-locksmith'].map(cityLink) },
-        { heading: 'East Bay', links: ['fremont-locksmith', 'oakland-locksmith', 'hayward-locksmith', 'san-leandro-locksmith'].map(cityLink) },
-        { heading: 'Tri-Valley', links: ['pleasanton-locksmith', 'dublin-locksmith', 'san-ramon-locksmith', 'walnut-creek-locksmith'].map(cityLink) },
+        {
+          heading: 'Bay Area',
+          links: [
+            ...['san-jose-locksmith', 'santa-clara-locksmith', 'sunnyvale-locksmith', 'cupertino-locksmith', 'mountain-view-locksmith', 'palo-alto-locksmith', 'fremont-locksmith', 'oakland-locksmith'].map(cityLink),
+            { label: 'All Bay Area areas', href: '/bay-area-locksmith' },
+          ],
+        },
         {
           heading: 'Company',
           links: [
@@ -404,7 +407,7 @@ const seed = async () => {
             { label: 'Reviews', href: '/reviews' },
             { label: 'Pricing', href: '/pricing' },
             { label: 'Contact', href: '/contact' },
-            { label: 'All service areas', href: '/bay-area-locksmith' },
+            { label: 'Request Service', href: '/book' },
           ],
         },
       ],

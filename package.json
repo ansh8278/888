@@ -29,7 +29,8 @@
     "images:services": "payload run src/scripts/service-images.ts",
     "area:arizona": "payload run src/scripts/add-arizona.ts",
     "images:hero": "payload run src/scripts/refresh-hero.ts",
-    "audit:content": "node scripts/content-audit.mjs"
+    "audit:content": "node scripts/content-audit.mjs",
+    "footer:tidy": "payload run src/scripts/tidy-footer.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

@@ -2021,18 +2021,24 @@ body.menu-open .mobilenav { display: flex; }
    many equal columns as fit, then the dispatch card. */
 .footer-main-grid {
   display: grid;
-  grid-template-columns: minmax(215px, 0.85fr) minmax(0, 4fr) minmax(225px, 0.95fr);
+  grid-template-columns: minmax(215px, 0.85fr) minmax(0, 3fr) minmax(225px, 0.95fr);
   gap: clamp(20px, 2.2vw, 32px);
   padding: clamp(40px, 5vw, 64px) 0 40px;
   align-items: start;
 }
-/* The link columns are editor-controlled (Navigation → Footer columns), so
+/* The link groups are editor-controlled (Navigation → Footer columns), so
    they get their own auto-fitting grid instead of fixed outer columns. */
 .footer-cols {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
-  gap: clamp(18px, 1.8vw, 26px);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(18px, 1.8vw, 28px);
 }
+/* Each group is a <details>: a plain column on desktop, a collapsible row on
+   phones. FooterGroup.tsx decides which, from a media query. */
+.footer-nav-col > summary { list-style: none; cursor: default; }
+.footer-nav-col > summary::-webkit-details-marker { display: none; }
+/* Beats the general `.site-footer svg` rule, which is more specific. */
+.site-footer .footer-heading-chevron { display: none; }
 
 /* Brand pane */
 .footer-brand-pane .logo-title { color: #ffffff; white-space: nowrap; }
@@ -2236,8 +2242,33 @@ body.menu-open .mobilenav { display: flex; }
   .footer-cols { grid-column: 1 / -1; order: 3; }
 }
 @media (max-width: 720px) {
-  .footer-main-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  .footer-main-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  /* One tappable row per group, rather than a wall of links. */
+  .footer-cols { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .footer-nav-col {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .footer-nav-col:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .footer-nav-col > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0;
+    padding: 15px 2px;
+    cursor: pointer;
+  }
+  .site-footer .footer-heading-chevron {
+    display: block;
+    width: 16px;
+    height: 16px;
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .footer-nav-col[open] .footer-heading-chevron { transform: rotate(180deg); }
+  .site-footer .footer-nav-col > summary .footer-heading { margin: 0; }
+  .footer-nav-col .footer-links { padding: 0 2px 16px; gap: 13px; }
 }
 @media (max-width: 520px) {
   .footer-main-grid {

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Icon } from './Icon'
 import { CallButton } from './CallButton'
+import { FooterGroup } from './FooterGroup'
 import type { Phone } from '../lib/contact'
 
 type Column = {
@@ -54,21 +55,12 @@ export const Footer = ({ companyName, tagline, phone, email, licenseNumber, serv
 
         <div className="footer-cols">
           {columns.map((col) => (
-            <div className="footer-nav-col" key={col.heading}>
-              <h4 className="footer-heading">{col.heading}</h4>
-              <ul className="footer-links">
-                {(col.links ?? []).map((link) => (
-                  <li key={link.id ?? link.href}>
-                    <Link href={link.href}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <FooterGroup key={col.heading} heading={col.heading} links={col.links ?? []} />
           ))}
         </div>
 
-        <div className="footer-nav-col footer-contact-pane">
-          <h4 className="footer-heading">Dispatch</h4>
+        <div className="footer-contact-pane">
+          <h4 className="footer-heading footer-heading-static">Dispatch</h4>
           <div className="dispatch-box">
             <p className="dispatch-text">
               {serviceAreaLine ? `Mobile technicians — ${serviceAreaLine.replace(/^Serving /, 'serving ')}.` : 'Mobile technicians dispatched to you.'}
