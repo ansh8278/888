@@ -92,5 +92,16 @@ if (!columns.some((c: any) => c.heading === 'Arizona')) {
 }
 await payload.updateGlobal({ slug: 'navigation', data: { header, footerColumns: columns } })
 
+// Wording stored before there was a second service area.
+const copy: any = await payload.findGlobal({ slug: 'page-copy', depth: 0 })
+const retitled: Record<string, string> = {}
+if (copy.hubRegionsHeading === 'Bay Area Service Regions') retitled.hubRegionsHeading = '{area} Service Regions'
+if (copy.serviceCtaSubtitle === 'Mobile technicians dispatched across San Jose & the Bay Area.')
+  retitled.serviceCtaSubtitle = 'Mobile technicians dispatched across every area we serve.'
+if (Object.keys(retitled).length) {
+  await payload.updateGlobal({ slug: 'page-copy', data: retitled })
+  console.log(`Reworded ${Object.keys(retitled).join(', ')} — they named the Bay Area only.`)
+}
+
 console.log(`Locations: ${existingCount.totalDocs} before, ${(await payload.count({ collection: 'locations' })).totalDocs} now.`)
 process.exit(0)

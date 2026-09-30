@@ -70,7 +70,9 @@ export const Footer = ({ companyName, tagline, phone, email, licenseNumber, serv
         <div className="footer-nav-col footer-contact-pane">
           <h4 className="footer-heading">Dispatch</h4>
           <div className="dispatch-box">
-            <p className="dispatch-text">Mobile technicians dispatched across San Jose &amp; the Bay Area.</p>
+            <p className="dispatch-text">
+              {serviceAreaLine ? `Mobile technicians — ${serviceAreaLine.replace(/^Serving /, 'serving ')}.` : 'Mobile technicians dispatched to you.'}
+            </p>
             <CallButton phone={phone} className="btn-hero-primary dispatch-call" label="Call Now —" />
             {hours ? <p className="dispatch-text">{hours}</p> : null}
             {email ? (

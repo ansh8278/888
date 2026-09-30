@@ -172,6 +172,8 @@ export const SERVICE_AREAS = [
     stateAbbr: 'CA',
     label: 'San Jose & the Bay Area',
     short: 'Bay Area',
+    /** Reads naturally mid-sentence: "dispatched across {phrase}". */
+    phrase: 'San Jose and the Bay Area',
     hub: '/bay-area-locksmith',
     regions: [
       { key: 'south-bay', label: 'South Bay / Silicon Valley', short: 'South Bay' },
@@ -185,6 +187,7 @@ export const SERVICE_AREAS = [
     stateAbbr: 'AZ',
     label: 'Arizona — Phoenix Metro Area',
     short: 'Arizona',
+    phrase: 'the Phoenix metro area',
     hub: '/arizona-locksmith',
     regions: [{ key: 'phoenix-metro', label: 'Phoenix Metro Area', short: 'Phoenix Metro' }],
   },

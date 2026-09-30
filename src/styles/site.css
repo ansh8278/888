@@ -3395,3 +3395,28 @@ a.contact-way:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -12px
   text-transform: uppercase;
   color: var(--muted-2);
 }
+
+/* Cities of a single-region area, filling the row */
+.city-link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+.city-link-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  color: var(--txt);
+  font-weight: 700;
+  text-decoration: none;
+}
+.city-link-list a svg { width: 16px; height: 16px; color: var(--orange); flex-shrink: 0; }
+.city-link-list a:hover { border-color: var(--orange); color: var(--orange-hover); }

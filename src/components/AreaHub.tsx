@@ -5,7 +5,8 @@ import { CtaBanner, SectionHead } from './blocks'
 import { HeroActions } from './CallButton'
 import { LinkPills } from './ServiceBlocks'
 import { phoneOf } from '../lib/contact'
-import { getLocations, getServices, getSiteSettings, getPageCopy, type ServiceArea } from '../lib/data'
+import { fillTemplate } from '../lib/template'
+import { SERVICE_AREAS, getLocations, getServices, getSiteSettings, getPageCopy, type ServiceArea } from '../lib/data'
 import { JsonLd, localBusinessSchema, breadcrumbSchema } from '../lib/schema'
 
 /**
@@ -45,13 +46,17 @@ export const AreaHub = async ({ area, title, intro, eyebrow }: { area: ServiceAr
         <div className="wrap">
           <SectionHead
             eyebrow={copy.hubRegionsEyebrow ?? 'Find Your Area'}
-            heading={copy.hubRegionsHeading ?? 'Service Regions'}
+            heading={fillTemplate(copy.hubRegionsHeading || '{area} Service Regions', { area: area.short })}
           />
           <RegionGrid locations={locations} area={area} showBlurb={false} />
         </div>
       </section>
 
-      <CtaBanner phone={phone} heading={copy.hubCtaHeading ?? 'Need a locksmith right now?'} subtitle={copy.serviceCtaSubtitle} />
+      <CtaBanner
+        phone={phone}
+        heading={copy.hubCtaHeading ?? 'Need a locksmith right now?'}
+        subtitle={`Mobile technicians dispatched across ${area.phrase}.`}
+      />
 
       {categories.length > 0 ? (
         <section className="sec sec-sand">
@@ -69,9 +74,11 @@ export const AreaHub = async ({ area, title, intro, eyebrow }: { area: ServiceAr
         <div className="wrap narrow">
           <p className="muted">
             Also serving{' '}
-            <Link href={area.key === 'arizona' ? '/bay-area-locksmith' : '/arizona-locksmith'}>
-              {area.key === 'arizona' ? 'San Jose & the Bay Area' : 'Arizona — Phoenix Metro Area'}
-            </Link>
+            {SERVICE_AREAS.filter((a) => a.key !== area.key).map((other) => (
+              <Link key={other.key} href={other.hub}>
+                {other.label}
+              </Link>
+            ))}
             .
           </p>
         </div>

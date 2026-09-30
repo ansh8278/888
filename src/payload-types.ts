@@ -1194,6 +1194,9 @@ export interface PageCopy {
   serviceRelatedEyebrow?: string | null;
   serviceRelatedHeading?: string | null;
   hubRegionsEyebrow?: string | null;
+  /**
+   * Use {area} for the area name (Bay Area, Arizona…).
+   */
   hubRegionsHeading?: string | null;
   hubCtaHeading?: string | null;
   pricingEmptyHeading?: string | null;

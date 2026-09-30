@@ -223,14 +223,14 @@ export const PageCopy: GlobalConfig = {
           description: 'The section labels repeated on all 14 service pages, and on the Bay Area page.',
           fields: [
             { name: 'serviceIncludedHeading', type: 'text', label: "What's included — heading", defaultValue: "What's included" },
-            { name: 'serviceCtaSubtitle', type: 'text', label: 'Banner text', defaultValue: 'Mobile technicians dispatched across San Jose & the Bay Area.' },
+            { name: 'serviceCtaSubtitle', type: 'text', label: 'Banner text', defaultValue: 'Mobile technicians dispatched across every area we serve.' },
             { name: 'serviceAreasEyebrow', type: 'text', label: 'Areas — small line', defaultValue: 'Where We Cover This Service' },
             { name: 'serviceAreasHeading', type: 'text', label: 'Areas — heading', defaultValue: 'Areas We Serve' },
             { name: 'serviceRelatedEyebrow', type: 'text', label: 'Related — small line', defaultValue: 'Related Services' },
             { name: 'serviceRelatedHeading', type: 'text', label: 'Related — heading', defaultValue: 'You May Also Need' },
-            { name: 'hubRegionsEyebrow', type: 'text', label: 'Bay Area page — small line', defaultValue: 'Find Your Area' },
-            { name: 'hubRegionsHeading', type: 'text', label: 'Bay Area page — heading', defaultValue: 'Bay Area Service Regions' },
-            { name: 'hubCtaHeading', type: 'text', label: 'Bay Area page — banner heading', defaultValue: 'Need a locksmith right now?' },
+            { name: 'hubRegionsEyebrow', type: 'text', label: 'Service-area page — small line', defaultValue: 'Find Your Area' },
+            { name: 'hubRegionsHeading', type: 'text', label: 'Service-area page — heading', defaultValue: '{area} Service Regions', admin: { description: 'Use {area} for the area name (Bay Area, Arizona…).' } },
+            { name: 'hubCtaHeading', type: 'text', label: 'Service-area page — banner heading', defaultValue: 'Need a locksmith right now?' },
           ],
         },
         {

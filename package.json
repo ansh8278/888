@@ -27,7 +27,9 @@
     "faqs:relink": "payload run src/scripts/relink-service-faqs.ts",
     "reviews:example": "payload run src/scripts/example-reviews.ts",
     "images:services": "payload run src/scripts/service-images.ts",
-    "area:arizona": "payload run src/scripts/add-arizona.ts"
+    "area:arizona": "payload run src/scripts/add-arizona.ts",
+    "images:hero": "payload run src/scripts/refresh-hero.ts",
+    "audit:content": "node scripts/content-audit.mjs"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

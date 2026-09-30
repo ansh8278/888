@@ -106,7 +106,7 @@ const seed = async () => {
     const created = await payload.create({ collection: 'media', data: { alt }, filePath })
     return created.id as number
   }
-  const heroImageId = await upload(path.join(ASSETS, 'hero.png'), '888 Lock & Key technician and mobile service van')
+  const heroImageId = await upload(path.join(ASSETS, 'hero.webp'), '888 Lock & Key technician and mobile service van')
   const sanJoseImageId = await upload(path.join(ASSETS, 'cities', 'san-jose.jpg'), 'San Jose skyline')
 
   // ---------- faqs ----------
