@@ -30,7 +30,8 @@
     "area:arizona": "payload run src/scripts/add-arizona.ts",
     "images:hero": "payload run src/scripts/refresh-hero.ts",
     "audit:content": "node scripts/content-audit.mjs",
-    "footer:tidy": "payload run src/scripts/tidy-footer.ts"
+    "footer:tidy": "payload run src/scripts/tidy-footer.ts",
+    "qa:footer": "node scripts/footer-check.mjs"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",

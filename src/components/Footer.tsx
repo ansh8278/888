@@ -61,18 +61,33 @@ export const Footer = ({ companyName, tagline, phone, email, licenseNumber, serv
 
         <div className="footer-contact-pane">
           <h4 className="footer-heading footer-heading-static">Dispatch</h4>
-          <div className="dispatch-box">
-            <p className="dispatch-text">
-              {serviceAreaLine ? `Mobile technicians — ${serviceAreaLine.replace(/^Serving /, 'serving ')}.` : 'Mobile technicians dispatched to you.'}
-            </p>
-            <CallButton phone={phone} className="btn-hero-primary dispatch-call" label="Call Now —" />
-            {hours ? <p className="dispatch-text">{hours}</p> : null}
+          {/* Plain, tappable details rather than a boxed card: the card made
+              the number wrap on to two lines and repeated the line above. */}
+          <div className="dispatch-list">
+            {phone ? (
+              <a className="dispatch-phone" href={`tel:${phone.href}`}>
+                <Icon name="phone" />
+                <span>{phone.display}</span>
+              </a>
+            ) : (
+              <Link className="dispatch-phone" href="/book">
+                <Icon name="phone" />
+                <span>Request service</span>
+              </Link>
+            )}
             {email ? (
-              <a href={`mailto:${email}`} className="dispatch-email">
-                {email}
+              <a className="dispatch-line" href={`mailto:${email}`}>
+                <Icon name="mail" />
+                <span>{email}</span>
               </a>
             ) : null}
-            <div className="dispatch-guarantee">✓ Upfront pricing, confirmed before work begins</div>
+            {hours ? (
+              <p className="dispatch-line">
+                <Icon name="clock" />
+                <span>{hours}</span>
+              </p>
+            ) : null}
+            <p className="dispatch-note">Upfront pricing, confirmed before work begins.</p>
           </div>
         </div>
       </div>
