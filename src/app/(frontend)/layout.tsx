@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter, Sora, Caveat } from 'next/font/google'
 import { Header, type NavItem } from '../../components/Header'
 import { Footer } from '../../components/Footer'
-import { StickyCall } from '../../components/StickyCall'
 import { getNavigation, getSiteSettings } from '../../lib/data'
 import { mediaUrl } from '../../components/blocks'
 import { ProgressBar } from '../../components/ProgressBar'
@@ -90,7 +89,6 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         />
 
         {/* Always-reachable Call / Request bar on phones. */}
-        <StickyCall phone={phone} />
 
         <Analytics id={settings.googleAnalyticsId} />
       </body>

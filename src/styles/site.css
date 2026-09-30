@@ -2279,32 +2279,6 @@ button:active,
 .burger span.is-open { background: transparent; }
 
 /* Sticky Call / Request bar (phones only) — per client prototype -------- */
-.stickybar {
-  display: none;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 900;
-  background: var(--dark-card);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.25);
-}
-.stickybar a {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 15px 8px;
-  color: #fff;
-  font-weight: 800;
-  font-size: 15px;
-  text-decoration: none;
-  border-radius: 0;
-}
-.stickybar .stickybar-call { background: var(--orange-radial); }
-.stickybar .stickybar-book { background: transparent; border-left: 1px solid rgba(255, 255, 255, 0.25); }
 .mobile-nav-actions { display: grid; gap: 10px; }
 
 /* ============================================================
@@ -2353,7 +2327,7 @@ button:active,
 }
 
 @media print {
-  header, .stickybar, .cta-banner, .mobile-nav, .rev-marquee { display: none !important; }
+  header, .cta-banner, .mobile-nav, .rev-marquee { display: none !important; }
 }
 
 /* The drawer sets display:flex, which outranks the browser's [hidden] rule —
@@ -2378,7 +2352,10 @@ button:active,
   .logo-icon-box { width: 38px; height: 38px; }
 }
 /* Nothing may push the page wider than the screen. */
-html, body { max-width: 100%; overflow-x: hidden; }
+/* `clip`, not `hidden`: overflow on the root makes it the scrolling container
+   and silently breaks `position: sticky` on the header. `clip` stops sideways
+   scroll without creating a scroll container. */
+html, body { max-width: 100%; overflow-x: clip; }
 
 /* Pricing-table notes column and the form page's main column. */
 .p-note { color: var(--muted-2); font-size: 0.88rem; }
@@ -2572,11 +2549,21 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .nav-phone-pill { padding: 9px 12px; font-size: 0.82rem; }
 }
 /* Narrow phones: the number does not fit beside the logo and the menu button,
-   and the sticky bar at the bottom already shows it in full — so the header
-   keeps a round call button instead. */
+   so the header keeps a round call button. It is filled rather than outlined
+   because it is now the only call button that stays on screen. */
 @media (max-width: 520px) {
   .nav-phone-num { display: none; }
-  .nav-phone-pill { padding: 0; width: 40px; height: 40px; justify-content: center; border-radius: 50%; }
+  .nav-phone-pill {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--orange-radial);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 14px -4px rgba(234, 88, 12, 0.5);
+  }
   .nav-phone-pill svg { width: 18px; height: 18px; }
   .nav-inner { gap: 8px; }
   .logo-title { font-size: 1rem; }
@@ -3248,14 +3235,6 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .check-grid li svg { width: 18px; height: 18px; color: var(--green); flex-shrink: 0; margin-top: 3px; }
 @media (max-width: 640px) { .check-grid { grid-template-columns: 1fr; } }
 
-/* Sticky Call / Request bar: phones and tablets, as in the client prototype (< 860px).
-   It slides away while a real call button is on screen — see StickyCall.tsx. */
-@media (max-width: 859px) {
-  body { padding-bottom: 64px; }
-  .stickybar { display: flex; }
-}
-.stickybar { transition: transform 0.25s var(--ease), opacity 0.2s ease; }
-.stickybar--hidden { transform: translateY(105%); opacity: 0; pointer-events: none; }
 /* FAQ footer buttons wrap on narrow phones instead of overflowing. */
 .faq-bottom-bar, .faq-bottom-links { flex-wrap: wrap; }
 @media (max-width: 480px) {
