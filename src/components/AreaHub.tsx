@@ -70,19 +70,22 @@ export const AreaHub = async ({ area, title, intro, eyebrow }: { area: ServiceAr
         </section>
       ) : null}
 
-      <section className="sec">
-        <div className="wrap narrow">
-          <p className="muted">
+      {/* Slim cross-link strip: a full section put one muted sentence in the
+          middle of a screenful of white space. */}
+      <div className="area-crosslink">
+        <div className="wrap">
+          <p>
             Also serving{' '}
-            {SERVICE_AREAS.filter((a) => a.key !== area.key).map((other) => (
-              <Link key={other.key} href={other.hub}>
-                {other.label}
-              </Link>
+            {SERVICE_AREAS.filter((a) => a.key !== area.key).map((other, i, arr) => (
+              <span key={other.key}>
+                <Link href={other.hub}>{other.label}</Link>
+                {i < arr.length - 2 ? ', ' : i === arr.length - 2 ? ' and ' : ''}
+              </span>
             ))}
             .
           </p>
         </div>
-      </section>
+      </div>
     </>
   )
 }
